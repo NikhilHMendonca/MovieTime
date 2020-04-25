@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Container, Wrapper, Card, MovieInfo, MovieImage, MovieName, MovieRating, SectionTitle } from '../HomePageStyles.js';
+import { Link } from 'react-router-dom';
 
 class NowPlayingMovies extends Component {
 	state = {
@@ -29,13 +30,15 @@ class NowPlayingMovies extends Component {
 			) : (
 				<Wrapper>
 					{moviesList.map(movie => (
-						<Card key={movie.id}>
-							<MovieImage image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
-							<MovieInfo>
-								<MovieName>{movie.title}</MovieName>
-								<MovieRating>{movie.vote_average}</MovieRating>
-							</MovieInfo>
-						</Card>
+						<Link to={`/movie/${movie.id}`} key={movie.id}>
+							<Card>
+								<MovieImage image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
+								<MovieInfo>
+									<MovieName>{movie.title}</MovieName>
+									<MovieRating>{movie.vote_average}</MovieRating>
+								</MovieInfo>
+							</Card>
+						</Link>
 					))}
 				</Wrapper>
 			)}
