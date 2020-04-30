@@ -3,6 +3,8 @@ import axios from "axios";
 import styled from "styled-components";
 import Cast from '../../components/Cast';
 import Review from "../../components/Review";
+import MovieCard from "../../components/MovieCard";
+import { Wrapper, SectionTitle } from "../HomePage/HomePageStyles";
 
 const Container = styled.div`
 	// color: #fff;
@@ -168,15 +170,13 @@ class MovieDetailsPage extends Component {
 									<Review review={review} />
 								))}
 						</div>
-                        <div>
+                        <Wrapper>
+							<SectionTitle>Similar movies</SectionTitle>
 							{similarMovies.length > 0 &&
 								similarMovies.map(movie => (
-									<Fragment key={movie.id}>
-										<div>{movie.title}</div>
-										<div>{movie.poster_path}</div>
-									</Fragment>
+									<MovieCard movie={movie} key={movie.id} />
 								))}
-						</div>
+						</Wrapper>
 					</Fragment>
 				)}
 			</Container>
