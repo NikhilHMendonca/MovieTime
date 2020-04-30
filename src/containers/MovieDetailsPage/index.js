@@ -5,56 +5,67 @@ import Cast from '../../components/Cast';
 import Review from "../../components/Review";
 import MovieCard from "../../components/MovieCard";
 import { Wrapper, SectionTitle } from "../HomePage/HomePageStyles";
+import dayjs from 'dayjs';
 
 const Container = styled.div`
-	// color: #fff;
+	border: 1px solid #38c3a3;
+    padding: 8px 8px 8px 8px;
+    border-radius: 4px;
+    position: relative;
+	margin: 190px 0 0 0;
 `;
 
 const MovieName = styled.div`
-	font-size: 24px;
+	font-size: 18px;
 	margin: 16px 0 4px 0;
+	text-align: center;
+	font-weight: 700;
+	color: #212020;
 `;
-
-const MovieTagline = styled.div`
-	font-size: 14px;
-	margin: 4px 0 16px 0;
-`;
-
+	
 const MovieOverview = styled.div`
-	font-size: 14px;
+	font-size: 12px;
 	margin: 8px 0;
+	text-align: justify;
+
 `;
 
 const MovieReleaseDate = styled.div`
-	font-size: 16px;
+	font-size: 12px;
 	margin: 8px 0;
 `;
 
 const MovieRuntime = styled.div`
 	font-size: 12px;
-	font-weight: 700;
 	margin: 8px 0;
 `;
 
 const MovieGenre = styled.div`
 	font-size: 12px;
-	font-style: italic;
-	margin: 8px 0;
+	margin: 8px 0 16px 0;
+	text-align: center;
+	font-weight: 600;
+	color: grey;
 `;
 
 const MoviePopularity = styled.div`
-	font-size: 16px;
+	font-size: 12px;
 	margin: 8px 0;
 `;
 
 const MovieImage = styled.div`
-	// width: 100%;
+	width: 135px;
 	height: 200px;
 	background-image: ${({ url }) => `url(${url})`};
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
-	border-radius: 4px;
+	position: absolute;
+    top: -185px;
+    left: 0;
+	right: 0;
+	margin: 0 auto;
+    border-radius: 10px;
 `;
 
 const Casts = styled.div`
@@ -132,7 +143,6 @@ class MovieDetailsPage extends Component {
 
 	render() {
 		const { movieDetails, casts, reviews, similarMovies, images } = this.state;
-		console.log(images);
 		// https://image.tmdb.org/t/p/w500/
 		return (
 			<Container>
@@ -142,32 +152,26 @@ class MovieDetailsPage extends Component {
 							url={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
 						/>
 						<MovieName>{movieDetails.title}</MovieName>
-						<MovieTagline>{movieDetails.tagline}</MovieTagline>
+						<MovieGenre>{movieDetails.genres.map(genre => genre.name).join(' • ')}</MovieGenre>
+						<SectionTitle>Overview</SectionTitle>
 						<MovieOverview>{movieDetails.overview}</MovieOverview>
-						<MovieReleaseDate>{movieDetails.release_date}</MovieReleaseDate>
+						<MovieReleaseDate>Release date: {dayjs(movieDetails.release_date).format('DD MMMM YYYY')}</MovieReleaseDate>
 						<MovieRuntime>
-							Release date: {movieDetails.runtime} mins
+							Duration: {movieDetails.runtime} mins
 						</MovieRuntime>
-						<MoviePopularity>{`${Math.ceil(
-							movieDetails.popularity
-						)}%`}</MoviePopularity>
-						<MovieGenre>
-							{movieDetails.genres.map(genre => (
-								<span key={genre.id}>{genre.name}</span>
-							))}
-						</MovieGenre>
+						<MoviePopularity>Rating: {movieDetails.vote_average}</MoviePopularity>
 						<Casts>
-                            <div>Cast</div>
+							<SectionTitle>Cast</SectionTitle>
 							{casts.length > 0 &&
 								casts.map(cast => (
-									<Cast cast={cast} />
+									<Cast cast={cast} key={cast.id} />
 								))}
 						</Casts>
                         <div>
-							<div>Reviews</div>
+							<SectionTitle>Reviews</SectionTitle>
 							{reviews.length > 0 &&
 								reviews.map(review => (
-									<Review review={review} />
+									<Review review={review} key={review.id} />
 								))}
 						</div>
                         <Wrapper>

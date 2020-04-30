@@ -3,16 +3,22 @@ import styled from 'styled-components';
 
 const Container = styled.div`
     display: inline-block;
+    vertical-align: top;
+    margin: 8px;
+    text-align: center;
 `;
 
 const Character = styled.div`
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
+    white-space: normal;
+    max-width: 100px;
 `;
 
 const Name = styled.div`
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 500;
+    margin: 4px 0;
 `;
 
 const Profile = styled.div`
@@ -22,6 +28,8 @@ const Profile = styled.div`
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
+    border-radius: 50%;
+    border: 1px solid #347768;
 `;
 
 const Cast = ({ cast }) => {
