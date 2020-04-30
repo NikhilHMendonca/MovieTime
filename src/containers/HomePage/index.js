@@ -6,12 +6,7 @@ import NowPlayingMovies from "./NowPlayingMovies/index.js";
 import TopRatedMovies from "./TopRatedMovies/index.js";
 import PopularMovies from "./PopularMovies/index.js";
 import Header from '../../components/Header';
-
-// const Header = styled.div`
-// 	background-color: #141d2b;
-// 	height: 80px;
-// 	margin: 0 16px;
-// `;
+import { Link } from 'react-router-dom';
 
 const Footer = styled.div`
 	position: fixed;
@@ -39,6 +34,13 @@ const Container = styled.div`
 	padding: 0 0 48px 0;
 `;
 
+const RedirectLink = styled(Link)`
+	display: inline-block;
+	text-decoration: none;
+	width: 100%;
+	color: inherit;
+`;
+
 const HomePage = () => (
 	<Container>
 		<Header />
@@ -47,10 +49,26 @@ const HomePage = () => (
 		<TopRatedMovies />
 		<PopularMovies />
 		<Footer>
-			<FooterOption><MdMovie size="22px" color="#141d2b" /><div>Movies</div></FooterOption>
-			<FooterOption><MdTv size="22px" color="#141d2b" /><div>TV Shows</div></FooterOption>
-			<FooterOption><MdPlaylistAdd  size="22px" color="#141d2b" /><div>Watchlist</div></FooterOption>
-			<FooterOption><MdFace  size="22px" color="#141d2b" /><div>Profile</div></FooterOption>
+				<FooterOption>
+			<RedirectLink to="/">
+					<MdMovie size="22px" color="#141d2b" /><div>Movies</div>
+			</RedirectLink>
+				</FooterOption>
+				<FooterOption>
+			<RedirectLink to="/tvshows">
+					<MdTv size="22px" color="#141d2b" /><div>TV Shows</div>
+			</RedirectLink>
+				</FooterOption>
+				<FooterOption>
+			<RedirectLink to="/watchlist">
+					<MdPlaylistAdd  size="22px" color="#141d2b" /><div>Watchlist</div>
+			</RedirectLink>
+				</FooterOption>
+				<FooterOption>
+			<RedirectLink to="/profile">
+					<MdFace  size="22px" color="#141d2b" /><div>Profile</div>
+			</RedirectLink>
+				</FooterOption>
 		</Footer>
 	</Container>
 );
