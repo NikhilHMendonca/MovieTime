@@ -12,6 +12,6 @@ export const Wrapper = styled.div`
 export const SectionTitle = styled.div`
   font-size: 16px;
   font-weight: 500;
-  color: #fffdfd;
+  color: #142d2b;
   margin: 8px 0;
 `;

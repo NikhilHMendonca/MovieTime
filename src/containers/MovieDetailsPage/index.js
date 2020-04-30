@@ -5,7 +5,7 @@ import Cast from '../../components/Cast';
 import Review from "../../components/Review";
 
 const Container = styled.div`
-	color: #fff;
+	// color: #fff;
 `;
 
 const MovieName = styled.div`
@@ -46,12 +46,13 @@ const MoviePopularity = styled.div`
 `;
 
 const MovieImage = styled.div`
-	width: 100%;
+	// width: 100%;
 	height: 200px;
 	background-image: ${({ url }) => `url(${url})`};
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: cover;
+	background-size: contain;
+	border-radius: 4px;
 `;
 
 const Casts = styled.div`

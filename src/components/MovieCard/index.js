@@ -20,17 +20,17 @@ const MovieImage = styled.div`
 `;
 
 const MovieInfo = styled.div`
-	color: grey;
 	font-weight: 500;
 `;
 
 const MovieName = styled.div`
-	font-weight: 500;
+	font-weight: 600;
 	font-size: 12px;
 	margin: 4px 0 2px 0;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	color: #544d4d;
 `;
 
 const MovieRating = styled.div`

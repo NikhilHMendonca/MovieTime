@@ -7,14 +7,16 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #141d2b;
-  border: 1px solid #fff;
+  background-color: #fff;
+  border: 1px solid #142d2b
+  border-radius: 4px;
+  margin: 16px 0; 
 `;
 
 const Title = styled.div`
   font-size: 18px;
   font-weight: 500;
-  color: #fff;
+  color: #141d2b;
   margin: 16px 0;
 `;
 

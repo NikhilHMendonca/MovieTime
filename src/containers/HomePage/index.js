@@ -19,7 +19,7 @@ const Footer = styled.div`
 	left: 0;
 	right: 0;
 	height: 60px;
-	background-color: #141d2b;
+	background-color: #e2e2e2;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -32,6 +32,7 @@ const FooterOption = styled.div`
 	width: 25%;
 	font-size: 12px;
 	font-weight: 500;
+	color: #141d2b;
 `;
 
 const Container = styled.div`
@@ -46,10 +47,10 @@ const HomePage = () => (
 		<TopRatedMovies />
 		<PopularMovies />
 		<Footer>
-			<FooterOption><MdMovie size="22px" /><div>Movies</div></FooterOption>
-			<FooterOption><MdTv size="22px" /><div>TV Shows</div></FooterOption>
-			<FooterOption><MdPlaylistAdd  size="22px" /><div>Watchlist</div></FooterOption>
-			<FooterOption><MdFace  size="22px" /><div>Profile</div></FooterOption>
+			<FooterOption><MdMovie size="22px" color="#141d2b" /><div>Movies</div></FooterOption>
+			<FooterOption><MdTv size="22px" color="#141d2b" /><div>TV Shows</div></FooterOption>
+			<FooterOption><MdPlaylistAdd  size="22px" color="#141d2b" /><div>Watchlist</div></FooterOption>
+			<FooterOption><MdFace  size="22px" color="#141d2b" /><div>Profile</div></FooterOption>
 		</Footer>
 	</Container>
 );
