@@ -9,6 +9,7 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
+import Navbar from "./components/Navbar/index.js";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/profile" component={ProfilePage} />
         <Route path="/" component={HomePage} />
       </Switch>
+      <Navbar />
     </Router>
   );
 }
