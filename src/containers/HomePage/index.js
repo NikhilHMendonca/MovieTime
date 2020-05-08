@@ -6,7 +6,10 @@ import TopRatedMovies from "./TopRatedMovies/index.js";
 import PopularMovies from "./PopularMovies/index.js";
 import Header from "../../components/Header";
 import { connect } from "react-redux";
-import { fetchUpcomingMovies } from "../HomePage/actions";
+import {
+	fetchUpcomingMovies,
+	fetchNowPlayingMovies
+} from "../HomePage/actions";
 
 const Container = styled.div`
 	padding: 0 0 48px 0;
@@ -17,7 +20,10 @@ class HomePage extends Component {
 		const {
 			handleFetchUpcomingMovies,
 			upcomingMoviesList,
-			fetchingUpcomingMovies
+			fetchingUpcomingMovies,
+			handleFetchNowPlayingMovies,
+			nowPlayingMoviesList,
+			fetchingNowPlayingMovies
 		} = this.props;
 		return (
 			<Container>
@@ -27,7 +33,11 @@ class HomePage extends Component {
 					upcomingMoviesList={upcomingMoviesList}
 					fetchingUpcomingMovies={fetchingUpcomingMovies}
 				/>
-				<NowPlayingMovies />
+				<NowPlayingMovies
+					fetchNowPlayingMovies={handleFetchNowPlayingMovies}
+					nowPlayingMoviesList={nowPlayingMoviesList}
+					fetchingNowPlayingMovies={fetchingNowPlayingMovies}
+				/>
 				<TopRatedMovies />
 				<PopularMovies />
 			</Container>
@@ -35,16 +45,26 @@ class HomePage extends Component {
 	}
 }
 
-const mapStateToProps = ({ homePage: { upcomingMoviesList, fetchingUpcomingMovies } }) => {
+const mapStateToProps = ({
+	homePage: {
+		upcomingMoviesList,
+		fetchingUpcomingMovies,
+		nowPlayingMoviesList,
+		fetchingNowPlayingMovies
+	}
+}) => {
 	return {
 		fetchingUpcomingMovies,
-		upcomingMoviesList
+		upcomingMoviesList,
+		fetchingNowPlayingMovies,
+		nowPlayingMoviesList
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		handleFetchUpcomingMovies: () => dispatch(fetchUpcomingMovies())
+		handleFetchUpcomingMovies: () => dispatch(fetchUpcomingMovies()),
+		handleFetchNowPlayingMovies: () => dispatch(fetchNowPlayingMovies())
 	};
 };
 
