@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Wrapper, SectionTitle } from '../HomePageStyles.js';
 import MovieCard from '../../../components/MovieCard/index.js';
+import Loader from '../../../components/Loader/index.js';
 
 class UpcomingMovies extends Component {
 	componentDidMount() {
@@ -14,7 +15,7 @@ class UpcomingMovies extends Component {
 			<Container>
 			<SectionTitle>Upcoming</SectionTitle>
 			{fetchingUpcomingMovies ? (
-				<div>Loading...</div>
+				<Loader />
 			) : (
 				<Wrapper>
 					{upcomingMoviesList.slice(0, 5).map(movie => (

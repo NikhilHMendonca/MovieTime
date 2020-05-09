@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Wrapper, SectionTitle } from '../HomePageStyles.js';
 import MovieCard from '../../../components/MovieCard/index.js';
+import Loader from '../../../components/Loader/index.js';
 
 class PopularMovies extends Component {
 	state = {
@@ -20,7 +21,7 @@ class PopularMovies extends Component {
 			<Container>
 			<SectionTitle>Popular</SectionTitle>
 			{fetchingPopularMovies ? (
-				<div>Loading...</div>
+				<Loader />
 			) : (
 				<Wrapper>
 					{moviesList.map(movie => (
