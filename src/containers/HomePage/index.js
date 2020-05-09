@@ -8,7 +8,8 @@ import Header from "../../components/Header";
 import { connect } from "react-redux";
 import {
 	fetchUpcomingMovies,
-	fetchNowPlayingMovies
+	fetchNowPlayingMovies,
+	fetchPopularMovies,
 } from "../HomePage/actions";
 
 const Container = styled.div`
@@ -23,7 +24,10 @@ class HomePage extends Component {
 			fetchingUpcomingMovies,
 			handleFetchNowPlayingMovies,
 			nowPlayingMoviesList,
-			fetchingNowPlayingMovies
+			fetchingNowPlayingMovies,
+			handleFetchPopularMovies,
+			popularMoviesList,
+			fetchingPopularMovies,
 		} = this.props;
 		return (
 			<Container>
@@ -39,7 +43,11 @@ class HomePage extends Component {
 					fetchingNowPlayingMovies={fetchingNowPlayingMovies}
 				/>
 				<TopRatedMovies />
-				<PopularMovies />
+				<PopularMovies
+					fetchPopularMovies={handleFetchPopularMovies}
+					popularMoviesList={popularMoviesList}
+					fetchingPopularMovies={fetchingPopularMovies}
+				/>
 			</Container>
 		);
 	}
@@ -50,21 +58,26 @@ const mapStateToProps = ({
 		upcomingMoviesList,
 		fetchingUpcomingMovies,
 		nowPlayingMoviesList,
-		fetchingNowPlayingMovies
+		fetchingNowPlayingMovies,
+		popularMoviesList,
+		fetchingPopularMovies,
 	}
 }) => {
 	return {
 		fetchingUpcomingMovies,
 		upcomingMoviesList,
 		fetchingNowPlayingMovies,
-		nowPlayingMoviesList
+		nowPlayingMoviesList,
+		popularMoviesList,
+		fetchingPopularMovies,
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
 		handleFetchUpcomingMovies: () => dispatch(fetchUpcomingMovies()),
-		handleFetchNowPlayingMovies: () => dispatch(fetchNowPlayingMovies())
+		handleFetchNowPlayingMovies: () => dispatch(fetchNowPlayingMovies()),
+		handleFetchPopularMovies: () => dispatch(fetchPopularMovies()),
 	};
 };
 

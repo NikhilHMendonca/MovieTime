@@ -4,7 +4,10 @@ import {
 	FETCH_UPCOMING_MOVIES_FAILED,
 	FETCH_NOW_PLAYING_MOVIES,
 	FETCH_NOW_PLAYING_MOVIES_SUCCESSFUL,
-	FETCH_NOW_PLAYING_MOVIES_FAILED
+	FETCH_NOW_PLAYING_MOVIES_FAILED,
+	FETCH_POPULAR_MOVIES,
+	FETCH_POPULAR_MOVIES_SUCCESSFUL,
+	FETCH_POPULAR_MOVIES_FAILED
 } from "../constants";
 
 export const fetchUpcomingMovies = () => {
@@ -42,5 +45,24 @@ export const fetchNowPlayingMoviesSuccessful = payload => {
 export const fetchNowPlayingMoviesFailed = () => {
 	return {
 		type: FETCH_NOW_PLAYING_MOVIES_FAILED
+	};
+};
+
+export const fetchPopularMovies = () => {
+	return {
+		type: FETCH_POPULAR_MOVIES
+	};
+};
+
+export const fetchPopularMoviesSuccessful = payload => {
+	return {
+		type: FETCH_POPULAR_MOVIES_SUCCESSFUL,
+		payload
+	};
+};
+
+export const fetchPopularMoviesFailed = () => {
+	return {
+		type: FETCH_POPULAR_MOVIES_FAILED
 	};
 };

@@ -10,22 +10,17 @@ class PopularMovies extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('https://api.themoviedb.org/3/movie/popular', {params: {api_key:'8ccc0bdb740b43b01bbfa64bd20639c0', language: 'en'}})
-		.then(response => {
-			this.setState({ loadingPopularMovies: false, popularMovies: response.data.results });
-		})
-		.catch(error => {
-			console.log({ error });
-		});
+		const { fetchPopularMovies } = this.props;
+		fetchPopularMovies();
 	}
 
 	render() {
-		const { loadingPopularMovies, popularMovies } = this.state;
-		const moviesList = popularMovies.slice(0, 5);
+		const { fetchingPopularMovies, popularMoviesList } = this.props;
+		const moviesList = popularMoviesList.slice(0, 5);
 		return (
 			<Container>
 			<SectionTitle>Popular</SectionTitle>
-			{loadingPopularMovies ? (
+			{fetchingPopularMovies ? (
 				<div>Loading...</div>
 			) : (
 				<Wrapper>
