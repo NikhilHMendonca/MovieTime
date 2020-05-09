@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Wrapper, SectionTitle } from '../HomePageStyles.js';
 import MovieCard from '../../../components/MovieCard/index.js';
+import Loader from '../../../components/Loader/index.js';
 
 class NowPlayingMovies extends Component {
 	componentDidMount() {
@@ -9,14 +10,13 @@ class NowPlayingMovies extends Component {
 	}
 
 	render() {
-		// const { loadingNowPlayingMovies, nowPlayingMovies } = this.state;
 		const { nowPlayingMoviesList, fetchingNowPlayingMovies } = this.props;
 		const moviesList = nowPlayingMoviesList.slice(0, 5);
 		return (
 			<Container>
 			<SectionTitle>Now Playing</SectionTitle>
 			{fetchingNowPlayingMovies ? (
-				<div>Loading...</div>
+				<Loader />
 			) : (
 				<Wrapper>
 					{moviesList.map(movie => (

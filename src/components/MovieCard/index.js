@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { IMAGE_BASE_URL_500 } from "../../constants";
 
 const Card = styled.div`
 	display: inline-block;
@@ -44,7 +45,7 @@ const MovieCard = ({ movie }) => {
 		<Link to={`/movie/${movie.id}`}>
 			<Card>
 				<MovieImage
-					image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+					image={`${IMAGE_BASE_URL_500}${movie.poster_path}`}
 				/>
 				<MovieInfo>
 					<MovieName>{movie.title}</MovieName>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Wrapper, SectionTitle } from '../HomePageStyles.js';
 import MovieCard from '../../../components/MovieCard/index.js';
+import Loader from '../../../components/Loader/index.js';
 
 class TopRatedMovies extends Component {
 	componentDidMount() {
@@ -15,7 +16,7 @@ class TopRatedMovies extends Component {
 			<Container>
 			<SectionTitle>Top Rated</SectionTitle>
 			{fetchingTopRatedMovies ? (
-				<div>Loading...</div>
+				<Loader />
 			) : (
 				<Wrapper>
 					{moviesList.map(movie => (
