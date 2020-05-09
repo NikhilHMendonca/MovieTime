@@ -142,7 +142,7 @@ class MovieDetailsPage extends Component {
 	}
 
 	render() {
-		const { movieDetails, casts, reviews, similarMovies, images } = this.state;
+		const { movieDetails, casts, reviews, similarMovies } = this.state;
 		// https://image.tmdb.org/t/p/w500/
 		return (
 			<Container>

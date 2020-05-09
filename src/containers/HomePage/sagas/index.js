@@ -11,11 +11,12 @@ import {
 	fetchTopRatedMoviesFailed
 } from "../actions";
 import { fetchUpcomingMoviesApi, fetchNowPlayingMoviesApi, fetchPopularMoviesApi, fetchTopRatedMoviesApi } from "../../../api";
+import { API_KEY } from '../../../constants';
 
 function* fetchUpcomingMoviesAsync() {
 	try {
 		const params = {
-			params: { api_key: "8ccc0bdb740b43b01bbfa64bd20639c0", language: "en" }
+			params: { api_key: API_KEY, language: "en" }
 		};
 		const response = yield call(fetchUpcomingMoviesApi, params);
 		yield put(fetchUpcomingMoviesSuccessful(response.data.results));
@@ -27,7 +28,7 @@ function* fetchUpcomingMoviesAsync() {
 function* fetchNowPlayingMoviesAsync() {
 	try {
 		const params = {
-			params: { api_key: "8ccc0bdb740b43b01bbfa64bd20639c0", language: "en" }
+			params: { api_key: API_KEY, language: "en" }
 		};
 		const response = yield call(fetchNowPlayingMoviesApi, params);
 		yield put(fetchNowPlayingMoviesSuccessful(response.data.results));
@@ -39,7 +40,7 @@ function* fetchNowPlayingMoviesAsync() {
 function* fetchPopularMoviesAsync() {
 	try {
 		const params = {
-			params: { api_key: "8ccc0bdb740b43b01bbfa64bd20639c0", language: "en" }
+			params: { api_key: API_KEY, language: "en" }
 		};
 		const response = yield call(fetchPopularMoviesApi, params);
 		yield put(fetchPopularMoviesSuccessful(response.data.results));
@@ -51,7 +52,7 @@ function* fetchPopularMoviesAsync() {
 function* fetchTopRatedMoviesAsync() {
 	try {
 		const params = {
-			params: { api_key: "8ccc0bdb740b43b01bbfa64bd20639c0", language: "en" }
+			params: { api_key: API_KEY, language: "en" }
 		};
 		const response = yield call(fetchTopRatedMoviesApi, params);
 		yield put(fetchTopRatedMoviesSuccessful(response.data.results));
