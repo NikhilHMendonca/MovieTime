@@ -6,7 +6,12 @@ import TopRatedMovies from "./TopRatedMovies/index.js";
 import PopularMovies from "./PopularMovies/index.js";
 import Header from "../../components/Header";
 import { connect } from "react-redux";
-import { fetchUpcomingMovies } from "../HomePage/actions";
+import {
+	fetchUpcomingMovies,
+	fetchNowPlayingMovies,
+	fetchPopularMovies,
+	fetchTopRatedMovies
+} from "../HomePage/actions";
 
 const Container = styled.div`
 	padding: 0 0 48px 0;
@@ -17,7 +22,16 @@ class HomePage extends Component {
 		const {
 			handleFetchUpcomingMovies,
 			upcomingMoviesList,
-			fetchingUpcomingMovies
+			fetchingUpcomingMovies,
+			handleFetchNowPlayingMovies,
+			nowPlayingMoviesList,
+			fetchingNowPlayingMovies,
+			handleFetchPopularMovies,
+			popularMoviesList,
+			fetchingPopularMovies,
+			handleFetchTopRatedMovies,
+			fetchingTopRatedMovies,
+			topRatedMoviesList
 		} = this.props;
 		return (
 			<Container>
@@ -27,24 +41,56 @@ class HomePage extends Component {
 					upcomingMoviesList={upcomingMoviesList}
 					fetchingUpcomingMovies={fetchingUpcomingMovies}
 				/>
-				<NowPlayingMovies />
-				<TopRatedMovies />
-				<PopularMovies />
+				<NowPlayingMovies
+					fetchNowPlayingMovies={handleFetchNowPlayingMovies}
+					nowPlayingMoviesList={nowPlayingMoviesList}
+					fetchingNowPlayingMovies={fetchingNowPlayingMovies}
+				/>
+				<TopRatedMovies
+					fetchTopRatedMovies={handleFetchTopRatedMovies}
+					fetchingTopRatedMovies={fetchingTopRatedMovies}
+					topRatedMoviesList={topRatedMoviesList}
+				/>
+				<PopularMovies
+					fetchPopularMovies={handleFetchPopularMovies}
+					popularMoviesList={popularMoviesList}
+					fetchingPopularMovies={fetchingPopularMovies}
+				/>
 			</Container>
 		);
 	}
 }
 
-const mapStateToProps = ({ homePage: { upcomingMoviesList, fetchingUpcomingMovies } }) => {
+const mapStateToProps = ({
+	homePage: {
+		upcomingMoviesList,
+		fetchingUpcomingMovies,
+		nowPlayingMoviesList,
+		fetchingNowPlayingMovies,
+		popularMoviesList,
+		fetchingPopularMovies,
+		topRatedMoviesList,
+		fetchingTopRatedMovies
+	}
+}) => {
 	return {
 		fetchingUpcomingMovies,
-		upcomingMoviesList
+		upcomingMoviesList,
+		fetchingNowPlayingMovies,
+		nowPlayingMoviesList,
+		popularMoviesList,
+		fetchingPopularMovies,
+		topRatedMoviesList,
+		fetchingTopRatedMovies
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		handleFetchUpcomingMovies: () => dispatch(fetchUpcomingMovies())
+		handleFetchUpcomingMovies: () => dispatch(fetchUpcomingMovies()),
+		handleFetchNowPlayingMovies: () => dispatch(fetchNowPlayingMovies()),
+		handleFetchPopularMovies: () => dispatch(fetchPopularMovies()),
+		handleFetchTopRatedMovies: () => dispatch(fetchTopRatedMovies())
 	};
 };
 
