@@ -6,6 +6,7 @@ import Review from "../../components/Review";
 import MovieCard from "../../components/MovieCard";
 import { Wrapper, SectionTitle } from "../HomePage/HomePageStyles";
 import dayjs from 'dayjs';
+import { IMAGE_BASE_URL_500 } from "../../constants";
 
 const Container = styled.div`
 	border: 1px solid #38c3a3;
@@ -143,13 +144,12 @@ class MovieDetailsPage extends Component {
 
 	render() {
 		const { movieDetails, casts, reviews, similarMovies } = this.state;
-		// https://image.tmdb.org/t/p/w500/
 		return (
 			<Container>
 				{Object.keys(movieDetails).length > 0 && (
 					<Fragment>
 						<MovieImage
-							url={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
+							url={`${IMAGE_BASE_URL_500}${movieDetails.poster_path}`}
 						/>
 						<MovieName>{movieDetails.title}</MovieName>
 						<MovieGenre>{movieDetails.genres.map(genre => genre.name).join(' • ')}</MovieGenre>

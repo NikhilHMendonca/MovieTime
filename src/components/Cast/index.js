@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { IMAGE_BASE_URL_200 } from '../../constants';
 
 const Container = styled.div`
     display: inline-block;
@@ -24,7 +25,7 @@ const Name = styled.div`
 const Profile = styled.div`
     height: 100px;
     width: 100px;
-    background-image: ${({ url }) => `url(https://image.tmdb.org/t/p/w200${url})`};
+    background-image: ${({ url }) => `url(${IMAGE_BASE_URL_200}/${url})`};
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
