@@ -10,6 +10,7 @@ import {
 	fetchUpcomingMovies,
 	fetchNowPlayingMovies,
 	fetchPopularMovies,
+	fetchTopRatedMovies
 } from "../HomePage/actions";
 
 const Container = styled.div`
@@ -28,6 +29,9 @@ class HomePage extends Component {
 			handleFetchPopularMovies,
 			popularMoviesList,
 			fetchingPopularMovies,
+			handleFetchTopRatedMovies,
+			fetchingTopRatedMovies,
+			topRatedMoviesList
 		} = this.props;
 		return (
 			<Container>
@@ -42,7 +46,11 @@ class HomePage extends Component {
 					nowPlayingMoviesList={nowPlayingMoviesList}
 					fetchingNowPlayingMovies={fetchingNowPlayingMovies}
 				/>
-				<TopRatedMovies />
+				<TopRatedMovies
+					fetchTopRatedMovies={handleFetchTopRatedMovies}
+					fetchingTopRatedMovies={fetchingTopRatedMovies}
+					topRatedMoviesList={topRatedMoviesList}
+				/>
 				<PopularMovies
 					fetchPopularMovies={handleFetchPopularMovies}
 					popularMoviesList={popularMoviesList}
@@ -61,6 +69,8 @@ const mapStateToProps = ({
 		fetchingNowPlayingMovies,
 		popularMoviesList,
 		fetchingPopularMovies,
+		topRatedMoviesList,
+		fetchingTopRatedMovies
 	}
 }) => {
 	return {
@@ -70,6 +80,8 @@ const mapStateToProps = ({
 		nowPlayingMoviesList,
 		popularMoviesList,
 		fetchingPopularMovies,
+		topRatedMoviesList,
+		fetchingTopRatedMovies
 	};
 };
 
@@ -78,6 +90,7 @@ const mapDispatchToProps = dispatch => {
 		handleFetchUpcomingMovies: () => dispatch(fetchUpcomingMovies()),
 		handleFetchNowPlayingMovies: () => dispatch(fetchNowPlayingMovies()),
 		handleFetchPopularMovies: () => dispatch(fetchPopularMovies()),
+		handleFetchTopRatedMovies: () => dispatch(fetchTopRatedMovies())
 	};
 };
 

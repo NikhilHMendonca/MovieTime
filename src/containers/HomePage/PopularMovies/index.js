@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Container, Wrapper, SectionTitle } from '../HomePageStyles.js';
 import MovieCard from '../../../components/MovieCard/index.js';
 
