@@ -36,7 +36,7 @@ const Profile = styled.div`
 const Cast = ({ cast }) => {
     return (
         <Container>
-            <Profile url={cast.profile_path} />
+            {cast.profile_path && <Profile url={cast.profile_path} />}
             <Character>{cast.character}</Character>
             <Name>{cast.name}</Name>
         </Container>
