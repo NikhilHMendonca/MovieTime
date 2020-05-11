@@ -11,3 +11,9 @@ export const fetchTopRatedMoviesApi = (params) => axios.get('https://api.themovi
 
 // Movie Details page API's
 export const fetchMovieDetailsApi = (movieId, params) => axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, params);
+
+export const fetchMovieCreditsApi = (movieId, params) => axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits`, params);
+
+export const fetchMovieReviewsApi = (movieId, params) => axios.get(`https://api.themoviedb.org/3/movie/${movieId}/reviews`, params);
+
+export const fetchSimilarMoviesApi = (movieId, params) => axios.get(`https://api.themoviedb.org/3/movie/${movieId}/similar`, params);

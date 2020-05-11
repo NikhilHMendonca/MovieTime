@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import axios from "axios";
 import styled from "styled-components";
 import Cast from "../../components/Cast";
 import Review from "../../components/Review";
@@ -8,14 +7,19 @@ import { Wrapper, SectionTitle } from "../HomePage/HomePageStyles";
 import dayjs from "dayjs";
 import { IMAGE_BASE_URL_500 } from "../../constants";
 import { connect } from "react-redux";
-import { fetchMovieDetails } from "./actions";
+import {
+	fetchMovieDetails,
+	fetchMovieCredits,
+	fetchMovieReviews,
+	fetchSimilarMovies
+} from "./actions";
 
 const Container = styled.div`
 	border: 1px solid #38c3a3;
-	padding: 8px 8px 8px 8px;
+	padding: 8px;
 	border-radius: 4px;
 	position: relative;
-	margin: 190px 0 0 0;
+	margin: 190px 0 72px 0;
 `;
 
 const MovieName = styled.div`
@@ -87,60 +91,36 @@ class MovieDetailsPage extends Component {
 	componentDidMount() {
 		const {
 			handleFetchMovieDetails,
+			handleFetchMovieCredits,
+			handleFetchMovieReviews,
+			handleFetchSimilarMovies,
 			match: {
 				params: { movieId }
 			}
 		} = this.props;
+
 		handleFetchMovieDetails(movieId);
-
-		axios
-			.get(`https://api.themoviedb.org/3/movie/${movieId}/credits`, {
-				params: { api_key: "8ccc0bdb740b43b01bbfa64bd20639c0", language: "en" }
-			})
-			.then(response => {
-				this.setState({ casts: response.data.cast });
-			})
-			.catch(error => {
-				console.log({ error });
-			});
-
-		axios
-			.get(`https://api.themoviedb.org/3/movie/${movieId}/reviews`, {
-				params: { api_key: "8ccc0bdb740b43b01bbfa64bd20639c0", language: "en" }
-			})
-			.then(response => {
-				this.setState({ reviews: response.data.results });
-			})
-			.catch(error => {
-				console.log({ error });
-			});
-
-		axios
-			.get(`https://api.themoviedb.org/3/movie/${movieId}/similar`, {
-				params: { api_key: "8ccc0bdb740b43b01bbfa64bd20639c0", language: "en" }
-			})
-			.then(response => {
-				this.setState({ similarMovies: response.data.results });
-			})
-			.catch(error => {
-				console.log({ error });
-			});
-
-		axios
-			.get(`https://api.themoviedb.org/3/movie/${movieId}/images`, {
-				params: { api_key: "8ccc0bdb740b43b01bbfa64bd20639c0", language: "en" }
-			})
-			.then(response => {
-				this.setState({ images: response.data });
-			})
-			.catch(error => {
-				console.log({ error });
-			});
+		handleFetchMovieCredits();
+		handleFetchMovieReviews();
+		handleFetchSimilarMovies();
+		// axios
+		// 	.get(`https://api.themoviedb.org/3/movie/${movieId}/images`, {
+		// 		params: { api_key: "8ccc0bdb740b43b01bbfa64bd20639c0", language: "en" }
+		// 	})
+		// 	.then(response => {
+		// 		this.setState({ images: response.data });
+		// 	})
+		// 	.catch(error => {
+		// 		console.log({ error });
+		// 	});
 	}
 
 	componentWillReceiveProps(nextProps) {
 		const {
 			handleFetchMovieDetails,
+			handleFetchMovieCredits,
+			handleFetchMovieReviews,
+			handleFetchSimilarMovies,
 			match: {
 				params: { movieId }
 			}
@@ -150,14 +130,17 @@ class MovieDetailsPage extends Component {
 				params: { movieId: updatedMovieId }
 			}
 		} = nextProps;
+		
 		if (updatedMovieId !== movieId) {
 			handleFetchMovieDetails(updatedMovieId);
+			handleFetchMovieCredits();
+			handleFetchMovieReviews();
+			handleFetchSimilarMovies();
 		}
 	}
 
 	render() {
-		const { casts, reviews, similarMovies } = this.state;
-		const { movieDetails } = this.props;
+		const { movieDetails, casts, reviews, similarMovies } = this.props;
 		return (
 			<Container>
 				{Object.keys(movieDetails).length > 0 && (
@@ -206,17 +189,35 @@ class MovieDetailsPage extends Component {
 }
 
 const mapStateToProps = ({
-	movieDetails: { isFetchingMovieDetails, movieDetails }
+	movieDetails: {
+		isFetchingMovieDetails,
+		movieDetails,
+		isFetchingMovieCredits,
+		casts,
+		isFetchingMovieReviews,
+		reviews,
+		isFetchingSimilarMovies,
+		similarMovies
+	}
 }) => {
 	return {
 		isFetchingMovieDetails,
-		movieDetails
+		movieDetails,
+		isFetchingMovieCredits,
+		casts,
+		isFetchingMovieReviews,
+		reviews,
+		isFetchingSimilarMovies,
+		similarMovies
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		handleFetchMovieDetails: payload => dispatch(fetchMovieDetails(payload))
+		handleFetchMovieDetails: payload => dispatch(fetchMovieDetails(payload)),
+		handleFetchMovieCredits: payload => dispatch(fetchMovieCredits(payload)),
+		handleFetchMovieReviews: payload => dispatch(fetchMovieReviews(payload)),
+		handleFetchSimilarMovies: payload => dispatch(fetchSimilarMovies(payload))
 	};
 };
 
