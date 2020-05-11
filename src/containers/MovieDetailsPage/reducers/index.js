@@ -15,7 +15,7 @@ import {
 
 const initialState = {
 	isFetchingMovieDetails: false,
-	movieDetails: {},
+	movie: {},
 	movieId: null,
 	isFetchingMovieCasts: false,
 	casts: [],
@@ -37,7 +37,7 @@ const movieDetails = (state = initialState, action) => {
 			return {
 				...state,
 				isFetchingMovieDetails: false,
-				movieDetails: action.payload
+				movie: action.payload
 			};
 		case FETCH_MOVIE_DETAILS_FAILED:
 			return {
