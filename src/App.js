@@ -1,19 +1,21 @@
 import React from "react";
-import HomePage from "./containers/HomePage/index.js";
-import MovieDetails from './containers/MovieDetailsPage/index.js';
-import TVShowsPage from './containers/TVShowsPage/index.js';
-import WatchlistPage from './containers/WatchlistPage/index.js';
-import ProfilePage from './containers/ProfilePage/index.js';
+import HomePage from "./containers/HomePage";
+import MovieDetails from './containers/MovieDetailsPage';
+import TVShowsPage from './containers/TVShowsPage';
+import WatchlistPage from './containers/WatchlistPage';
+import ProfilePage from './containers/ProfilePage';
 import {
   BrowserRouter as Router,
   Route,
   Switch,
 } from "react-router-dom";
-import Navbar from "./components/Navbar/index.js";
+import Navbar from "./components/Navbar";
+import Header from "./components/Header";
 
 function App() {
   return (
     <Router>
+      <Header />
       <Switch>
         <Route path="/movie/:movieId" component={MovieDetails} />
         <Route path="/tvshows" component={TVShowsPage} />
