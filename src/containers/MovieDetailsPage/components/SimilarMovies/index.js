@@ -1,5 +1,5 @@
 import React from 'react';
-import MovieCard from "../../../../components/MovieCard";
+import Card from "../../../../components/Card";
 import { Wrapper, SectionTitle } from "../../../HomePage/HomePageStyles";
 
 const SimilarMovies = ({ similarMovies }) => {
@@ -8,7 +8,7 @@ const SimilarMovies = ({ similarMovies }) => {
             <SectionTitle>Similar movies</SectionTitle>
             {similarMovies.length > 0 &&
                 similarMovies.map(movie => (
-                    <MovieCard movie={movie} key={movie.id} />
+                    <Card movie={movie} redirectTo="/movie" key={movie.id} />
                 ))}
         </Wrapper>
 

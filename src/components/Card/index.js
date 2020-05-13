@@ -40,9 +40,9 @@ const MovieRating = styled.div`
 	color: #9c9c9c;
 `;
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, redirectTo }) => {
 	return (
-		<Link to={`/movie/${movie.id}`}>
+		<Link to={`${redirectTo}/${movie.id}`}>
 			<Card>
 				<MovieImage
 					image={`${IMAGE_BASE_URL_500}${movie.poster_path}`}

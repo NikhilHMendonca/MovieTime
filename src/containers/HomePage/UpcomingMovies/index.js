@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Wrapper, SectionTitle } from '../HomePageStyles.js';
-import MovieCard from '../../../components/MovieCard/index.js';
+import Card from '../../../components/Card';
 import Loader from '../../../components/Loader/index.js';
 
 class UpcomingMovies extends Component {
@@ -19,7 +19,7 @@ class UpcomingMovies extends Component {
 			) : (
 				<Wrapper>
 					{upcomingMoviesList.slice(0, 5).map(movie => (
-						<MovieCard movie={movie} key={movie.id} />
+						<Card movie={movie} redirectTo="/movie" key={movie.id} />
 					))}
 				</Wrapper>
 			)}
