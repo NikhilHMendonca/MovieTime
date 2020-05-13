@@ -48,7 +48,7 @@ const MovieCard = ({ movie }) => {
 					image={`${IMAGE_BASE_URL_500}${movie.poster_path}`}
 				/>
 				<MovieInfo>
-					<MovieName>{movie.title}</MovieName>
+					<MovieName>{movie.title || movie.name}</MovieName>
 					<MovieRating>{movie.vote_average}</MovieRating>
 				</MovieInfo>
 			</Card>

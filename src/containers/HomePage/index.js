@@ -4,7 +4,6 @@ import UpcomingMovies from "./UpcomingMovies/index.js";
 import NowPlayingMovies from "./NowPlayingMovies/index.js";
 import TopRatedMovies from "./TopRatedMovies/index.js";
 import PopularMovies from "./PopularMovies/index.js";
-import Header from "../../components/Header";
 import { connect } from "react-redux";
 import {
 	fetchUpcomingMovies,
@@ -35,7 +34,6 @@ class HomePage extends Component {
 		} = this.props;
 		return (
 			<Container>
-				<Header />
 				<UpcomingMovies
 					fetchUpcomingMovies={handleFetchUpcomingMovies}
 					upcomingMoviesList={upcomingMoviesList}

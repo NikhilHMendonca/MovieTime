@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
-import { FiSearch } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   // width: calc(100vw - 32px);
@@ -14,71 +14,36 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 18px;
-  font-weight: 500;
-  color: #141d2b;
-  margin: 16px 0;
+	font-size: 18px;
+	font-weight: 500;
+	color: #141d2b;
+	margin: 16px 0;
 `;
 
-const SearchBar = styled.input`
-  width: 100%;
-  height: 40px;
-  box-shadow: none;
-  border: none;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 500;
-  padding: 0 8px;
-  background: transparent;
-
-  &:focus,
-  &:active {
-    outline: none;
-  }
+const RouteLink = styled(Link)`
+	text-decoration: none;
+	width: 100%;
 `;
 
-const SearchButton = styled.button`
-	border: none;
-	box-shadow: none;
-	background: none;
-
-	&:focus, &:active {
-		outline: none;
-	}
+const DummySearchBar = styled.div`
+	padding: 12px 8px;
+	color: grey;
+	border-radius: 8px;
 `;
 
-class Header extends Component {
-  state = {
-    searchedValue: ""
-  };
-
-  handleOnSearch = event => {
-    this.setState({ searchedValue: event.target.value });
-	};
-	
-  handleOnSubmitSearch = () => {
-    console.log(this.state.searchedValue);
-  };
-
-  render() {
-    const { searchedValue } = this.state;
-    return (
-      <Fragment>
-        <Title>MovieTime</Title>
-        <Container>
-          <SearchBar
-            type="text"
-            value={searchedValue}
-            onChange={this.handleOnSearch}
-            placeholder="Search for your Movie/Tv show"
-          />
-          <SearchButton onClick={this.handleOnSubmitSearch}>
-            <FiSearch size="32px" style={{ color: "#fff", margin: "0 8px" }} />
-          </SearchButton>
-        </Container>
-      </Fragment>
-    );
-  }
-}
+const Header = () => {
+	return (
+		<Fragment>
+			<Fragment>
+				<Title>MovieTime</Title>
+				<Container>
+					<RouteLink to="/search">
+						<DummySearchBar>Search for Movies / TV Shows</DummySearchBar>
+					</RouteLink>
+				</Container>
+			</Fragment>
+		</Fragment>
+	);
+};
 
 export default Header;
