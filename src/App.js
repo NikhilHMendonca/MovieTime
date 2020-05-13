@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Header from "./components/Header";
+import SearchPage from "./containers/SearchPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/tvshows" component={TVShowsPage} />
         <Route path="/watchlist" component={WatchlistPage} />
         <Route path="/profile" component={ProfilePage} />
+        <Route path="/search" component={SearchPage} />
         <Route path="/" component={HomePage} />
       </Switch>
       <Navbar />
