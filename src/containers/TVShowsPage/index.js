@@ -30,8 +30,8 @@ class TVShows extends Component {
 						<Loader />
 					) : (
 						<Wrapper>
-							{popularTvShows.map(movie => (
-								<Card movie={movie} redirectTo="/tv-show" key={movie.id} />
+							{popularTvShows.map(show => (
+								<Card format={show} redirectTo="/tv-show" key={show.id} />
 							))}
 						</Wrapper>
 					)}
@@ -42,8 +42,8 @@ class TVShows extends Component {
 						<Loader />
 					) : (
 						<Wrapper>
-							{topRatedTvShows.map(movie => (
-								<Card movie={movie} redirectTo="/tv-show" key={movie.id} />
+							{topRatedTvShows.map(show => (
+								<Card format={show} redirectTo="/tv-show" key={show.id} />
 							))}
 						</Wrapper>
 					)}

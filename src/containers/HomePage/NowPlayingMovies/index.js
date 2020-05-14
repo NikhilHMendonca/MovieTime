@@ -20,7 +20,7 @@ class NowPlayingMovies extends Component {
 			) : (
 				<Wrapper>
 					{moviesList.map(movie => (
-						<Card movie={movie} redirectTo="/movie" key={movie.id} />
+						<Card format={movie} redirectTo="/movie" key={movie.id} />
 					))}
 				</Wrapper>
 			)}

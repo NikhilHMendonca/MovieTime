@@ -95,7 +95,7 @@ class TVShowDetailsPage extends Component {
 							<SectionTitle>Similar TV Shows</SectionTitle>
 							<Wrapper>
 								{similarTvShows.map(show => (
-									<Card key={show.id} redirectTo="/tv-show" movie={show} />
+									<Card key={show.id} redirectTo="/tv-show" format={show} />
 								))}
 							</Wrapper>
 						</Fragment>

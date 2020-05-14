@@ -8,7 +8,7 @@ const SimilarMovies = ({ similarMovies }) => {
             <SectionTitle>Similar movies</SectionTitle>
             {similarMovies.length > 0 &&
                 similarMovies.map(movie => (
-                    <Card movie={movie} redirectTo="/movie" key={movie.id} />
+                    <Card format={movie} redirectTo="/movie" key={movie.id} />
                 ))}
         </Wrapper>
 
