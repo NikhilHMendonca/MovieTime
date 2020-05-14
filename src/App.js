@@ -12,6 +12,7 @@ import {
 import Navbar from "./components/Navbar";
 import Header from "./components/Header";
 import SearchPage from "./containers/SearchPage";
+import TVShowDetailsPage from "./containers/TVShowDetailsPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Switch>
         <Route path="/movie/:movieId" component={MovieDetails} />
         <Route path="/tvshows" component={TVShowsPage} />
+        <Route path="/tv-show/:tvShowId" component={TVShowDetailsPage} />
         <Route path="/watchlist" component={WatchlistPage} />
         <Route path="/profile" component={ProfilePage} />
         <Route path="/search" component={SearchPage} />

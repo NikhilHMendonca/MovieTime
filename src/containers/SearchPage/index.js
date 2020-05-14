@@ -75,6 +75,10 @@ const ResultSubtitle = styled.div`
 	color: #2e8066;
 `;
 
+const RouteLink = styled(Link)`
+	text-decoration: none;
+`;
+
 class SearchPage extends Component {
 	state = {
 		searchedValue: ""
@@ -115,8 +119,8 @@ class SearchPage extends Component {
 								image = `${IMAGE_BASE_URL_200}${result.poster_path}`;
 							// let redirect = '/search-details'
 							return (
-								<Link to={result.media_type === 'movie' ? `/movie/${result.id}` : `/tv-show/${result.id}`}>
-									<ResultContainer key={result.id}>
+								<RouteLink to={result.media_type === 'movie' ? `/movie/${result.id}` : `/tv-show/${result.id}`} key={result.id}>
+									<ResultContainer >
 										<ResultImage src={image} />
 										<ResultInfoWrapper>
 											<ResultTitle>{result.title || result.name}</ResultTitle>
@@ -125,7 +129,7 @@ class SearchPage extends Component {
 											</ResultSubtitle>
 										</ResultInfoWrapper>
 									</ResultContainer>
-								</Link>
+								</RouteLink>
 							);
 						})}
 				</div>

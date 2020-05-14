@@ -32,6 +32,19 @@ export const fetchPopularTVShowsApi = params =>
 
 export const fetchTopRatedTVShowsApi = params =>
 	axios.get("https://api.themoviedb.org/3/tv/top_rated", params);
+	
+// TV Show Details API's
+export const fetchTVShowDetailsApi = (tvShowId, params) =>
+	axios.get(`https://api.themoviedb.org/3/tv/${tvShowId}`, params);
+
+export const fetchTVShowCreditsApi = (movieId, params) =>
+axios.get(`https://api.themoviedb.org/3/tv/${movieId}/credits`, params);
+
+export const ffetchTVShowReviewsApi = (movieId, params) =>
+	axios.get(`https://api.themoviedb.org/3/tv/${movieId}/reviews`, params);
+
+export const fetchSimilarTVShowsApi = (movieId, params) =>
+	axios.get(`https://api.themoviedb.org/3/tv/${movieId}/similar`, params);
 
 // Search API's
 export const fetchSearchResultsApi = params =>
