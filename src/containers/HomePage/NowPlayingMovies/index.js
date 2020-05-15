@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Container, Wrapper, SectionTitle } from '../HomePageStyles.js';
+import { Container } from '../HomePageStyles.js';
+import SectionTitle from "../../../components/SectionTitle";
+import Wrapper from "../../../components/HorizontalScrollWrapper";
+
 import Card from '../../../components/Card';
 import Loader from '../../../components/Loader/index.js';
 

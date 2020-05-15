@@ -1,16 +1,16 @@
 import React, { Fragment } from "react";
 import styled from "styled-components";
-import { SectionTitle } from "../../../HomePage/HomePageStyles";
+import SectionTitle from "../../../../components/SectionTitle";
 import dayjs from "dayjs";
 import { IMAGE_BASE_URL_500 } from "../../../../constants";
 import Divider from "../../../../components/Divider";
 
 const MovieName = styled.div`
-	font-size: 18px;
+	font-size: 20px;
 	margin: 16px 0 4px 0;
 	text-align: center;
 	font-weight: 700;
-	color: #212020;
+	color: #2e8066;
 `;
 
 const MovieOverview = styled.div`

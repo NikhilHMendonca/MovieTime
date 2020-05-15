@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from "react";
-import { Container, Wrapper, SectionTitle } from "../HomePage/HomePageStyles";
+import { Container } from "../HomePage/HomePageStyles";
+import SectionTitle from "../../components/SectionTitle";
+import Wrapper from "../../components/HorizontalScrollWrapper";
 import Loader from "../../components/Loader";
 import Card from "../../components/Card";
 import { connect } from "react-redux";

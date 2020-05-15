@@ -6,22 +6,20 @@ import {
 	fetchTVShowReviews,
 	fetchTVShowCredits
 } from "./actions";
-import { IMAGE_BASE_URL_500 } from "../../constants";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import Cast from "../../components/Cast";
-import {
-	SectionTitle,
-	Wrapper
-} from "../../containers/HomePage/HomePageStyles";
+import SimilarContent from "../../components/SimilarContent";
+import Reviews from "../../components/Reviews";
+import Casts from "../../components/Casts";
 import styled from "styled-components";
-import Review from "../../components/Review";
-import Card from "../../components/Card";
+import TVShowInfo from "./components/TVShowInfo";
+import TVShowSeasons from "./components/TVShowSeasons";
 
-const Casts = styled.div`
-	width: 100%;
-	overflow-x: scroll;
-	white-space: nowrap;
+const Container = styled.div`
+	border: 1px solid #38c3a3;
+	padding: 8px;
+	border-radius: 4px;
+	position: relative;
+	margin: 190px 0 72px 0;
 `;
 
 class TVShowDetailsPage extends Component {
@@ -39,69 +37,42 @@ class TVShowDetailsPage extends Component {
 		handleFetchSimilarTvShows();
 	}
 
+	componentWillReceiveProps(nextProps) {
+		const {
+			handleFetchTvShowDetails,
+			handleFetchSimilarTvShows,
+			handleFetchTvShowCredits,
+			handleFetchTvShowReviews,
+			match: { params: { tvShowId } }
+		} = this.props;
+
+		const { tvShowId: updatedtvShowId } = nextProps.match.params;
+		if (updatedtvShowId !== tvShowId) {
+			handleFetchTvShowDetails(updatedtvShowId);
+			handleFetchTvShowCredits();
+			handleFetchTvShowReviews();
+			handleFetchSimilarTvShows();
+		}
+	}
+
 	render() {
 		const { tvShow, tvShowCredits, tvShowReviews, similarTvShows } = this.props;
 		return (
-			<div>
+			<Container>
 				{Object.keys(tvShow).length > 0 && (
-					<div>
-						<img
-							src={`${IMAGE_BASE_URL_500}${tvShow.poster_path}`}
-							width={300}
-							height={200}
+					<Fragment>
+						<TVShowInfo tvShow={tvShow} />
+						<TVShowSeasons tvShow={tvShow} />
+						<Casts casts={tvShowCredits} />
+						<Reviews reviews={tvShowReviews} />
+						<SimilarContent
+							similarContent={similarTvShows}
+							title="Similar TV Shows"
+							redirectTo="/tv-show"
 						/>
-						<div>{tvShow.name}</div>
-						<div>{tvShow.overview}</div>
-						<div>First episode aired: {tvShow.first_air_date}</div>
-						<div>Last episode aired: {tvShow.last_air_date}</div>
-						<div>
-							Created by: {tvShow.created_by.map(creator => creator.name)}
-						</div>
-						<div>Created by: {tvShow.genres.map(genre => genre.name)}</div>
-						<div>Last episode aired: {tvShow.last_air_date}</div>
-						<div>Popularity: {tvShow.popularity}</div>
-						<div>Vote Average: {tvShow.vote_average}</div>
-						<Tabs>
-							<TabList>
-								{tvShow.seasons.map(season => (
-									<Tab>{season.name}</Tab>
-								))}
-							</TabList>
-							{tvShow.seasons.map(season => (
-								<TabPanel>{season.overview}</TabPanel>
-							))}
-						</Tabs>
-						<Fragment>
-							<SectionTitle>Cast</SectionTitle>
-							<Casts>
-								{tvShowCredits.map(cast => (
-									<Cast key={cast.id} cast={cast} />
-								))}
-							</Casts>
-						</Fragment>
-						<Fragment>
-							<SectionTitle>Reviews</SectionTitle>
-							{tvShowReviews.map(review => (
-								<Review key={review.id} review={review} />
-							))}
-						</Fragment>
-						<Fragment>
-							<SectionTitle>Reviews</SectionTitle>
-							{tvShowReviews.map(review => (
-								<Review key={review.id} review={review} />
-							))}
-						</Fragment>
-						<Fragment>
-							<SectionTitle>Similar TV Shows</SectionTitle>
-							<Wrapper>
-								{similarTvShows.map(show => (
-									<Card key={show.id} redirectTo="/tv-show" format={show} />
-								))}
-							</Wrapper>
-						</Fragment>
-					</div>
+					</Fragment>
 				)}
-			</div>
+			</Container>
 		);
 	}
 }
