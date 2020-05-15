@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from "react";
-import { Container, Wrapper, SectionTitle } from "../HomePage/HomePageStyles";
+import { Container } from "../HomePage/HomePageStyles";
+import SectionTitle from "../../components/SectionTitle";
+import Wrapper from "../../components/HorizontalScrollWrapper";
 import Loader from "../../components/Loader";
-import MovieCard from "../../components/MovieCard";
+import Card from "../../components/Card";
 import { connect } from "react-redux";
 import { fetchPopularTvShows, fetchTopRatedTvShows } from "./actions";
 
@@ -30,8 +32,8 @@ class TVShows extends Component {
 						<Loader />
 					) : (
 						<Wrapper>
-							{popularTvShows.map(movie => (
-								<MovieCard movie={movie} key={movie.id} />
+							{popularTvShows.map(show => (
+								<Card format={show} redirectTo="/tv-show" key={show.id} />
 							))}
 						</Wrapper>
 					)}
@@ -42,8 +44,8 @@ class TVShows extends Component {
 						<Loader />
 					) : (
 						<Wrapper>
-							{topRatedTvShows.map(movie => (
-								<MovieCard movie={movie} key={movie.id} />
+							{topRatedTvShows.map(show => (
+								<Card format={show} redirectTo="/tv-show" key={show.id} />
 							))}
 						</Wrapper>
 					)}

@@ -9,9 +9,9 @@ import {
 } from "./actions";
 import Loader from "../../components/Loader";
 import MovieInfo from "./components/MovieInfo";
-import Casts from "./components/Casts";
-import Reviews from "./components/Reviews";
-import SimilarMovies from "./components/SimilarMovies";
+import Casts from "../../components/Casts";
+import Reviews from "../../components/Reviews";
+import SimilarContent from "../../components/SimilarContent";
 
 const Container = styled.div`
 	border: 1px solid #38c3a3;
@@ -88,7 +88,11 @@ class MovieDetailsPage extends Component {
 						<MovieInfo movie={movie} />
 						<Casts casts={casts} />
 						<Reviews reviews={reviews} />
-						<SimilarMovies similarMovies={similarMovies} />
+						<SimilarContent
+							similarContent={similarMovies}
+							title="Similar Movies"
+							redirectTo="/movie"
+						/>
 					</Fragment>
 				) : (
 					<Loader />

@@ -10,7 +10,7 @@ const Card = styled.div`
 	overflow: hidden;
 `;
 
-const MovieImage = styled.div`
+const FormatImage = styled.div`
 	height: 170px;
 	width: 100%;
 	background-image: ${({ image }) => `url(${image})}`};
@@ -20,11 +20,11 @@ const MovieImage = styled.div`
 	border-radius: 6px;
 `;
 
-const MovieInfo = styled.div`
+const FormatInfo = styled.div`
 	font-weight: 500;
 `;
 
-const MovieName = styled.div`
+const FormatName = styled.div`
 	font-weight: 600;
 	font-size: 12px;
 	margin: 4px 0 2px 0;
@@ -34,23 +34,23 @@ const MovieName = styled.div`
 	color: #544d4d;
 `;
 
-const MovieRating = styled.div`
+const FormatRating = styled.div`
 	font-weight: 600;
 	font-size: 10px;
 	color: #9c9c9c;
 `;
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ format, redirectTo }) => {
 	return (
-		<Link to={`/movie/${movie.id}`}>
+		<Link to={`${redirectTo}/${format.id}`}>
 			<Card>
-				<MovieImage
-					image={`${IMAGE_BASE_URL_500}${movie.poster_path}`}
+				<FormatImage
+					image={`${IMAGE_BASE_URL_500}${format.poster_path}`}
 				/>
-				<MovieInfo>
-					<MovieName>{movie.title || movie.name}</MovieName>
-					<MovieRating>{movie.vote_average}</MovieRating>
-				</MovieInfo>
+				<FormatInfo>
+					<FormatName>{format.title || format.name}</FormatName>
+					<FormatRating>{format.vote_average}</FormatRating>
+				</FormatInfo>
 			</Card>
 		</Link>
 	);

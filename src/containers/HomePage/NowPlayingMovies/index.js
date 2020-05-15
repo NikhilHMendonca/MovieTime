@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { Container, Wrapper, SectionTitle } from '../HomePageStyles.js';
-import MovieCard from '../../../components/MovieCard/index.js';
+import { Container } from '../HomePageStyles.js';
+import SectionTitle from "../../../components/SectionTitle";
+import Wrapper from "../../../components/HorizontalScrollWrapper";
+
+import Card from '../../../components/Card';
 import Loader from '../../../components/Loader/index.js';
 
 class NowPlayingMovies extends Component {
@@ -20,7 +23,7 @@ class NowPlayingMovies extends Component {
 			) : (
 				<Wrapper>
 					{moviesList.map(movie => (
-						<MovieCard movie={movie} key={movie.id} />
+						<Card format={movie} redirectTo="/movie" key={movie.id} />
 					))}
 				</Wrapper>
 			)}
