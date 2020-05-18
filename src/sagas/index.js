@@ -4,6 +4,7 @@ import { movieDetailsSaga } from '../containers/MovieDetailsPage/sagas';
 import { tvShowsSaga } from '../containers/TVShowsPage/sagas';
 import { searchResultsSaga } from "../containers/SearchPage/sagas";
 import { tvShowDetailsSaga } from "../containers/TVShowDetailsPage/sagas";
+import { personDetailsSaga } from "../containers/PersonDetailsPage/sagas";
 
 export default function* rootSaga() {
 	yield all([
@@ -11,7 +12,8 @@ export default function* rootSaga() {
 		movieDetailsSaga(),
 		tvShowsSaga(),
 		searchResultsSaga(),
-		tvShowDetailsSaga()
+		tvShowDetailsSaga(),
+		personDetailsSaga()
 	])
 	// code after all-effect
   }
