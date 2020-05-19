@@ -21,14 +21,14 @@ const TopicImage = styled.div`
 `;
 
 const TopicTitle = styled.div`
-	font-size: 20px;
+	font-size: 16px;
 	font-weight: 600;
 	color: #104810;
 	margin: 0 16px;
 `;
 
 const TopicCategory = styled.div`
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: 400;
 	color: #293829;
 	margin: 0 16px;
