@@ -15,7 +15,7 @@ const Casts = ({ casts, title }) => {
 		<Fragment>
 			{casts.length > 0 && (
 				<Fragment>
-					<SectionTitle>{title || "Casts"}</SectionTitle>
+					<SectionTitle>{title || "Cast"}</SectionTitle>
 					<Container>
 						{casts.map(cast => (
 							<Cast cast={cast} key={cast.cast_id || cast.id} />
