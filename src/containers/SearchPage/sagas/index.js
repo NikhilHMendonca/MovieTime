@@ -1,10 +1,12 @@
 import { call, put, takeEvery, select } from "redux-saga/effects";
-import { FETCH_SEARCH_RESULTS } from "../constants";
-import { fetchSearchResultsApi } from "../../../api";
+import { FETCH_SEARCH_RESULTS, FETCH_TRENDING } from "../constants";
+import { fetchSearchResultsApi, fetchTrendingApi } from "../../../api";
 import { API_KEY, LANGUAGE } from "../../../constants";
 import {
 	fetchSearchResultsSuccessful,
-	fetchSearchResultsFailed
+	fetchSearchResultsFailed,
+	fetchTrendingSuccessful,
+	fetchTrendingFailed
 } from "../actions";
 
 
@@ -23,6 +25,19 @@ function* fetchSearchResultsAsync() {
 	}
 }
 
+function* fetchTrendingAsync() {
+    try {
+		const searchParams = {
+            params: { api_key: API_KEY, language: LANGUAGE }
+        };
+        const { data: { results } } = yield call(fetchTrendingApi, searchParams);
+		yield put(fetchTrendingSuccessful(results));
+	} catch (error) {
+		yield put(fetchTrendingFailed());
+	}
+}
+
 export function* searchResultsSaga() {
 	yield takeEvery(FETCH_SEARCH_RESULTS, fetchSearchResultsAsync);
+	yield takeEvery(FETCH_TRENDING, fetchTrendingAsync);
 }

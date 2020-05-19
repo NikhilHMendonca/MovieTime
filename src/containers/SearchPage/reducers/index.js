@@ -1,13 +1,18 @@
 import {
 	FETCH_SEARCH_RESULTS,
 	FETCH_SEARCH_RESULTS_SUCCESSFUL,
-    FETCH_SEARCH_RESULTS_FAILED
+	FETCH_SEARCH_RESULTS_FAILED,
+	FETCH_TRENDING,
+	FETCH_TRENDING_SUCCESSFUL,
+	FETCH_TRENDING_FAILED
 } from "../constants";
 
 const initialState = {
 	isFetchingSearchResults: false,
 	searchResults: [],
 	searchQuery: "",
+	isFetchingTrending: false,
+	trending: []
 };
 
 const searches = (state = initialState, action) => {
@@ -29,6 +34,22 @@ const searches = (state = initialState, action) => {
 				...state,
 				searchQuery: "",
 				isFetchingSearchResults: false
+			};
+		case FETCH_TRENDING:
+			return {
+				...state,
+				isFetchingTrending: true
+			};
+		case FETCH_TRENDING_SUCCESSFUL:
+			return {
+				...state,
+				isFetchingTrending: false,
+				trending: action.payload
+			};
+		case FETCH_TRENDING_FAILED:
+			return {
+				...state,
+				isFetchingTrending: false
 			};
 		default: {
 			return state;
