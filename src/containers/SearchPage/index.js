@@ -2,9 +2,11 @@ import React, { Component, Fragment } from "react";
 import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
 import { connect } from "react-redux";
-import { fetchSearchResults } from "./actions";
+import { fetchSearchResults, fetchTrending } from "./actions";
 import { IMAGE_BASE_URL_200, DEFAULT_USER_IMAGE } from "../../constants";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import Trending from './components/Trending';
+import Divider from "../../components/Divider";
 
 const Container = styled.div`
   // width: calc(100vw - 32px);
@@ -52,12 +54,12 @@ const ResultContainer = styled.div`
 `;
 
 const ResultImage = styled.div`
-	width: 60px;
-	height: 60px;
+	width: 50px;
+	height: 70px;
 	background-image: url(${({ src }) => src});
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: cover;
+	background-size: contain;
 `;
 
 const ResultInfoWrapper = styled.div`
@@ -67,7 +69,9 @@ const ResultInfoWrapper = styled.div`
 const ResultTitle = styled.div`
 	font-size: 18px;
 	font-weight: 500;
+	color: #524c4c;
 `;
+
 const ResultSubtitle = styled.div`
 	font-size: 14px;
 	font-weight: 700;
@@ -84,6 +88,11 @@ class SearchPage extends Component {
 		searchedValue: ""
 	};
 
+	componentDidMount() {
+		const { handleFetchTrending } = this.props;
+		handleFetchTrending();
+	}
+
 	handleOnSearch = event => {
 		const { handleFetchSearchResults } = this.props;
 		if (event.target.value.length > 0) {
@@ -94,7 +103,7 @@ class SearchPage extends Component {
 
 	render() {
 		const { searchedValue } = this.state;
-		const { searchResults } = this.props;
+		const { searchResults, trending } = this.props;
 		return (
 			<Fragment>
 				<Container>
@@ -117,10 +126,15 @@ class SearchPage extends Component {
 								image = `${IMAGE_BASE_URL_200}${result.profile_path}`;
 							else if (result.poster_path)
 								image = `${IMAGE_BASE_URL_200}${result.poster_path}`;
-							// let redirect = '/search-details'
+							let redirectTo = "/movie";
+							if (result.media_type === "tv") {
+								redirectTo = `/tv-show/${result.id}`;
+							} else {
+								redirectTo = `/person/${result.id}`;
+							}
 							return (
-								<RouteLink to={result.media_type === 'movie' ? `/movie/${result.id}` : `/tv-show/${result.id}`} key={result.id}>
-									<ResultContainer >
+								<RouteLink to={redirectTo} key={result.id}>
+									<ResultContainer>
 										<ResultImage src={image} />
 										<ResultInfoWrapper>
 											<ResultTitle>{result.title || result.name}</ResultTitle>
@@ -133,20 +147,24 @@ class SearchPage extends Component {
 							);
 						})}
 				</div>
+				<Divider />
+				{!searchedValue && <Trending trending={trending} />}
 			</Fragment>
 		);
 	}
 }
 
-const mapStateToProps = ({ searches: { searchResults } }) => {
+const mapStateToProps = ({ searches: { searchResults, trending } }) => {
 	return {
-		searchResults
+		searchResults,
+		trending
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		handleFetchSearchResults: payload => dispatch(fetchSearchResults(payload))
+		handleFetchSearchResults: payload => dispatch(fetchSearchResults(payload)),
+		handleFetchTrending: () => dispatch(fetchTrending())
 	};
 };
 

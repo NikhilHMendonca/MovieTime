@@ -18,6 +18,7 @@ const FormatImage = styled.div`
 	background-repeat: no-repeat;
 	background-position: center;
 	border-radius: 6px;
+	background-color: #dedede;
 `;
 
 const FormatInfo = styled.div`
@@ -44,9 +45,7 @@ const MovieCard = ({ format, redirectTo }) => {
 	return (
 		<Link to={`${redirectTo}/${format.id}`}>
 			<Card>
-				<FormatImage
-					image={`${IMAGE_BASE_URL_500}${format.poster_path}`}
-				/>
+				<FormatImage image={`${IMAGE_BASE_URL_500}${format.poster_path}`} />
 				<FormatInfo>
 					<FormatName>{format.title || format.name}</FormatName>
 					<FormatRating>{format.vote_average}</FormatRating>
