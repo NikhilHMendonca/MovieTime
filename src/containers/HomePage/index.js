@@ -54,6 +54,7 @@ class HomePage extends Component {
 					popularMoviesList={popularMoviesList}
 					fetchingPopularMovies={fetchingPopularMovies}
 				/>
+				{/* <div>Icons made by <a href="https://www.flaticon.com/free-icon/camera_860321" title="monkik">monkik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> */}
 			</Container>
 		);
 	}

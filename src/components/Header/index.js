@@ -1,18 +1,32 @@
-import React, { Fragment } from "react";
+import React from "react";
 import styled from "styled-components";
+import VideoCamera from "../../images/video-cameras.png";
+import { Link } from "react-router-dom";
+
+const Wrapper = styled.div`
+	display: flex;
+	align-items: center;
+`;
 
 const Title = styled.div`
-	font-size: 20px;
-	font-weight: 500;
-	color: #141d2b;
-	margin: 16px 0;
+	font-size: 24px;
+	font-weight: 600;
+	color: #46bd97;
+	margin: 16px 4px;
+`;
+
+const RouteLink = styled(Link)`
+	text-decoration: none;
 `;
 
 const Header = () => {
 	return (
-		<Fragment>
-			<Title>MovieTime</Title>
-		</Fragment>
+		<RouteLink to="/">
+			<Wrapper>
+				<img src={VideoCamera} height="40px" alt="MovieTime Logo" />
+				<Title>MovieTime</Title>
+			</Wrapper>
+		</RouteLink>
 	);
 };
 
