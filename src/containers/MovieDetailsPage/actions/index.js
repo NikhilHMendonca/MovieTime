@@ -10,20 +10,26 @@ import {
 	FETCH_MOVIE_REVIEWS_FAILED,
 	FETCH_SIMILAR_MOVIES,
 	FETCH_SIMILAR_MOVIES_SUCCESSFUL,
-	FETCH_SIMILAR_MOVIES_FAILED
+	FETCH_SIMILAR_MOVIES_FAILED,
+	SAVE_WATCHLIST_MOVIE,
+	SAVE_WATCHLIST_MOVIE_SUCCESSFUL,
+	SAVE_WATCHLIST_MOVIE_FAILED,
+	SAVE_FAVOURITE_MOVIE,
+	SAVE_FAVOURITE_MOVIE_SUCCESSFUL,
+	SAVE_FAVOURITE_MOVIE_FAILED
 } from "../constants";
 
-export const fetchMovieDetails = (payload) => {
+export const fetchMovieDetails = payload => {
 	return {
 		type: FETCH_MOVIE_DETAILS,
 		payload
 	};
 };
 
-export const fetchMovieDetailsSuccessful = (payload) => {
+export const fetchMovieDetailsSuccessful = payload => {
 	return {
 		type: FETCH_MOVIE_DETAILS_SUCCESSFUL,
-		payload,
+		payload
 	};
 };
 
@@ -33,17 +39,17 @@ export const fetchMovieDetailsFailed = () => {
 	};
 };
 
-export const fetchMovieCredits = (payload) => {
+export const fetchMovieCredits = payload => {
 	return {
 		type: FETCH_MOVIE_CREDITS,
 		payload
 	};
 };
 
-export const fetchMovieCreditsSuccessful = (payload) => {
+export const fetchMovieCreditsSuccessful = payload => {
 	return {
 		type: FETCH_MOVIE_CREDITS_SUCCESSFUL,
-		payload,
+		payload
 	};
 };
 
@@ -53,17 +59,17 @@ export const fetchMovieCreditsFailed = () => {
 	};
 };
 
-export const fetchMovieReviews = (payload) => {
+export const fetchMovieReviews = payload => {
 	return {
 		type: FETCH_MOVIE_REVIEWS,
 		payload
 	};
 };
 
-export const fetchMovieReviewsSuccessful = (payload) => {
+export const fetchMovieReviewsSuccessful = payload => {
 	return {
 		type: FETCH_MOVIE_REVIEWS_SUCCESSFUL,
-		payload,
+		payload
 	};
 };
 
@@ -73,22 +79,60 @@ export const fetchMovieReviewsFailed = () => {
 	};
 };
 
-export const fetchSimilarMovies = (payload) => {
+export const fetchSimilarMovies = payload => {
 	return {
 		type: FETCH_SIMILAR_MOVIES,
 		payload
 	};
 };
 
-export const fetchSimilarMoviesSuccessful = (payload) => {
+export const fetchSimilarMoviesSuccessful = payload => {
 	return {
 		type: FETCH_SIMILAR_MOVIES_SUCCESSFUL,
-		payload,
+		payload
 	};
 };
 
 export const fetchSimilarMoviesFailed = () => {
 	return {
 		type: FETCH_SIMILAR_MOVIES_FAILED
+	};
+};
+
+export const saveWatchlistMovie = payload => {
+	return {
+		type: SAVE_WATCHLIST_MOVIE,
+		payload
+	};
+};
+
+export const saveWatchlistMovieSuccessful = () => {
+	return {
+		type: SAVE_WATCHLIST_MOVIE_SUCCESSFUL
+	};
+};
+
+export const saveWatchlistMovieFailed = () => {
+	return {
+		type: SAVE_WATCHLIST_MOVIE_FAILED
+	};
+};
+
+export const saveFavouriteMovie = () => {
+	return {
+		type: SAVE_FAVOURITE_MOVIE
+	};
+};
+
+export const saveFavouriteMovieSuccessful = payload => {
+	return {
+		type: SAVE_FAVOURITE_MOVIE_SUCCESSFUL,
+		payload
+	};
+};
+
+export const saveFavouriteMovieFailed = () => {
+	return {
+		type: SAVE_FAVOURITE_MOVIE_FAILED
 	};
 };

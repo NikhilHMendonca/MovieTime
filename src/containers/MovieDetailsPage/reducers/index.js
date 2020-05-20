@@ -10,7 +10,13 @@ import {
 	FETCH_MOVIE_REVIEWS_FAILED,
 	FETCH_SIMILAR_MOVIES,
 	FETCH_SIMILAR_MOVIES_SUCCESSFUL,
-	FETCH_SIMILAR_MOVIES_FAILED
+	FETCH_SIMILAR_MOVIES_FAILED,
+	SAVE_WATCHLIST_MOVIE,
+	SAVE_WATCHLIST_MOVIE_SUCCESSFUL,
+	SAVE_WATCHLIST_MOVIE_FAILED,
+	SAVE_FAVOURITE_MOVIE,
+	SAVE_FAVOURITE_MOVIE_SUCCESSFUL,
+	SAVE_FAVOURITE_MOVIE_FAILED
 } from "../constants";
 
 const initialState = {
@@ -22,7 +28,9 @@ const initialState = {
 	isFetchingMovieReviews: false,
 	reviews: [],
 	isFetchingSimilarMovies: false,
-	similarMovies: []
+	similarMovies: [],
+	isSavingFavouriteMovie: false,
+	isSavingWatchlistMovie: false,
 };
 
 const movieDetails = (state = initialState, action) => {
@@ -91,6 +99,36 @@ const movieDetails = (state = initialState, action) => {
 			return {
 				...state,
 				isFetchingSimilarMovies: false
+			};
+		case SAVE_WATCHLIST_MOVIE:
+			return {
+				...state,
+				isSavingWatchlistMovie: true
+			};
+		case SAVE_WATCHLIST_MOVIE_SUCCESSFUL:
+			return {
+				...state,
+				isSavingWatchlistMovie: false,
+			};
+		case SAVE_WATCHLIST_MOVIE_FAILED:
+			return {
+				...state,
+				isSavingWatchlistMovie: false
+			};
+		case SAVE_FAVOURITE_MOVIE:
+			return {
+				...state,
+				isSavingFavouriteMovie: true
+			};
+		case SAVE_FAVOURITE_MOVIE_SUCCESSFUL:
+			return {
+				...state,
+				isSavingFavouriteMovie: false,
+			};
+		case SAVE_FAVOURITE_MOVIE_FAILED:
+			return {
+				...state,
+				isSavingFavouriteMovie: false
 			};
 		default:
 			return state;

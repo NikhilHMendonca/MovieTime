@@ -26,6 +26,20 @@ export const fetchMovieReviewsApi = (movieId, params) =>
 export const fetchSimilarMoviesApi = (movieId, params) =>
 	axios.get(`https://api.themoviedb.org/3/movie/${movieId}/similar`, params);
 
+export const saveWatchlistMovieApi = (accountId, body, params) =>
+	axios.post(
+		`https://api.themoviedb.org/3/account/${accountId}/watchlist`,
+		body,
+		params
+	);
+
+export const saveFavouriteMovieApi = (accountId, body, params) =>
+	axios.post(
+		`https://api.themoviedb.org/3/account/${accountId}/favorite`,
+		body,
+		params
+	);
+
 // TV Shows API's
 export const fetchPopularTVShowsApi = params =>
 	axios.get("https://api.themoviedb.org/3/tv/popular", params);
@@ -60,5 +74,31 @@ export const fetchPersonDetailsApi = (personId, params) =>
 export const fetchPersonMoviesApi = (personId, params) =>
 	axios.get(
 		`https://api.themoviedb.org/3/person/${personId}/movie_credits`,
+		params
+	);
+
+// Profile API's
+export const fetchTokenApi = params =>
+	axios.get(`https://api.themoviedb.org/3/authentication/token/new`, params);
+
+export const createSessionApi = (params, body) =>
+	axios.post(
+		`https://api.themoviedb.org/3/authentication/session/new`,
+		params,
+		body
+	);
+
+export const fetchUserDetailsApi = params =>
+	axios.get(`https://api.themoviedb.org/3/account`, params);
+
+export const fetchWatchlistMoviesApi = (accountId, params) =>
+	axios.get(
+		`https://api.themoviedb.org/3/account/${accountId}/watchlist/movies`,
+		params
+	);
+
+export const fetchFavouriteMoviesApi = (accountId, params) =>
+	axios.get(
+		`https://api.themoviedb.org/3/account/${accountId}/favorite/movies`,
 		params
 	);

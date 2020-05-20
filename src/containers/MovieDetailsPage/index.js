@@ -5,7 +5,9 @@ import {
 	fetchMovieDetails,
 	fetchMovieCredits,
 	fetchMovieReviews,
-	fetchSimilarMovies
+	fetchSimilarMovies,
+	saveWatchlistMovie,
+	saveFavouriteMovie
 } from "./actions";
 import Loader from "../../components/Loader";
 import MovieInfo from "./components/MovieInfo";
@@ -79,13 +81,19 @@ class MovieDetailsPage extends Component {
 			casts,
 			reviews,
 			similarMovies,
-			isFetchingMovieDetails
+			isFetchingMovieDetails,
+			handleSaveFavouriteMovie,
+			handleSaveWatchlistMovie,
 		} = this.props;
 		return (
 			<Container>
 				{!isFetchingMovieDetails && Object.keys(movie).length > 0 ? (
 					<Fragment>
-						<MovieInfo movie={movie} />
+						<MovieInfo
+							movie={movie}
+							handleSaveWatchlistMovie={handleSaveWatchlistMovie}
+							handleSaveFavouriteMovie={handleSaveFavouriteMovie}
+						/>
 						<Casts casts={casts} />
 						<Reviews reviews={reviews} />
 						<SimilarContent
@@ -131,7 +139,9 @@ const mapDispatchToProps = dispatch => {
 		handleFetchMovieDetails: payload => dispatch(fetchMovieDetails(payload)),
 		handleFetchMovieCredits: payload => dispatch(fetchMovieCredits(payload)),
 		handleFetchMovieReviews: payload => dispatch(fetchMovieReviews(payload)),
-		handleFetchSimilarMovies: payload => dispatch(fetchSimilarMovies(payload))
+		handleFetchSimilarMovies: payload => dispatch(fetchSimilarMovies(payload)),
+		handleSaveWatchlistMovie: (payload) => dispatch(saveWatchlistMovie(payload)),
+		handleSaveFavouriteMovie: (payload) => dispatch(saveFavouriteMovie(payload))
 	};
 };
 

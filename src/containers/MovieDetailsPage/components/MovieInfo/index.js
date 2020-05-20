@@ -4,6 +4,12 @@ import SectionTitle from "../../../../components/SectionTitle";
 import dayjs from "dayjs";
 import { IMAGE_BASE_URL_500 } from "../../../../constants";
 import Divider from "../../../../components/Divider";
+import {
+	// MdFavorite,
+	// MdLibraryAdd,
+	MdFavoriteBorder,
+	MdBookmarkBorder
+} from "react-icons/md";
 
 const MovieName = styled.div`
 	font-size: 20px;
@@ -57,10 +63,34 @@ const MovieImage = styled.div`
 	border-radius: 10px;
 `;
 
-const MovieInfo = ({ movie }) => {
+const IconWrapper = styled.div`
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	border: 1px solid #208066;
+	position: absolute;
+	right: ${({ position }) => `${position}px`};
+	top: -185px;
+	padding: 8px;
+`;
+
+const MovieInfo = ({
+	movie,
+	handleSaveFavouriteMovie,
+	handleSaveWatchlistMovie
+}) => {
 	return (
 		<Fragment>
 			<MovieImage url={`${IMAGE_BASE_URL_500}${movie.poster_path}`} />
+			<IconWrapper
+				position={50}
+				onClick={handleSaveWatchlistMovie}
+			>
+				<MdBookmarkBorder color="#19ca9a" size="24px" />
+			</IconWrapper>
+			<IconWrapper position={0} onClick={handleSaveFavouriteMovie}>
+				<MdFavoriteBorder color="#19ca9a" size="24px" />
+			</IconWrapper>
 			<MovieName>{movie.title}</MovieName>
 			<MovieGenre>
 				{movie.genres.map(genre => genre.name).join(" • ")}
