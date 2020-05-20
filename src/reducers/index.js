@@ -5,6 +5,7 @@ import tvShows from '../containers/TVShowsPage/reducers';
 import searches from '../containers/SearchPage/reducers';
 import tvShowDetails from '../containers/TVShowDetailsPage/reducers';
 import personDetails from '../containers/PersonDetailsPage/reducers';
+import profileDetails from '../containers/ProfilePage/reducers';
 
 const rootReducers = combineReducers({
     homePage,
@@ -13,6 +14,7 @@ const rootReducers = combineReducers({
     searches,
     tvShowDetails,
     personDetails,
+    profileDetails,
 })
 
 export default rootReducers;
