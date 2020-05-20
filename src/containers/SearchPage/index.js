@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { fetchSearchResults, fetchTrending } from "./actions";
 import { IMAGE_BASE_URL_200, DEFAULT_USER_IMAGE } from "../../constants";
 import { Link } from "react-router-dom";
-import Trending from './components/Trending';
+import Trending from "./components/Trending";
 import Divider from "../../components/Divider";
 
 const Container = styled.div`
@@ -126,10 +126,10 @@ class SearchPage extends Component {
 								image = `${IMAGE_BASE_URL_200}${result.profile_path}`;
 							else if (result.poster_path)
 								image = `${IMAGE_BASE_URL_200}${result.poster_path}`;
-							let redirectTo = "/movie";
+							let redirectTo = `/movie/${result.id}`;
 							if (result.media_type === "tv") {
 								redirectTo = `/tv-show/${result.id}`;
-							} else {
+							} else if (result.media_type === "person") {
 								redirectTo = `/person/${result.id}`;
 							}
 							return (
