@@ -13,7 +13,10 @@ import {
 	FETCH_WATCHLIST_MOVIES_FAILED,
 	FETCH_FAVOURITE_MOVIES,
 	FETCH_FAVOURITE_MOVIES_SUCCESSFUL,
-	FETCH_FAVOURITE_MOVIES_FAILED
+	FETCH_FAVOURITE_MOVIES_FAILED,
+	DELETE_SESSION,
+	DELETE_SESSION_FAILED,
+	DELETE_SESSION_SUCCESSFUL
 } from "../constants";
 
 export const fetchToken = () => {
@@ -109,5 +112,23 @@ export const fetchFavouriteMoviesSuccessful = payload => {
 export const fetchFavouriteMoviesFailed = () => {
 	return {
 		type: FETCH_FAVOURITE_MOVIES_FAILED
+	};
+};
+
+export const deleteSession = () => {
+	return {
+		type: DELETE_SESSION
+	};
+};
+
+export const deleteSessionSuccessful = () => {
+	return {
+		type: DELETE_SESSION_SUCCESSFUL
+	};
+};
+
+export const deleteSessionFailed = () => {
+	return {
+		type: DELETE_SESSION_FAILED
 	};
 };

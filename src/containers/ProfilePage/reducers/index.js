@@ -9,7 +9,10 @@ import {
 	FETCH_FAVOURITE_MOVIES_FAILED,
 	FETCH_WATCHLIST_MOVIES,
 	FETCH_WATCHLIST_MOVIES_SUCCESSFUL,
-	FETCH_WATCHLIST_MOVIES_FAILED
+	FETCH_WATCHLIST_MOVIES_FAILED,
+	DELETE_SESSION,
+	DELETE_SESSION_SUCCESSFUL,
+	DELETE_SESSION_FAILED
 } from "../constants";
 
 const initialState = {
@@ -93,6 +96,26 @@ const profileDetails = (state = initialState, action) => {
 			return {
 				...state,
 				isFetchingFavouriteMovies: false
+			};
+		}
+		case DELETE_SESSION: {
+			return {
+				...state
+			};
+		}
+		case DELETE_SESSION_SUCCESSFUL: {
+			return {
+				...state,
+				token: null,
+				sessionId: null,
+				watchlistMovies: [],
+				favouriteMovies: [],
+				user: {}
+			};
+		}
+		case DELETE_SESSION_FAILED: {
+			return {
+				...state
 			};
 		}
 		default:
