@@ -3,7 +3,7 @@ import { DEFAULT_USER_IMAGE, GRAVATAR_BASE_URL } from "../../constants";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { fetchToken, createSession, fetchUserDetails } from "./actions";
-import MovieCard from "../../components/Card";
+import Card from "./components/Card";
 import HorizontalScrollWrapper from "../../components/HorizontalScrollWrapper";
 import SectionTitle from "../../components/SectionTitle";
 import Divider from "../../components/Divider";
@@ -36,8 +36,9 @@ const LoginSignupButton = styled.button`
 	padding: 12px;
 	border-radius: 4px;
 	background: #edfffa;
-	margin: 16px 0;
+	margin: 16px auto;
 	min-width: 200px;
+	display: block;
 `;
 
 const UserName = styled.div`
@@ -91,7 +92,7 @@ class Profile extends Component {
 							<HorizontalScrollWrapper>
 								{watchlistMovies.length > 0 &&
 									watchlistMovies.map(movie => (
-										<MovieCard
+										<Card
 											redirectTo="/movie"
 											format={movie}
 											key={movie.id}
@@ -104,7 +105,7 @@ class Profile extends Component {
 							<HorizontalScrollWrapper>
 								{favouriteMovies.length > 0 &&
 									favouriteMovies.map(movie => (
-										<MovieCard
+										<Card
 											redirectTo="/movie"
 											format={movie}
 											key={movie.id}
@@ -116,7 +117,7 @@ class Profile extends Component {
 				) : (
 					<Container>
 						<UserImage src={DEFAULT_USER_IMAGE} />
-						<div>Guest</div>
+						<UserName>Guest</UserName>
 						<LoginSignupButton onClick={this.handleOnLoginSignup}>
 							Login/Signup
 						</LoginSignupButton>
