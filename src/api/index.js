@@ -88,6 +88,13 @@ export const createSessionApi = (params, body) =>
 		body
 	);
 
+export const deleteSessionApi = (params, body) =>
+	axios.delete(
+		`https://api.themoviedb.org/3/authentication/session`,
+		params,
+		body
+	);
+
 export const fetchUserDetailsApi = params =>
 	axios.get(`https://api.themoviedb.org/3/account`, params);
 

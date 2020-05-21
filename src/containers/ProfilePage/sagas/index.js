@@ -4,14 +4,16 @@ import {
 	CREATE_SESSION,
 	FETCH_USER_DETAILS,
 	FETCH_FAVOURITE_MOVIES,
-	FETCH_WATCHLIST_MOVIES
+	FETCH_WATCHLIST_MOVIES,
+	DELETE_SESSION
 } from "../constants";
 import {
 	fetchTokenApi,
 	createSessionApi,
 	fetchUserDetailsApi,
 	fetchFavouriteMoviesApi,
-	fetchWatchlistMoviesApi
+	fetchWatchlistMoviesApi,
+	deleteSessionApi
 } from "../../../api";
 import { API_KEY } from "../../../constants";
 import {
@@ -27,7 +29,9 @@ import {
 	fetchWatchlistMoviesSuccessful,
 	fetchWatchlistMoviesFailed,
 	fetchFavouriteMovies,
-	fetchWatchlistMovies
+	fetchWatchlistMovies,
+	deleteSessionSuccessful,
+	deleteSessionFailed
 } from "../actions";
 import qs from "qs";
 
@@ -113,10 +117,24 @@ function* fetchWatchlistMoviesAsync() {
 	}
 }
 
+function* deleteSessionAsync() {
+	try {
+		const sessionId = localStorage.getItem("sessionId");
+		yield call(deleteSessionApi, {
+			params: { api_key: API_KEY, session_id: sessionId }
+		});
+		yield put(deleteSessionSuccessful());
+		localStorage.removeItem('sessionId');
+	} catch (error) {
+		yield put(deleteSessionFailed());
+	}
+}
+
 export function* profileSaga() {
 	yield takeEvery(FETCH_TOKEN, fetchTokenAsync);
 	yield takeEvery(CREATE_SESSION, createSessionAsync);
 	yield takeEvery(FETCH_USER_DETAILS, fetchUserDetailsAsync);
 	yield takeEvery(FETCH_FAVOURITE_MOVIES, fetchFavouriteMoviesAsync);
 	yield takeEvery(FETCH_WATCHLIST_MOVIES, fetchWatchlistMoviesAsync);
+	yield takeEvery(DELETE_SESSION, deleteSessionAsync);
 }

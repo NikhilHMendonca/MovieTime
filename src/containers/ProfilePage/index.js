@@ -1,15 +1,19 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { DEFAULT_USER_IMAGE, GRAVATAR_BASE_URL } from "../../constants";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { fetchToken, createSession, fetchUserDetails } from "./actions";
-import MovieCard from "../../components/Card";
+import {
+	fetchToken,
+	createSession,
+	fetchUserDetails,
+	deleteSession
+} from "./actions";
+import Card from "./components/Card";
 import HorizontalScrollWrapper from "../../components/HorizontalScrollWrapper";
 import SectionTitle from "../../components/SectionTitle";
 import Divider from "../../components/Divider";
 
 const Container = styled.div`
-	// text-align: center;
 	padding: 0 0 72px 0;
 `;
 
@@ -36,8 +40,9 @@ const LoginSignupButton = styled.button`
 	padding: 12px;
 	border-radius: 4px;
 	background: #edfffa;
-	margin: 16px 0;
+	margin: 16px auto;
 	min-width: 200px;
+	display: block;
 `;
 
 const UserName = styled.div`
@@ -56,9 +61,9 @@ class Profile extends Component {
 		const { handleCreateSession, handleFetchUserDetails } = this.props;
 		const sessionId = localStorage.getItem("sessionId");
 		const requestToken = this.getUrlParameter("request_token");
-		if (!sessionId) {
+		if (!sessionId && requestToken) {
 			handleCreateSession(requestToken);
-		} else {
+		} else if (sessionId) {
 			handleFetchUserDetails();
 		}
 	}
@@ -78,24 +83,28 @@ class Profile extends Component {
 	};
 
 	render() {
-		const { user, watchlistMovies, favouriteMovies } = this.props;
+		const {
+			user,
+			watchlistMovies,
+			favouriteMovies,
+			handleDeleteSession
+		} = this.props;
 		return (
 			<Container>
 				{Object.keys(user).length > 0 ? (
 					<Container>
 						<UserImage src={user.avatar.gravatar.hash} />
 						<UserName>{user.username}</UserName>
+						<LoginSignupButton onClick={handleDeleteSession}>
+							Logout
+						</LoginSignupButton>
 						<Divider />
 						<Wrapper>
 							<SectionTitle>Watchlist</SectionTitle>
 							<HorizontalScrollWrapper>
 								{watchlistMovies.length > 0 &&
 									watchlistMovies.map(movie => (
-										<MovieCard
-											redirectTo="/movie"
-											format={movie}
-											key={movie.id}
-										/>
+										<Card redirectTo="/movie" format={movie} key={movie.id} />
 									))}
 							</HorizontalScrollWrapper>
 						</Wrapper>
@@ -104,11 +113,7 @@ class Profile extends Component {
 							<HorizontalScrollWrapper>
 								{favouriteMovies.length > 0 &&
 									favouriteMovies.map(movie => (
-										<MovieCard
-											redirectTo="/movie"
-											format={movie}
-											key={movie.id}
-										/>
+										<Card redirectTo="/movie" format={movie} key={movie.id} />
 									))}
 							</HorizontalScrollWrapper>
 						</Wrapper>
@@ -116,7 +121,7 @@ class Profile extends Component {
 				) : (
 					<Container>
 						<UserImage src={DEFAULT_USER_IMAGE} />
-						<div>Guest</div>
+						<UserName>Guest</UserName>
 						<LoginSignupButton onClick={this.handleOnLoginSignup}>
 							Login/Signup
 						</LoginSignupButton>
@@ -142,7 +147,8 @@ const mapDispatchToProps = dispatch => {
 	return {
 		handleFetchToken: () => dispatch(fetchToken()),
 		handleCreateSession: payload => dispatch(createSession(payload)),
-		handleFetchUserDetails: payload => dispatch(fetchUserDetails(payload))
+		handleFetchUserDetails: payload => dispatch(fetchUserDetails(payload)),
+		handleDeleteSession: () => dispatch(deleteSession())
 	};
 };
 
