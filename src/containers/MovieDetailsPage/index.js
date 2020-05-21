@@ -7,7 +7,8 @@ import {
 	fetchMovieReviews,
 	fetchSimilarMovies,
 	saveWatchlistMovie,
-	saveFavouriteMovie
+	saveFavouriteMovie,
+	fetchIsMovieSaved
 } from "./actions";
 import Loader from "../../components/Loader";
 import MovieInfo from "./components/MovieInfo";
@@ -23,6 +24,8 @@ const Container = styled.div`
 	margin: 190px 0 72px 0;
 `;
 
+const sessionId = localStorage.getItem("sessionId");
+
 class MovieDetailsPage extends Component {
 	componentDidMount() {
 		const {
@@ -30,6 +33,7 @@ class MovieDetailsPage extends Component {
 			handleFetchMovieCredits,
 			handleFetchMovieReviews,
 			handleFetchSimilarMovies,
+			handleFetchIsMovieSaved,
 			match: {
 				params: { movieId }
 			}
@@ -39,16 +43,7 @@ class MovieDetailsPage extends Component {
 		handleFetchMovieCredits();
 		handleFetchMovieReviews();
 		handleFetchSimilarMovies();
-		// axios
-		// 	.get(`https://api.themoviedb.org/3/movie/${movieId}/images`, {
-		// 		params: { api_key: "8ccc0bdb740b43b01bbfa64bd20639c0", language: "en" }
-		// 	})
-		// 	.then(response => {
-		// 		this.setState({ images: response.data });
-		// 	})
-		// 	.catch(error => {
-		// 		console.log({ error });
-		// 	});
+		if (sessionId) handleFetchIsMovieSaved();
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -57,6 +52,7 @@ class MovieDetailsPage extends Component {
 			handleFetchMovieCredits,
 			handleFetchMovieReviews,
 			handleFetchSimilarMovies,
+			handleFetchIsMovieSaved,
 			match: {
 				params: { movieId }
 			}
@@ -72,6 +68,7 @@ class MovieDetailsPage extends Component {
 			handleFetchMovieCredits();
 			handleFetchMovieReviews();
 			handleFetchSimilarMovies();
+			if (sessionId) handleFetchIsMovieSaved();
 		}
 	}
 
@@ -84,6 +81,7 @@ class MovieDetailsPage extends Component {
 			isFetchingMovieDetails,
 			handleSaveFavouriteMovie,
 			handleSaveWatchlistMovie,
+			savedMovie
 		} = this.props;
 		return (
 			<Container>
@@ -93,6 +91,7 @@ class MovieDetailsPage extends Component {
 							movie={movie}
 							handleSaveWatchlistMovie={handleSaveWatchlistMovie}
 							handleSaveFavouriteMovie={handleSaveFavouriteMovie}
+							savedMovie={savedMovie}
 						/>
 						<Casts casts={casts} />
 						<Reviews reviews={reviews} />
@@ -119,7 +118,8 @@ const mapStateToProps = ({
 		isFetchingMovieReviews,
 		reviews,
 		isFetchingSimilarMovies,
-		similarMovies
+		similarMovies,
+		savedMovie
 	}
 }) => {
 	return {
@@ -130,7 +130,8 @@ const mapStateToProps = ({
 		isFetchingMovieReviews,
 		reviews,
 		isFetchingSimilarMovies,
-		similarMovies
+		similarMovies,
+		savedMovie
 	};
 };
 
@@ -140,8 +141,9 @@ const mapDispatchToProps = dispatch => {
 		handleFetchMovieCredits: payload => dispatch(fetchMovieCredits(payload)),
 		handleFetchMovieReviews: payload => dispatch(fetchMovieReviews(payload)),
 		handleFetchSimilarMovies: payload => dispatch(fetchSimilarMovies(payload)),
-		handleSaveWatchlistMovie: (payload) => dispatch(saveWatchlistMovie(payload)),
-		handleSaveFavouriteMovie: (payload) => dispatch(saveFavouriteMovie(payload))
+		handleSaveWatchlistMovie: payload => dispatch(saveWatchlistMovie(payload)),
+		handleSaveFavouriteMovie: payload => dispatch(saveFavouriteMovie(payload)),
+		handleFetchIsMovieSaved: () => dispatch(fetchIsMovieSaved())
 	};
 };
 

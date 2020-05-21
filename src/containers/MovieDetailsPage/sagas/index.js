@@ -5,7 +5,8 @@ import {
 	FETCH_MOVIE_CREDITS,
 	FETCH_SIMILAR_MOVIES,
 	SAVE_WATCHLIST_MOVIE,
-	SAVE_FAVOURITE_MOVIE
+	SAVE_FAVOURITE_MOVIE,
+	FETCH_IS_MOVIE_SAVED
 } from "../constants";
 import { API_KEY, LANGUAGE } from "../../../constants";
 import {
@@ -14,7 +15,8 @@ import {
 	fetchMovieReviewsApi,
 	fetchSimilarMoviesApi,
 	saveWatchlistMovieApi,
-	saveFavouriteMovieApi
+	saveFavouriteMovieApi,
+	fetchIsMovieSavedApi
 } from "../../../api";
 import {
 	fetchMovieDetailsSuccessful,
@@ -28,7 +30,10 @@ import {
 	saveWatchlistMovieSuccessful,
 	saveWatchlistMovieFailed,
 	saveFavouriteMovieSuccessful,
-	saveFavouriteMovieFailed
+	saveFavouriteMovieFailed,
+	fetchIsMovieSavedFailed,
+	fetchIsMovieSaved,
+	fetchIsMovieSavedSuccessful
 } from "../actions";
 
 const params = {
@@ -39,6 +44,8 @@ const id = ({ movieDetails }) => movieDetails.movieId;
 const aId = ({ profileDetails }) => profileDetails.user.id;
 // const sId = ({ profileDetails }) => profileDetails.sessionId;
 const movie = ({ movieDetails }) => movieDetails.movie;
+const mId = ({ movieDetails }) => movieDetails.movieId;
+const sMovie = ({ movieDetails }) => movieDetails.savedMovie;
 
 function* fetchMovieDetailsAsync() {
 	try {
@@ -91,13 +98,19 @@ function* savingWatchlistMovieAsync() {
 		const accountId = yield select(aId);
 		const sessionId = localStorage.getItem("sessionId");
 		const movieDetails = yield select(movie);
+		const savedMovie = yield select(sMovie);
 		yield call(
 			saveWatchlistMovieApi,
 			accountId,
-			{ media_type: "movie", media_id: movieDetails.id, watchlist: true },
+			{
+				media_type: "movie",
+				media_id: movieDetails.id,
+				watchlist: !savedMovie.watchlist
+			},
 			{ params: { api_key: API_KEY, session_id: sessionId } }
 		);
 		yield put(saveWatchlistMovieSuccessful());
+		yield put(fetchIsMovieSaved(movieDetails.id));
 	} catch (error) {
 		yield put(saveWatchlistMovieFailed());
 	}
@@ -107,15 +120,38 @@ function* savingFavouriteMovieAsync() {
 		const accountId = yield select(aId);
 		const sessionId = localStorage.getItem("sessionId");
 		const movieDetails = yield select(movie);
+		const savedMovie = yield select(sMovie);
 		yield call(
 			saveFavouriteMovieApi,
 			accountId,
-			{ media_type: "movie", media_id: movieDetails.id, favorite: true },
+			{
+				media_type: "movie",
+				media_id: movieDetails.id,
+				favorite: !savedMovie.favorite
+			},
 			{ params: { api_key: API_KEY, session_id: sessionId } }
 		);
 		yield put(saveFavouriteMovieSuccessful());
+		yield put(fetchIsMovieSaved());
 	} catch (error) {
 		yield put(saveFavouriteMovieFailed());
+	}
+}
+
+function* fetchIsMovieSavedAsync() {
+	try {
+		const sessionId = localStorage.getItem("sessionId");
+		const movieId = yield select(mId);
+		const params = {
+			params: {
+				api_key: API_KEY,
+				session_id: sessionId
+			}
+		};
+		const { data } = yield call(fetchIsMovieSavedApi, movieId, params);
+		yield put(fetchIsMovieSavedSuccessful(data));
+	} catch (error) {
+		yield put(fetchIsMovieSavedFailed());
 	}
 }
 
@@ -126,4 +162,5 @@ export function* movieDetailsSaga() {
 	yield takeEvery(FETCH_SIMILAR_MOVIES, fetchSimilarMoviesAsync);
 	yield takeEvery(SAVE_WATCHLIST_MOVIE, savingWatchlistMovieAsync);
 	yield takeEvery(SAVE_FAVOURITE_MOVIE, savingFavouriteMovieAsync);
+	yield takeEvery(FETCH_IS_MOVIE_SAVED, fetchIsMovieSavedAsync);
 }

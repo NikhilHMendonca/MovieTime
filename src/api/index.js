@@ -40,6 +40,12 @@ export const saveFavouriteMovieApi = (accountId, body, params) =>
 		params
 	);
 
+export const fetchIsMovieSavedApi = (movieId, params) =>
+	axios.get(
+		`https://api.themoviedb.org/3/movie/${movieId}/account_states`,
+		params
+	);
+
 // TV Shows API's
 export const fetchPopularTVShowsApi = params =>
 	axios.get("https://api.themoviedb.org/3/tv/popular", params);
