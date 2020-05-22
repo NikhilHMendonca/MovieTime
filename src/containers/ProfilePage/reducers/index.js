@@ -12,7 +12,13 @@ import {
 	FETCH_WATCHLIST_MOVIES_FAILED,
 	DELETE_SESSION,
 	DELETE_SESSION_SUCCESSFUL,
-	DELETE_SESSION_FAILED
+	DELETE_SESSION_FAILED,
+	FETCH_WATCHLIST_TV_SHOWS,
+	FETCH_WATCHLIST_TV_SHOWS_SUCCESSFUL,
+	FETCH_WATCHLIST_TV_SHOWS_FAILED,
+	FETCH_FAVOURITE_TV_SHOWS,
+	FETCH_FAVOURITE_TV_SHOWS_SUCCESSFUL,
+	FETCH_FAVOURITE_TV_SHOWS_FAILED
 } from "../constants";
 
 const initialState = {
@@ -24,7 +30,11 @@ const initialState = {
 	favouriteMovies: [],
 	isFetchingFavouriteMovies: false,
 	watchlistMovies: [],
-	isFetchingWatchlistMovies: false
+	isFetchingWatchlistMovies: false,
+	isFetchingWatchlistTVShows: false,
+	isFetchingFavouriteTVShows: false,
+	watchlistTVShows: [],
+	favouriteTVShows: []
 };
 
 const profileDetails = (state = initialState, action) => {
@@ -96,6 +106,44 @@ const profileDetails = (state = initialState, action) => {
 			return {
 				...state,
 				isFetchingFavouriteMovies: false
+			};
+		}
+		case FETCH_WATCHLIST_TV_SHOWS: {
+			return {
+				...state,
+				isFetchingWatchlistTVShows: true
+			};
+		}
+		case FETCH_WATCHLIST_TV_SHOWS_SUCCESSFUL: {
+			return {
+				...state,
+				isFetchingWatchlistTVShows: false,
+				watchlistTVShows: action.payload
+			};
+		}
+		case FETCH_WATCHLIST_TV_SHOWS_FAILED: {
+			return {
+				...state,
+				isFetchingWatchlistTVShows: false
+			};
+		}
+		case FETCH_FAVOURITE_TV_SHOWS: {
+			return {
+				...state,
+				isFetchingFavouriteTVShows: true
+			};
+		}
+		case FETCH_FAVOURITE_TV_SHOWS_SUCCESSFUL: {
+			return {
+				...state,
+				isFetchingFavouriteTVShows: false,
+				favouriteTVShows: action.payload
+			};
+		}
+		case FETCH_FAVOURITE_TV_SHOWS_FAILED: {
+			return {
+				...state,
+				isFetchingFavouriteTVShows: false
 			};
 		}
 		case DELETE_SESSION: {
