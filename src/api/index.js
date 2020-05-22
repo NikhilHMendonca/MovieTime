@@ -66,6 +66,26 @@ export const ffetchTVShowReviewsApi = (movieId, params) =>
 export const fetchSimilarTVShowsApi = (movieId, params) =>
 	axios.get(`https://api.themoviedb.org/3/tv/${movieId}/similar`, params);
 
+export const saveWatchlistTVShowApi = (accountId, body, params) =>
+	axios.post(
+		`https://api.themoviedb.org/3/account/${accountId}/watchlist`,
+		body,
+		params
+	);
+
+export const saveFavouriteTVShowApi = (accountId, body, params) =>
+	axios.post(
+		`https://api.themoviedb.org/3/account/${accountId}/favorite`,
+		body,
+		params
+	);
+
+export const fetchIsTVShowSavedApi = (showId, params) =>
+	axios.get(
+		`https://api.themoviedb.org/3/tv/${showId}/account_states`,
+		params
+	);
+
 // Search API's
 export const fetchSearchResultsApi = params =>
 	axios.get("https://api.themoviedb.org/3/search/multi", params);

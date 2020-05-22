@@ -10,12 +10,21 @@ import {
 	FETCH_TV_SHOW_REVIEWS_FAILED,
 	FETCH_SIMILAR_TV_SHOWS,
 	FETCH_SIMILAR_TV_SHOWS_SUCCESSFUL,
-	FETCH_SIMILAR_TV_SHOWS_FAILED
+	FETCH_SIMILAR_TV_SHOWS_FAILED,
+	SAVE_FAVOURITE_TV_SHOW,
+	SAVE_FAVOURITE_TV_SHOW_SUCCESSFUL,
+	SAVE_FAVOURITE_TV_SHOW_FAILED,
+	SAVE_WATCHLIST_TV_SHOW,
+	SAVE_WATCHLIST_TV_SHOW_FAILED,
+	SAVE_WATCHLIST_TV_SHOW_SUCCESSFUL,
+	FETCH_IS_TV_SHOW_SAVED,
+	FETCH_IS_TV_SHOW_SAVED_SUCCESSFUL,
+	FETCH_IS_TV_SHOW_SAVED_FAILED
 } from "../constants";
 
 const initialState = {
 	isFetchingTVShowDetails: false,
-    tvShow: {},
+	tvShow: {},
 	tvShowId: null,
 	isFetchingTVShowCredits: false,
 	tvShowCredits: [],
@@ -23,6 +32,10 @@ const initialState = {
 	tvShowReviews: [],
 	isFetchingSimilarTVShows: false,
 	similarTvShows: [],
+	savedTVShow: {},
+	isSavingFavouriteTVShow: false,
+	isSavingWatchlistTVShow: false,
+	isFetchingTVShowSaved: false
 };
 
 const tvShowDetails = (state = initialState, action) => {
@@ -47,7 +60,7 @@ const tvShowDetails = (state = initialState, action) => {
 		case FETCH_TV_SHOW_CREDITS:
 			return {
 				...state,
-				isFetchingTVShowCredits: true,
+				isFetchingTVShowCredits: true
 			};
 		case FETCH_TV_SHOW_CREDITS_SUCCESSFUL:
 			return {
@@ -63,7 +76,7 @@ const tvShowDetails = (state = initialState, action) => {
 		case FETCH_TV_SHOW_REVIEWS:
 			return {
 				...state,
-				isFetchingTVShowCredits: true,
+				isFetchingTVShowCredits: true
 			};
 		case FETCH_TV_SHOW_REVIEWS_SUCCESSFUL:
 			return {
@@ -79,7 +92,7 @@ const tvShowDetails = (state = initialState, action) => {
 		case FETCH_SIMILAR_TV_SHOWS:
 			return {
 				...state,
-				isFetchingTVShowCredits: true,
+				isFetchingTVShowCredits: true
 			};
 		case FETCH_SIMILAR_TV_SHOWS_SUCCESSFUL:
 			return {
@@ -91,6 +104,52 @@ const tvShowDetails = (state = initialState, action) => {
 			return {
 				...state,
 				isFetchingTVShowCredits: false
+			};
+		case SAVE_FAVOURITE_TV_SHOW:
+			return {
+				...state,
+				isSavingFavouriteTVShow: true
+			};
+		case SAVE_FAVOURITE_TV_SHOW_SUCCESSFUL:
+			return {
+				...state,
+				isSavingFavouriteTVShow: false
+			};
+		case SAVE_FAVOURITE_TV_SHOW_FAILED:
+			return {
+				...state,
+				isSavingFavouriteTVShow: false
+			};
+		case SAVE_WATCHLIST_TV_SHOW:
+			return {
+				...state,
+				isSavingWatchlistTVShow: true
+			};
+		case SAVE_WATCHLIST_TV_SHOW_SUCCESSFUL:
+			return {
+				...state,
+				isSavingWatchlistTVShow: false
+			};
+		case SAVE_WATCHLIST_TV_SHOW_FAILED:
+			return {
+				...state,
+				isSavingWatchlistTVShow: false
+			};
+		case FETCH_IS_TV_SHOW_SAVED:
+			return {
+				...state,
+				isFetchingTVShowSaved: true
+			};
+		case FETCH_IS_TV_SHOW_SAVED_SUCCESSFUL:
+			return {
+				...state,
+				isFetchingTVShowSaved: false,
+				savedTVShow: action.payload
+			};
+		case FETCH_IS_TV_SHOW_SAVED_FAILED:
+			return {
+				...state,
+				isFetchingTVShowSaved: false
 			};
 		default: {
 			return state;
