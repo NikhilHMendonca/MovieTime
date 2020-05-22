@@ -3,13 +3,19 @@ import {
 	FETCH_TV_SHOW_DETAILS,
 	FETCH_TV_SHOW_CREDITS,
 	FETCH_TV_SHOW_REVIEWS,
-	FETCH_SIMILAR_TV_SHOWS
+	FETCH_SIMILAR_TV_SHOWS,
+	SAVE_WATCHLIST_TV_SHOW,
+	SAVE_FAVOURITE_TV_SHOW,
+	FETCH_IS_TV_SHOW_SAVED
 } from "../constants";
 import {
 	fetchTVShowDetailsApi,
 	fetchTVShowCreditsApi,
 	ffetchTVShowReviewsApi,
-	fetchSimilarTVShowsApi
+	fetchSimilarTVShowsApi,
+	saveWatchlistTVShowApi,
+	saveFavouriteTVShowApi,
+	fetchIsTVShowSavedApi
 } from "../../../api";
 import { API_KEY, LANGUAGE } from "../../../constants";
 import {
@@ -20,9 +26,22 @@ import {
 	fetchTVShowReviewsSuccessful,
 	fetchTVShowReviewsFailed,
 	fetchSimilarTVShowsSuccessful,
-	fetchSimilarTVShowsFailed
+	fetchSimilarTVShowsFailed,
+	saveWatchlistTVShowSuccessful,
+	fetchIsTVShowSaved,
+	saveWatchlistTVShowFailed,
+	saveFavouriteTVShowSuccessful,
+	saveFavouriteTVShowFailed,
+	fetchIsTVShowSavedSuccessful,
+	fetchIsTVShowSavedFailed
 } from "../actions";
-import { TV_SHOW_ID } from "../selectors";
+import {
+	TV_SHOW_ID,
+	ACCOUNT_ID,
+	TV_SHOW,
+	SAVED_TV_SHOW,
+	SESSION_ID
+} from "../selectors";
 
 const params = {
 	params: { api_key: API_KEY, language: LANGUAGE }
@@ -74,9 +93,74 @@ function* fetchSimilarTVShowsAsync() {
 	}
 }
 
+function* savingWatchlistTVShowAsync() {
+	try {
+		const accountId = yield select(ACCOUNT_ID);
+		const tvShowDetails = yield select(TV_SHOW);
+		const savedTVShow = yield select(SAVED_TV_SHOW);
+		const sessionId = yield select(SESSION_ID);
+		yield call(
+			saveWatchlistTVShowApi,
+			accountId,
+			{
+				media_type: "tv",
+				media_id: tvShowDetails.id,
+				watchlist: !savedTVShow.watchlist
+			},
+			{ params: { api_key: API_KEY, session_id: sessionId } }
+		);
+		yield put(saveWatchlistTVShowSuccessful());
+		yield put(fetchIsTVShowSaved());
+	} catch (error) {
+		yield put(saveWatchlistTVShowFailed());
+	}
+}
+function* savingFavouriteTVShowAsync() {
+	try {
+		const accountId = yield select(ACCOUNT_ID);
+		const tvShowDetails = yield select(TV_SHOW);
+		const savedTVShow = yield select(SAVED_TV_SHOW);
+		const sessionId = yield select(SESSION_ID);
+		yield call(
+			saveFavouriteTVShowApi,
+			accountId,
+			{
+				media_type: "tv",
+				media_id: tvShowDetails.id,
+				favorite: !savedTVShow.favorite
+			},
+			{ params: { api_key: API_KEY, session_id: sessionId } }
+		);
+		yield put(saveFavouriteTVShowSuccessful());
+		yield put(fetchIsTVShowSaved());
+	} catch (error) {
+		yield put(saveFavouriteTVShowFailed());
+	}
+}
+
+function* fetchIsTVShowSavedAsync() {
+	try {
+		const tvShowId = yield select(TV_SHOW_ID);
+		const sessionId = yield select(SESSION_ID);
+		const params = {
+			params: {
+				api_key: API_KEY,
+				session_id: sessionId
+			}
+		};
+		const { data } = yield call(fetchIsTVShowSavedApi, tvShowId, params);
+		yield put(fetchIsTVShowSavedSuccessful(data));
+	} catch (error) {
+		yield put(fetchIsTVShowSavedFailed());
+	}
+}
+
 export function* tvShowDetailsSaga() {
 	yield takeEvery(FETCH_TV_SHOW_DETAILS, fetchTVShowDetailsAsync);
 	yield takeEvery(FETCH_TV_SHOW_CREDITS, fetchTVShowCreditsAsync);
 	yield takeEvery(FETCH_TV_SHOW_REVIEWS, fetchTVShowReviewsAsync);
 	yield takeEvery(FETCH_SIMILAR_TV_SHOWS, fetchSimilarTVShowsAsync);
+	yield takeEvery(SAVE_WATCHLIST_TV_SHOW, savingWatchlistTVShowAsync);
+	yield takeEvery(SAVE_FAVOURITE_TV_SHOW, savingFavouriteTVShowAsync);
+	yield takeEvery(FETCH_IS_TV_SHOW_SAVED, fetchIsTVShowSavedAsync);
 }

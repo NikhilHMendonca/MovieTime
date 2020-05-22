@@ -10,7 +10,16 @@ import {
 	FETCH_TV_SHOW_REVIEWS_FAILED,
 	FETCH_SIMILAR_TV_SHOWS,
 	FETCH_SIMILAR_TV_SHOWS_SUCCESSFUL,
-	FETCH_SIMILAR_TV_SHOWS_FAILED
+	FETCH_SIMILAR_TV_SHOWS_FAILED,
+	SAVE_WATCHLIST_TV_SHOW,
+	SAVE_WATCHLIST_TV_SHOW_SUCCESSFUL,
+	SAVE_WATCHLIST_TV_SHOW_FAILED,
+	SAVE_FAVOURITE_TV_SHOW,
+	SAVE_FAVOURITE_TV_SHOW_SUCCESSFUL,
+	SAVE_FAVOURITE_TV_SHOW_FAILED,
+	FETCH_IS_TV_SHOW_SAVED,
+	FETCH_IS_TV_SHOW_SAVED_SUCCESSFUL,
+	FETCH_IS_TV_SHOW_SAVED_FAILED
 } from "../constants";
 
 export const fetchTVShowDetails = payload => {
@@ -35,7 +44,7 @@ export const fetchTVShowDetailsFailed = () => {
 
 export const fetchTVShowCredits = () => {
 	return {
-		type: FETCH_TV_SHOW_CREDITS,
+		type: FETCH_TV_SHOW_CREDITS
 	};
 };
 
@@ -54,7 +63,7 @@ export const fetchTVShowCreditsFailed = () => {
 
 export const fetchTVShowReviews = () => {
 	return {
-		type: FETCH_TV_SHOW_REVIEWS,
+		type: FETCH_TV_SHOW_REVIEWS
 	};
 };
 
@@ -73,7 +82,7 @@ export const fetchTVShowReviewsFailed = () => {
 
 export const fetchSimilarTVShows = () => {
 	return {
-		type: FETCH_SIMILAR_TV_SHOWS,
+		type: FETCH_SIMILAR_TV_SHOWS
 	};
 };
 
@@ -87,5 +96,62 @@ export const fetchSimilarTVShowsSuccessful = payload => {
 export const fetchSimilarTVShowsFailed = () => {
 	return {
 		type: FETCH_SIMILAR_TV_SHOWS_FAILED
+	};
+};
+
+export const saveWatchlistTVShow = () => {
+	return {
+		type: SAVE_WATCHLIST_TV_SHOW
+	};
+};
+
+export const saveWatchlistTVShowSuccessful = payload => {
+	return {
+		type: SAVE_WATCHLIST_TV_SHOW_SUCCESSFUL,
+		payload
+	};
+};
+
+export const saveWatchlistTVShowFailed = () => {
+	return {
+		type: SAVE_WATCHLIST_TV_SHOW_FAILED
+	};
+};
+
+export const saveFavouriteTVShow = () => {
+	return {
+		type: SAVE_FAVOURITE_TV_SHOW
+	};
+};
+
+export const saveFavouriteTVShowSuccessful = payload => {
+	return {
+		type: SAVE_FAVOURITE_TV_SHOW_SUCCESSFUL,
+		payload
+	};
+};
+
+export const saveFavouriteTVShowFailed = () => {
+	return {
+		type: SAVE_FAVOURITE_TV_SHOW_FAILED
+	};
+};
+
+export const fetchIsTVShowSaved = () => {
+	return {
+		type: FETCH_IS_TV_SHOW_SAVED
+	};
+};
+
+export const fetchIsTVShowSavedSuccessful = payload => {
+	return {
+		type: FETCH_IS_TV_SHOW_SAVED_SUCCESSFUL,
+		payload
+	};
+};
+
+export const fetchIsTVShowSavedFailed = () => {
+	return {
+		type: FETCH_IS_TV_SHOW_SAVED_FAILED
 	};
 };

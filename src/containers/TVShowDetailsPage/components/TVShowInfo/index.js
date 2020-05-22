@@ -3,6 +3,12 @@ import { IMAGE_BASE_URL_500 } from "../../../../constants";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import Divider from "../../../../components/Divider";
+import {
+	MdFavoriteBorder,
+	MdFavorite,
+	MdBookmarkBorder,
+	MdBookmark
+} from "react-icons/md";
 
 const TVShowImage = styled.div`
 	width: 135px;
@@ -51,10 +57,40 @@ const TVShowPopularity = styled.div`
 	margin: 8px 0;
 `;
 
-const TVShowInfo = ({ tvShow }) => {
+const IconWrapper = styled.div`
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	border: 1px solid #208066;
+	position: absolute;
+	right: ${({ position }) => `${position}px`};
+	top: -185px;
+	padding: 8px;
+`;
+
+const TVShowInfo = ({
+	tvShow,
+	handleSaveFavouriteTVShow,
+	handleSaveWatchlistTVShow,
+	savedTVShow
+}) => {
 	return (
 		<div>
 			<TVShowImage url={`${IMAGE_BASE_URL_500}${tvShow.poster_path}`} />
+			<IconWrapper position={50} onClick={handleSaveWatchlistTVShow}>
+				{savedTVShow.watchlist ? (
+					<MdBookmark color="#19ca9a" size="24px" />
+				) : (
+					<MdBookmarkBorder color="#19ca9a" size="24px" />
+				)}
+			</IconWrapper>
+			<IconWrapper position={0} onClick={handleSaveFavouriteTVShow}>
+				{savedTVShow.favorite ? (
+					<MdFavorite color="#19ca9a" size="24px" />
+				) : (
+					<MdFavoriteBorder color="#19ca9a" size="24px" />
+				)}
+			</IconWrapper>
 			<TVShowName>{tvShow.name}</TVShowName>
 			<TVShowGenre>
 				{tvShow.genres.map(genre => genre.name).join(" • ")}
