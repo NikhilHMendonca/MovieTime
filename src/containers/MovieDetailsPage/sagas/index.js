@@ -8,7 +8,7 @@ import {
 	SAVE_FAVOURITE_MOVIE,
 	FETCH_IS_MOVIE_SAVED
 } from "../constants";
-import { API_KEY, LANGUAGE } from "../../../constants";
+import { API_KEY, LANGUAGE, STORED_SESSION_ID } from "../../../constants";
 import {
 	fetchMovieDetailsApi,
 	fetchMovieCreditsApi,
@@ -90,7 +90,6 @@ function* fetchSimilarMoviesAsync() {
 function* savingWatchlistMovieAsync() {
 	try {
 		const accountId = yield select(ACCOUNT_ID);
-		const sessionId = localStorage.getItem("sessionId");
 		const movieDetails = yield select(MOVIE);
 		const savedMovie = yield select(SAVED_MOVIE);
 		yield call(
@@ -101,7 +100,7 @@ function* savingWatchlistMovieAsync() {
 				media_id: movieDetails.id,
 				watchlist: !savedMovie.watchlist
 			},
-			{ params: { api_key: API_KEY, session_id: sessionId } }
+			{ params: { api_key: API_KEY, session_id: STORED_SESSION_ID } }
 		);
 		yield put(saveWatchlistMovieSuccessful());
 		yield put(fetchIsMovieSaved(movieDetails.id));
@@ -112,7 +111,6 @@ function* savingWatchlistMovieAsync() {
 function* savingFavouriteMovieAsync() {
 	try {
 		const accountId = yield select(ACCOUNT_ID);
-		const sessionId = localStorage.getItem("sessionId");
 		const movieDetails = yield select(MOVIE);
 		const savedMovie = yield select(SAVED_MOVIE);
 		yield call(
@@ -123,7 +121,7 @@ function* savingFavouriteMovieAsync() {
 				media_id: movieDetails.id,
 				favorite: !savedMovie.favorite
 			},
-			{ params: { api_key: API_KEY, session_id: sessionId } }
+			{ params: { api_key: API_KEY, session_id: STORED_SESSION_ID } }
 		);
 		yield put(saveFavouriteMovieSuccessful());
 		yield put(fetchIsMovieSaved());
@@ -134,12 +132,11 @@ function* savingFavouriteMovieAsync() {
 
 function* fetchIsMovieSavedAsync() {
 	try {
-		const sessionId = localStorage.getItem("sessionId");
 		const movieId = yield select(MOVIE_ID);
 		const params = {
 			params: {
 				api_key: API_KEY,
-				session_id: sessionId
+				session_id: STORED_SESSION_ID
 			}
 		};
 		const { data } = yield call(fetchIsMovieSavedApi, movieId, params);

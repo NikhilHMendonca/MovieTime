@@ -15,6 +15,7 @@ import MovieInfo from "./components/MovieInfo";
 import Casts from "../../components/Casts";
 import Reviews from "../../components/Reviews";
 import SimilarContent from "../../components/SimilarContent";
+import { STORED_SESSION_ID } from "../../constants";
 
 const Container = styled.div`
 	border: 1px solid #38c3a3;
@@ -23,8 +24,6 @@ const Container = styled.div`
 	position: relative;
 	margin: 190px 0 72px 0;
 `;
-
-const sessionId = localStorage.getItem("sessionId");
 
 class MovieDetailsPage extends Component {
 	componentDidMount() {
@@ -43,7 +42,7 @@ class MovieDetailsPage extends Component {
 		handleFetchMovieCredits();
 		handleFetchMovieReviews();
 		handleFetchSimilarMovies();
-		if (sessionId) handleFetchIsMovieSaved();
+		if (STORED_SESSION_ID) handleFetchIsMovieSaved();
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -68,7 +67,7 @@ class MovieDetailsPage extends Component {
 			handleFetchMovieCredits();
 			handleFetchMovieReviews();
 			handleFetchSimilarMovies();
-			if (sessionId) handleFetchIsMovieSaved();
+			if (STORED_SESSION_ID) handleFetchIsMovieSaved();
 		}
 	}
 

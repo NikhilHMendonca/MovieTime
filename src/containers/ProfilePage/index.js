@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import { DEFAULT_USER_IMAGE, GRAVATAR_BASE_URL } from "../../constants";
+import {
+	DEFAULT_USER_IMAGE,
+	GRAVATAR_BASE_URL,
+} from "../../constants";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import {
@@ -58,8 +61,11 @@ const Wrapper = styled.div`
 
 class Profile extends Component {
 	componentDidMount() {
-		const { handleCreateSession, handleFetchUserDetails } = this.props;
-		const sessionId = localStorage.getItem("sessionId");
+		const {
+			handleCreateSession,
+			handleFetchUserDetails,
+			sessionId
+		} = this.props;
 		const requestToken = this.getUrlParameter("request_token");
 		if (!sessionId && requestToken) {
 			handleCreateSession(requestToken);

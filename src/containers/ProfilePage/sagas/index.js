@@ -15,7 +15,7 @@ import {
 	fetchWatchlistMoviesApi,
 	deleteSessionApi
 } from "../../../api";
-import { API_KEY } from "../../../constants";
+import { API_KEY, STORED_SESSION_ID } from "../../../constants";
 import {
 	fetchTokenFailed,
 	fetchTokenSuccessful,
@@ -34,7 +34,7 @@ import {
 	deleteSessionFailed
 } from "../actions";
 import qs from "qs";
-import { TOKEN, ACCOUNT_ID } from "../selectors";
+import { TOKEN, ACCOUNT_ID, SESSION_ID } from "../selectors";
 
 const params = {
 	params: { api_key: API_KEY }
@@ -61,7 +61,7 @@ function* createSessionAsync() {
 		} = yield call(createSessionApi, qs.stringify(data), {
 			params: { api_key: API_KEY }
 		});
-		localStorage.setItem("sessionId", session_id);
+		yield localStorage.setItem("sessionId", session_id);
 		yield put(createSessionSuccessful(session_id));
 		yield put(fetchUserDetails());
 	} catch (error) {
@@ -72,8 +72,10 @@ function* createSessionAsync() {
 
 function* fetchUserDetailsAsync() {
 	try {
-		const sessionId = localStorage.getItem("sessionId");
-		const uparams = { params: { api_key: API_KEY, session_id: sessionId } };
+		const sessionId = yield select(SESSION_ID);
+		const uparams = {
+			params: { api_key: API_KEY, session_id: sessionId }
+		};
 		const { data } = yield call(fetchUserDetailsApi, uparams);
 		yield put(fetchUserDetailsSuccessful(data));
 		yield put(fetchWatchlistMovies());
@@ -85,8 +87,8 @@ function* fetchUserDetailsAsync() {
 
 function* fetchFavouriteMoviesAsync() {
 	try {
-		const sessionId = localStorage.getItem("sessionId");
 		const accountId = yield select(ACCOUNT_ID);
+		const sessionId = yield select(SESSION_ID);
 		const {
 			data: { results }
 		} = yield call(fetchFavouriteMoviesApi, accountId, {
@@ -100,8 +102,8 @@ function* fetchFavouriteMoviesAsync() {
 
 function* fetchWatchlistMoviesAsync() {
 	try {
-		const sessionId = localStorage.getItem("sessionId");
 		const accountId = yield select(ACCOUNT_ID);
+		const sessionId = yield select(SESSION_ID);
 		const {
 			data: { results }
 		} = yield call(fetchWatchlistMoviesApi, accountId, {
@@ -115,9 +117,8 @@ function* fetchWatchlistMoviesAsync() {
 
 function* deleteSessionAsync() {
 	try {
-		const sessionId = localStorage.getItem("sessionId");
 		yield call(deleteSessionApi, {
-			params: { api_key: API_KEY, session_id: sessionId }
+			params: { api_key: API_KEY, session_id: STORED_SESSION_ID }
 		});
 		yield put(deleteSessionSuccessful());
 		localStorage.removeItem("sessionId");
