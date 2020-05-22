@@ -50,14 +50,14 @@ const Navbar = ({ handleSaveNavbarOption, activeTab }) => {
 					</NavbarName>
 				</RedirectLink>
 			</NavbarOption>
-			<NavbarOption onClick={() => handleSaveNavbarOption("moviesPage")}>
+			<NavbarOption onClick={() => handleSaveNavbarOption("tvShowsPage")}>
 				<RedirectLink to="/tvshows">
 					<MdTv
 						size="22px"
-						color={activeTab === "moviesPage" ? "#2e8066" : "#141d2b"}
+						color={activeTab === "tvShowsPage" ? "#2e8066" : "#141d2b"}
 					/>
 					<NavbarName
-						color={activeTab === "moviesPage" ? "#2e8066" : "#141d2b"}
+						color={activeTab === "tvShowsPage" ? "#2e8066" : "#141d2b"}
 					>
 						TV Shows
 					</NavbarName>

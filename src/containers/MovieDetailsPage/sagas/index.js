@@ -35,21 +35,15 @@ import {
 	fetchIsMovieSaved,
 	fetchIsMovieSavedSuccessful
 } from "../actions";
+import { MOVIE_ID, ACCOUNT_ID, SAVED_MOVIE, MOVIE } from "../selectors";
 
 const params = {
 	params: { api_key: API_KEY, language: LANGUAGE }
 };
 
-const id = ({ movieDetails }) => movieDetails.movieId;
-const aId = ({ profileDetails }) => profileDetails.user.id;
-// const sId = ({ profileDetails }) => profileDetails.sessionId;
-const movie = ({ movieDetails }) => movieDetails.movie;
-const mId = ({ movieDetails }) => movieDetails.movieId;
-const sMovie = ({ movieDetails }) => movieDetails.savedMovie;
-
 function* fetchMovieDetailsAsync() {
 	try {
-		const movieId = yield select(id);
+		const movieId = yield select(MOVIE_ID);
 		const { data } = yield call(fetchMovieDetailsApi, movieId, params);
 		yield put(fetchMovieDetailsSuccessful(data));
 	} catch (error) {
@@ -59,7 +53,7 @@ function* fetchMovieDetailsAsync() {
 
 function* fetchMovieCreditsAsync() {
 	try {
-		const movieId = yield select(id);
+		const movieId = yield select(MOVIE_ID);
 		const {
 			data: { cast }
 		} = yield call(fetchMovieCreditsApi, movieId, params);
@@ -71,7 +65,7 @@ function* fetchMovieCreditsAsync() {
 
 function* fetchMovieReviewsAsync() {
 	try {
-		const movieId = yield select(id);
+		const movieId = yield select(MOVIE_ID);
 		const {
 			data: { results }
 		} = yield call(fetchMovieReviewsApi, movieId, params);
@@ -83,7 +77,7 @@ function* fetchMovieReviewsAsync() {
 
 function* fetchSimilarMoviesAsync() {
 	try {
-		const movieId = yield select(id);
+		const movieId = yield select(MOVIE_ID);
 		const {
 			data: { results }
 		} = yield call(fetchSimilarMoviesApi, movieId, params);
@@ -95,10 +89,10 @@ function* fetchSimilarMoviesAsync() {
 
 function* savingWatchlistMovieAsync() {
 	try {
-		const accountId = yield select(aId);
+		const accountId = yield select(ACCOUNT_ID);
 		const sessionId = localStorage.getItem("sessionId");
-		const movieDetails = yield select(movie);
-		const savedMovie = yield select(sMovie);
+		const movieDetails = yield select(MOVIE);
+		const savedMovie = yield select(SAVED_MOVIE);
 		yield call(
 			saveWatchlistMovieApi,
 			accountId,
@@ -117,10 +111,10 @@ function* savingWatchlistMovieAsync() {
 }
 function* savingFavouriteMovieAsync() {
 	try {
-		const accountId = yield select(aId);
+		const accountId = yield select(ACCOUNT_ID);
 		const sessionId = localStorage.getItem("sessionId");
-		const movieDetails = yield select(movie);
-		const savedMovie = yield select(sMovie);
+		const movieDetails = yield select(MOVIE);
+		const savedMovie = yield select(SAVED_MOVIE);
 		yield call(
 			saveFavouriteMovieApi,
 			accountId,
@@ -141,7 +135,7 @@ function* savingFavouriteMovieAsync() {
 function* fetchIsMovieSavedAsync() {
 	try {
 		const sessionId = localStorage.getItem("sessionId");
-		const movieId = yield select(mId);
+		const movieId = yield select(MOVIE_ID);
 		const params = {
 			params: {
 				api_key: API_KEY,
