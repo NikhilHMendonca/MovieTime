@@ -12,9 +12,9 @@ import TVShowDetailsPage from "../TVShowDetailsPage";
 import PersonDetailsPage from "../PersonDetailsPage";
 import { connect } from "react-redux";
 import { saveNavbarOption } from "./actions";
-import { STORED_ACTIVE_TAB } from "../../constants";
 class App extends Component {
 	render() {
+		const activeTab = localStorage.getItem('activeTab');
 		const { handleSaveNavbarOption } = this.props;
 		return (
 			<Router>
@@ -31,7 +31,7 @@ class App extends Component {
 				</Switch>
 				<Navbar
 					handleSaveNavbarOption={handleSaveNavbarOption}
-					activeTab={STORED_ACTIVE_TAB}
+					activeTab={activeTab}
 				/>
 			</Router>
 		);
