@@ -6,8 +6,10 @@ import searches from '../containers/SearchPage/reducers';
 import tvShowDetails from '../containers/TVShowDetailsPage/reducers';
 import personDetails from '../containers/PersonDetailsPage/reducers';
 import profileDetails from '../containers/ProfilePage/reducers';
+import app from '../containers/App/reducers';
 
 const rootReducers = combineReducers({
+    app,
     homePage,
     movieDetails,
     tvShows,
