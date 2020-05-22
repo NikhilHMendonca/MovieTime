@@ -135,3 +135,15 @@ export const fetchFavouriteMoviesApi = (accountId, params) =>
 		`https://api.themoviedb.org/3/account/${accountId}/favorite/movies`,
 		params
 	);
+
+export const fetchWatchlistTVShowsApi = (accountId, params) =>
+	axios.get(
+		`https://api.themoviedb.org/3/account/${accountId}/watchlist/tv`,
+		params
+	);
+
+export const fetchFavouriteTVShowsApi = (accountId, params) =>
+	axios.get(
+		`https://api.themoviedb.org/3/account/${accountId}/favorite/tv`,
+		params
+	);

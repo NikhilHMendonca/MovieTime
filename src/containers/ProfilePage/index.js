@@ -93,6 +93,8 @@ class Profile extends Component {
 			user,
 			watchlistMovies,
 			favouriteMovies,
+			watchlistTVShows,
+			favouriteTVShows,
 			handleDeleteSession
 		} = this.props;
 		return (
@@ -106,7 +108,7 @@ class Profile extends Component {
 						</LoginSignupButton>
 						<Divider />
 						<Wrapper>
-							<SectionTitle>Watchlist</SectionTitle>
+							<SectionTitle>Watchlist Movies</SectionTitle>
 							<HorizontalScrollWrapper>
 								{watchlistMovies.length > 0 &&
 									watchlistMovies.map(movie => (
@@ -115,11 +117,29 @@ class Profile extends Component {
 							</HorizontalScrollWrapper>
 						</Wrapper>
 						<Wrapper>
-							<SectionTitle>Favourite</SectionTitle>
+							<SectionTitle>Favourite Movies</SectionTitle>
 							<HorizontalScrollWrapper>
 								{favouriteMovies.length > 0 &&
 									favouriteMovies.map(movie => (
 										<Card redirectTo="/movie" format={movie} key={movie.id} />
+									))}
+							</HorizontalScrollWrapper>
+						</Wrapper>
+						<Wrapper>
+							<SectionTitle>Watchlist TV Shows</SectionTitle>
+							<HorizontalScrollWrapper>
+								{watchlistTVShows.length > 0 &&
+									watchlistTVShows.map(show => (
+										<Card redirectTo="/tv-show" format={show} key={show.id} />
+									))}
+							</HorizontalScrollWrapper>
+						</Wrapper>
+						<Wrapper>
+							<SectionTitle>Favourite TV Shows</SectionTitle>
+							<HorizontalScrollWrapper>
+								{favouriteTVShows.length > 0 &&
+									favouriteTVShows.map(show => (
+										<Card redirectTo="/tv-show" format={show} key={show.id} />
 									))}
 							</HorizontalScrollWrapper>
 						</Wrapper>
@@ -139,13 +159,15 @@ class Profile extends Component {
 }
 
 const mapStateToProps = ({
-	profileDetails: { sessionId, user, watchlistMovies, favouriteMovies }
+	profileDetails: { sessionId, user, watchlistMovies, favouriteMovies, watchlistTVShows, favouriteTVShows }
 }) => {
 	return {
 		sessionId,
 		user,
 		watchlistMovies,
-		favouriteMovies
+		favouriteMovies,
+		watchlistTVShows,
+		favouriteTVShows,
 	};
 };
 

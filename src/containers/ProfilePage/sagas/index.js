@@ -5,7 +5,9 @@ import {
 	FETCH_USER_DETAILS,
 	FETCH_FAVOURITE_MOVIES,
 	FETCH_WATCHLIST_MOVIES,
-	DELETE_SESSION
+	DELETE_SESSION,
+	FETCH_FAVOURITE_TV_SHOWS,
+	FETCH_WATCHLIST_TV_SHOWS
 } from "../constants";
 import {
 	fetchTokenApi,
@@ -13,7 +15,9 @@ import {
 	fetchUserDetailsApi,
 	fetchFavouriteMoviesApi,
 	fetchWatchlistMoviesApi,
-	deleteSessionApi
+	deleteSessionApi,
+	fetchFavouriteTVShowsApi,
+	fetchWatchlistTVShowsApi
 } from "../../../api";
 import { API_KEY, STORED_SESSION_ID } from "../../../constants";
 import {
@@ -31,7 +35,13 @@ import {
 	fetchFavouriteMovies,
 	fetchWatchlistMovies,
 	deleteSessionSuccessful,
-	deleteSessionFailed
+	deleteSessionFailed,
+	fetchWatchlistTVShowsSuccessful,
+	fetchWatchlistTVShowsFailed,
+	fetchFavouriteTVShowsSuccessful,
+	fetchFavouriteTVShowsFailed,
+	fetchFavouriteTVShows,
+	fetchWatchlistTVShows
 } from "../actions";
 import qs from "qs";
 import { TOKEN, ACCOUNT_ID, SESSION_ID } from "../selectors";
@@ -80,6 +90,8 @@ function* fetchUserDetailsAsync() {
 		yield put(fetchUserDetailsSuccessful(data));
 		yield put(fetchWatchlistMovies());
 		yield put(fetchFavouriteMovies());
+		yield put(fetchWatchlistTVShows());
+		yield put(fetchFavouriteTVShows());
 	} catch (error) {
 		yield put(fetchUserDetailsFailed());
 	}
@@ -115,6 +127,36 @@ function* fetchWatchlistMoviesAsync() {
 	}
 }
 
+function* fetchFavouriteTVShowsAsync() {
+	try {
+		const accountId = yield select(ACCOUNT_ID);
+		const sessionId = yield select(SESSION_ID);
+		const {
+			data: { results }
+		} = yield call(fetchFavouriteTVShowsApi, accountId, {
+			params: { api_key: API_KEY, session_id: sessionId }
+		});
+		yield put(fetchFavouriteTVShowsSuccessful(results));
+	} catch (error) {
+		yield put(fetchFavouriteTVShowsFailed());
+	}
+}
+
+function* fetchWatchlistTVShowsAsync() {
+	try {
+		const accountId = yield select(ACCOUNT_ID);
+		const sessionId = yield select(SESSION_ID);
+		const {
+			data: { results }
+		} = yield call(fetchWatchlistTVShowsApi, accountId, {
+			params: { api_key: API_KEY, session_id: sessionId }
+		});
+		yield put(fetchWatchlistTVShowsSuccessful(results));
+	} catch (error) {
+		yield put(fetchWatchlistTVShowsFailed());
+	}
+}
+
 function* deleteSessionAsync() {
 	try {
 		yield call(deleteSessionApi, {
@@ -133,5 +175,7 @@ export function* profileSaga() {
 	yield takeEvery(FETCH_USER_DETAILS, fetchUserDetailsAsync);
 	yield takeEvery(FETCH_FAVOURITE_MOVIES, fetchFavouriteMoviesAsync);
 	yield takeEvery(FETCH_WATCHLIST_MOVIES, fetchWatchlistMoviesAsync);
+	yield takeEvery(FETCH_FAVOURITE_TV_SHOWS, fetchFavouriteTVShowsAsync);
+	yield takeEvery(FETCH_WATCHLIST_TV_SHOWS, fetchWatchlistTVShowsAsync);
 	yield takeEvery(DELETE_SESSION, deleteSessionAsync);
 }
