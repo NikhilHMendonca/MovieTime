@@ -16,7 +16,10 @@ import {
 	SAVE_WATCHLIST_MOVIE_FAILED,
 	SAVE_FAVOURITE_MOVIE,
 	SAVE_FAVOURITE_MOVIE_SUCCESSFUL,
-	SAVE_FAVOURITE_MOVIE_FAILED
+	SAVE_FAVOURITE_MOVIE_FAILED,
+	FETCH_IS_MOVIE_SAVED,
+	FETCH_IS_MOVIE_SAVED_SUCCESSFUL,
+	FETCH_IS_MOVIE_SAVED_FAILED
 } from "../constants";
 
 export const fetchMovieDetails = payload => {
@@ -134,5 +137,24 @@ export const saveFavouriteMovieSuccessful = payload => {
 export const saveFavouriteMovieFailed = () => {
 	return {
 		type: SAVE_FAVOURITE_MOVIE_FAILED
+	};
+};
+
+export const fetchIsMovieSaved = () => {
+	return {
+		type: FETCH_IS_MOVIE_SAVED,
+	};
+};
+
+export const fetchIsMovieSavedSuccessful = payload => {
+	return {
+		type: FETCH_IS_MOVIE_SAVED_SUCCESSFUL,
+		payload
+	};
+};
+
+export const fetchIsMovieSavedFailed = () => {
+	return {
+		type: FETCH_IS_MOVIE_SAVED_FAILED
 	};
 };

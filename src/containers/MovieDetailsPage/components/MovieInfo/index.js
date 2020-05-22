@@ -5,10 +5,10 @@ import dayjs from "dayjs";
 import { IMAGE_BASE_URL_500 } from "../../../../constants";
 import Divider from "../../../../components/Divider";
 import {
-	// MdFavorite,
-	// MdLibraryAdd,
 	MdFavoriteBorder,
-	MdBookmarkBorder
+	MdFavorite,
+	MdBookmarkBorder,
+	MdBookmark
 } from "react-icons/md";
 
 const MovieName = styled.div`
@@ -77,19 +77,25 @@ const IconWrapper = styled.div`
 const MovieInfo = ({
 	movie,
 	handleSaveFavouriteMovie,
-	handleSaveWatchlistMovie
+	handleSaveWatchlistMovie,
+	savedMovie
 }) => {
 	return (
 		<Fragment>
 			<MovieImage url={`${IMAGE_BASE_URL_500}${movie.poster_path}`} />
-			<IconWrapper
-				position={50}
-				onClick={handleSaveWatchlistMovie}
-			>
-				<MdBookmarkBorder color="#19ca9a" size="24px" />
+			<IconWrapper position={50} onClick={handleSaveWatchlistMovie}>
+				{savedMovie.watchlist ? (
+					<MdBookmark color="#19ca9a" size="24px" />
+				) : (
+					<MdBookmarkBorder color="#19ca9a" size="24px" />
+				)}
 			</IconWrapper>
 			<IconWrapper position={0} onClick={handleSaveFavouriteMovie}>
-				<MdFavoriteBorder color="#19ca9a" size="24px" />
+				{savedMovie.favorite ? (
+					<MdFavorite color="#19ca9a" size="24px" />
+				) : (
+					<MdFavoriteBorder color="#19ca9a" size="24px" />
+				)}
 			</IconWrapper>
 			<MovieName>{movie.title}</MovieName>
 			<MovieGenre>

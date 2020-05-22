@@ -16,7 +16,10 @@ import {
 	SAVE_WATCHLIST_MOVIE_FAILED,
 	SAVE_FAVOURITE_MOVIE,
 	SAVE_FAVOURITE_MOVIE_SUCCESSFUL,
-	SAVE_FAVOURITE_MOVIE_FAILED
+	SAVE_FAVOURITE_MOVIE_FAILED,
+	FETCH_IS_MOVIE_SAVED,
+	FETCH_IS_MOVIE_SAVED_SUCCESSFUL,
+	FETCH_IS_MOVIE_SAVED_FAILED
 } from "../constants";
 
 const initialState = {
@@ -31,6 +34,8 @@ const initialState = {
 	similarMovies: [],
 	isSavingFavouriteMovie: false,
 	isSavingWatchlistMovie: false,
+	isFetchingMovieSaved: false,
+	savedMovie: {}
 };
 
 const movieDetails = (state = initialState, action) => {
@@ -129,6 +134,22 @@ const movieDetails = (state = initialState, action) => {
 			return {
 				...state,
 				isSavingFavouriteMovie: false
+			};
+		case FETCH_IS_MOVIE_SAVED:
+			return {
+				...state,
+				isFetchingMovieSaved: true
+			};
+		case FETCH_IS_MOVIE_SAVED_SUCCESSFUL:
+			return {
+				...state,
+				isFetchingMovieSaved: false,
+				savedMovie: action.payload
+			};
+		case FETCH_IS_MOVIE_SAVED_FAILED:
+			return {
+				...state,
+				isFetchingMovieSaved: false
 			};
 		default:
 			return state;

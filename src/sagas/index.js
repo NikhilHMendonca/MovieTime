@@ -6,9 +6,11 @@ import { searchResultsSaga } from "../containers/SearchPage/sagas";
 import { tvShowDetailsSaga } from "../containers/TVShowDetailsPage/sagas";
 import { personDetailsSaga } from "../containers/PersonDetailsPage/sagas";
 import { profileSaga } from "../containers/ProfilePage/sagas";
+import { appSaga } from "../containers/App/sagas";
 
 export default function* rootSaga() {
 	yield all([
+		appSaga(),
 		homePageSaga(),
 		movieDetailsSaga(),
 		tvShowsSaga(),
