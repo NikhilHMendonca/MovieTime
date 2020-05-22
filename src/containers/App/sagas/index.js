@@ -1,11 +1,10 @@
 import { takeEvery, select, put } from "redux-saga/effects";
 import { SAVE_NAVBAR_OPTION } from "../constants";
 import { saveNavbarOptionSuccessful, saveNavbarOptionFailed } from "../actions";
-
-const option = ({ app }) => app.activeTab;
+import { ACTIVE_TAB } from "../selectors";
 
 function* saveNavbarOptionAsync() {
-	const navbarOption = yield select(option);
+	const navbarOption = yield select(ACTIVE_TAB);
 	try {
 		yield put(saveNavbarOptionSuccessful());
 		yield localStorage.setItem("activeTab", navbarOption);

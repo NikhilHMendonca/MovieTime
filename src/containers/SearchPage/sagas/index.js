@@ -8,13 +8,11 @@ import {
 	fetchTrendingSuccessful,
 	fetchTrendingFailed
 } from "../actions";
-
-
-const sq = ({ searches }) => searches.searchQuery;
+import { SEARCHED_QUERY } from "../selectors";
 
 function* fetchSearchResultsAsync() {
     try {
-        const searchQuery = yield select(sq);
+        const searchQuery = yield select(SEARCHED_QUERY);
         const searchParams = {
             params: { api_key: API_KEY, language: LANGUAGE, query: searchQuery }
         };
