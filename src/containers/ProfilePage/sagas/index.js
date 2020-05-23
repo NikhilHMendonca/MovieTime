@@ -117,8 +117,9 @@ function* fetchWatchlistMoviesAsync() {
 
 function* deleteSessionAsync() {
 	try {
+		const sessionId = yield select(SESSION_ID);
 		yield call(deleteSessionApi, {
-			params: { api_key: API_KEY, session_id: STORED_SESSION_ID }
+			params: { api_key: API_KEY, session_id: sessionId }
 		});
 		yield put(deleteSessionSuccessful());
 		localStorage.removeItem("sessionId");
