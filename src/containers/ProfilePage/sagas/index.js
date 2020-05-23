@@ -56,7 +56,7 @@ function* fetchTokenAsync() {
 			data: { request_token }
 		} = yield call(fetchTokenApi, params);
 		yield put(fetchTokenSuccessful());
-		yield (window.location.href = `https://www.themoviedb.org/authenticate/${request_token}?redirect_to=http://localhost:3000/profile`);
+		yield (window.location.href = `https://www.themoviedb.org/authenticate/${request_token}?redirect_to=https://movietimeapp.netlify.app/profile`);
 	} catch (error) {
 		yield put(fetchTokenFailed());
 	}
