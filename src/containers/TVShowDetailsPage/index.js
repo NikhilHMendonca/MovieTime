@@ -4,7 +4,10 @@ import {
 	fetchTVShowDetails,
 	fetchSimilarTVShows,
 	fetchTVShowReviews,
-	fetchTVShowCredits
+	fetchTVShowCredits,
+	saveWatchlistTVShow,
+	saveFavouriteTVShow,
+	fetchIsTVShowSaved
 } from "./actions";
 import "react-tabs/style/react-tabs.css";
 import SimilarContent from "../../components/SimilarContent";
@@ -13,6 +16,7 @@ import Casts from "../../components/Casts";
 import styled from "styled-components";
 import TVShowInfo from "./components/TVShowInfo";
 import TVShowSeasons from "./components/TVShowSeasons";
+import { STORED_SESSION_ID } from "../../constants";
 
 const Container = styled.div`
 	border: 1px solid #38c3a3;
@@ -28,13 +32,15 @@ class TVShowDetailsPage extends Component {
 			handleFetchTvShowDetails,
 			handleFetchSimilarTvShows,
 			handleFetchTvShowCredits,
-			handleFetchTvShowReviews
+			handleFetchTvShowReviews,
+			handleFetchIsTVShowSaved
 		} = this.props;
 		const { tvShowId } = this.props.match.params;
 		handleFetchTvShowDetails(tvShowId);
 		handleFetchTvShowCredits();
 		handleFetchTvShowReviews();
 		handleFetchSimilarTvShows();
+		if (STORED_SESSION_ID) handleFetchIsTVShowSaved();
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -43,7 +49,10 @@ class TVShowDetailsPage extends Component {
 			handleFetchSimilarTvShows,
 			handleFetchTvShowCredits,
 			handleFetchTvShowReviews,
-			match: { params: { tvShowId } }
+			handleFetchIsTVShowSaved,
+			match: {
+				params: { tvShowId }
+			}
 		} = this.props;
 
 		const { tvShowId: updatedtvShowId } = nextProps.match.params;
@@ -52,16 +61,30 @@ class TVShowDetailsPage extends Component {
 			handleFetchTvShowCredits();
 			handleFetchTvShowReviews();
 			handleFetchSimilarTvShows();
+			if (STORED_SESSION_ID) handleFetchIsTVShowSaved();
 		}
 	}
 
 	render() {
-		const { tvShow, tvShowCredits, tvShowReviews, similarTvShows } = this.props;
+		const {
+			tvShow,
+			tvShowCredits,
+			tvShowReviews,
+			similarTvShows,
+			handleSaveWatchlistTVShow,
+			handleSaveFavouriteTVShow,
+			savedTVShow
+		} = this.props;
 		return (
 			<Container>
 				{Object.keys(tvShow).length > 0 && (
 					<Fragment>
-						<TVShowInfo tvShow={tvShow} />
+						<TVShowInfo
+							tvShow={tvShow}
+							savedTVShow={savedTVShow}
+							handleSaveWatchlistTVShow={handleSaveWatchlistTVShow}
+							handleSaveFavouriteTVShow={handleSaveFavouriteTVShow}
+						/>
 						<TVShowSeasons tvShow={tvShow} />
 						<Casts casts={tvShowCredits} />
 						<Reviews reviews={tvShowReviews} />
@@ -83,7 +106,8 @@ const mapStateToProps = ({
 		tvShow,
 		tvShowCredits,
 		tvShowReviews,
-		similarTvShows
+		similarTvShows,
+		savedTVShow
 	}
 }) => {
 	return {
@@ -91,7 +115,8 @@ const mapStateToProps = ({
 		tvShow,
 		tvShowCredits,
 		tvShowReviews,
-		similarTvShows
+		similarTvShows,
+		savedTVShow
 	};
 };
 
@@ -100,7 +125,12 @@ const mapDispatchToProps = dispatch => {
 		handleFetchTvShowDetails: payload => dispatch(fetchTVShowDetails(payload)),
 		handleFetchTvShowCredits: () => dispatch(fetchTVShowCredits()),
 		handleFetchTvShowReviews: () => dispatch(fetchTVShowReviews()),
-		handleFetchSimilarTvShows: () => dispatch(fetchSimilarTVShows())
+		handleFetchSimilarTvShows: () => dispatch(fetchSimilarTVShows()),
+		handleSaveWatchlistTVShow: payload =>
+			dispatch(saveWatchlistTVShow(payload)),
+		handleSaveFavouriteTVShow: payload =>
+			dispatch(saveFavouriteTVShow(payload)),
+		handleFetchIsTVShowSaved: () => dispatch(fetchIsTVShowSaved())
 	};
 };
 
