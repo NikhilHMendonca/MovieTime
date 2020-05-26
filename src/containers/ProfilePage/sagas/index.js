@@ -19,7 +19,7 @@ import {
 	fetchFavouriteTVShowsApi,
 	fetchWatchlistTVShowsApi
 } from "../../../api";
-import { API_KEY, STORED_SESSION_ID } from "../../../constants";
+import { API_KEY } from "../../../constants";
 import {
 	fetchTokenFailed,
 	fetchTokenSuccessful,
@@ -49,6 +49,7 @@ import { TOKEN, ACCOUNT_ID, SESSION_ID } from "../selectors";
 const params = {
 	params: { api_key: API_KEY }
 };
+const sessionId = localStorage.getItem('sessionId');
 
 function* fetchTokenAsync() {
 	try {
@@ -56,7 +57,7 @@ function* fetchTokenAsync() {
 			data: { request_token }
 		} = yield call(fetchTokenApi, params);
 		yield put(fetchTokenSuccessful());
-		yield (window.location.href = `https://www.themoviedb.org/authenticate/${request_token}?redirect_to=https://movietimeapp.netlify.app/profile`);
+		yield (window.location.href = `https://www.themoviedb.org/authenticate/${request_token}?redirect_to=http://localhost:3000/profile`);
 	} catch (error) {
 		yield put(fetchTokenFailed());
 	}
@@ -82,7 +83,7 @@ function* createSessionAsync() {
 
 function* fetchUserDetailsAsync() {
 	try {
-		const sessionId = yield select(SESSION_ID);
+		// const sessionId = yield select(SESSION_ID);
 		const uparams = {
 			params: { api_key: API_KEY, session_id: sessionId }
 		};
@@ -100,7 +101,7 @@ function* fetchUserDetailsAsync() {
 function* fetchFavouriteMoviesAsync() {
 	try {
 		const accountId = yield select(ACCOUNT_ID);
-		const sessionId = yield select(SESSION_ID);
+		// const sessionId = yield select(SESSION_ID);
 		const {
 			data: { results }
 		} = yield call(fetchFavouriteMoviesApi, accountId, {
@@ -115,7 +116,7 @@ function* fetchFavouriteMoviesAsync() {
 function* fetchWatchlistMoviesAsync() {
 	try {
 		const accountId = yield select(ACCOUNT_ID);
-		const sessionId = yield select(SESSION_ID);
+		// const sessionId = yield select(SESSION_ID);
 		const {
 			data: { results }
 		} = yield call(fetchWatchlistMoviesApi, accountId, {
@@ -130,7 +131,7 @@ function* fetchWatchlistMoviesAsync() {
 function* fetchFavouriteTVShowsAsync() {
 	try {
 		const accountId = yield select(ACCOUNT_ID);
-		const sessionId = yield select(SESSION_ID);
+		// const sessionId = yield select(SESSION_ID);
 		const {
 			data: { results }
 		} = yield call(fetchFavouriteTVShowsApi, accountId, {
@@ -145,7 +146,7 @@ function* fetchFavouriteTVShowsAsync() {
 function* fetchWatchlistTVShowsAsync() {
 	try {
 		const accountId = yield select(ACCOUNT_ID);
-		const sessionId = yield select(SESSION_ID);
+		// const sessionId = yield select(SESSION_ID);
 		const {
 			data: { results }
 		} = yield call(fetchWatchlistTVShowsApi, accountId, {
@@ -159,7 +160,7 @@ function* fetchWatchlistTVShowsAsync() {
 
 function* deleteSessionAsync() {
 	try {
-		const sessionId = yield select(SESSION_ID);
+		// const sessionId = yield select(SESSION_ID);
 		yield call(deleteSessionApi, {
 			params: { api_key: API_KEY, session_id: sessionId }
 		});

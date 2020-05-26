@@ -17,7 +17,7 @@ import SectionTitle from "../../components/SectionTitle";
 import Divider from "../../components/Divider";
 
 const Container = styled.div`
-	padding: 0 0 72px 0;
+	padding: 0 0 24px 0;
 `;
 
 const UserImage = styled.div`
@@ -64,9 +64,10 @@ class Profile extends Component {
 		const {
 			handleCreateSession,
 			handleFetchUserDetails,
-			sessionId
+			// sessionId
 		} = this.props;
 		const requestToken = this.getUrlParameter("request_token");
+		const sessionId = localStorage.getItem('sessionId');
 		if (!sessionId && requestToken) {
 			handleCreateSession(requestToken);
 		} else if (sessionId) {

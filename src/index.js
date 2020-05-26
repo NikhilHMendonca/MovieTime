@@ -9,17 +9,44 @@ import "../src/containers/App/app.css";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas";
 
+// const loadState = () => {
+// 	try {
+// 		const serializedState = localStorage.getItem("sessionId");
+// 		if (serializedState === null) return undefined;
+// 		return serializedState;
+// 	} catch (error) {
+// 		return undefined;
+// 	}
+// };
+
+// const saveState = state => {
+// 	try {
+// 		const serializedState = state.profileDetails.sessionId;
+// 		localStorage.setItem("sessionId", serializedState);
+// 	} catch (error) {
+// 		return undefined;
+// 	}
+// };
+
 const sagaMiddleware = createSagaMiddleware();
 
 const composeEnhancers =
-  typeof window === 'object' &&
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-      // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
-    }) : compose;
+	typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+		? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+				// Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+		  })
+		: compose;
 
-const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(sagaMiddleware)));
+// const persistedState = loadState();
+
+const store = createStore(
+	rootReducer,
+	{},
+	composeEnhancers(applyMiddleware(sagaMiddleware))
+);
 sagaMiddleware.run(rootSaga);
+
+// store.subscribe(() => saveState(store.getState()));
 
 ReactDOM.render(
 	<Provider store={store}>
