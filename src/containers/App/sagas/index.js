@@ -1,6 +1,6 @@
-import { takeEvery, select, put } from "redux-saga/effects";
-import { SAVE_NAVBAR_OPTION } from "../constants";
-import { saveNavbarOptionSuccessful, saveNavbarOptionFailed } from "../actions";
+import { select, put, takeLatest, delay } from "redux-saga/effects";
+import { SAVE_NAVBAR_OPTION, SHOW_SNACKBAR } from "../constants";
+import { saveNavbarOptionSuccessful, saveNavbarOptionFailed, hideSnackbar } from "../actions";
 import { ACTIVE_TAB } from "../selectors";
 
 function* saveNavbarOptionAsync() {
@@ -14,6 +14,16 @@ function* saveNavbarOptionAsync() {
 	}
 }
 
+function* showSnackbarAsync() {
+	try {
+		yield delay(4000);
+		yield put(hideSnackbar());
+	} catch (error) {
+		yield put(hideSnackbar());
+	}
+}
+
 export function* appSaga() {
-	yield takeEvery(SAVE_NAVBAR_OPTION, saveNavbarOptionAsync);
+	yield takeLatest(SAVE_NAVBAR_OPTION, saveNavbarOptionAsync);
+	yield takeLatest(SHOW_SNACKBAR, showSnackbarAsync);
 }

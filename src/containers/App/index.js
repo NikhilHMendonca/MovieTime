@@ -12,10 +12,16 @@ import TVShowDetailsPage from "../TVShowDetailsPage";
 import PersonDetailsPage from "../PersonDetailsPage";
 import { connect } from "react-redux";
 import { saveNavbarOption } from "./actions";
+import Snackbar from "../../components/Snackbar";
 class App extends Component {
 	render() {
-		const activeTab = localStorage.getItem('activeTab');
-		const { handleSaveNavbarOption, user } = this.props;
+		const activeTab = localStorage.getItem("activeTab");
+		const {
+			handleSaveNavbarOption,
+			user,
+			showSnackbar,
+			snackbarMessage
+		} = this.props;
 		return (
 			<Router>
 				<Header />
@@ -34,15 +40,21 @@ class App extends Component {
 					activeTab={activeTab}
 					user={user}
 				/>
+				{showSnackbar && <Snackbar message={snackbarMessage} />}
 			</Router>
 		);
 	}
 }
 
-const mapStateToProps = ({ app: { activeTab }, profileDetails: { user } }) => {
+const mapStateToProps = ({
+	app: { activeTab, showSnackbar, snackbarMessage },
+	profileDetails: { user }
+}) => {
 	return {
 		activeTab,
-		user
+		user,
+		showSnackbar,
+		snackbarMessage
 	};
 };
 

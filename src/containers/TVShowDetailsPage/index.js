@@ -18,6 +18,7 @@ import TVShowInfo from "./components/TVShowInfo";
 import TVShowSeasons from "./components/TVShowSeasons";
 import { STORED_SESSION_ID } from "../../constants";
 import CircularLoader from "../../components/CircularLoader";
+import { showSnackbar } from "../App/actions";
 
 const Container = styled.div`
 	border: 1px solid #38c3a3;
@@ -66,6 +67,17 @@ class TVShowDetailsPage extends Component {
 		}
 	}
 
+	validateIsUserLoggedIn = (callback, errorMessage) => {
+		const { user, handleShowSnackbar } = this.props;
+		if (Object.keys(user).length > 0) {
+			// callback to be called if user is logged in
+			callback();
+		} else {
+			// if not then show snackbar to login
+			handleShowSnackbar(errorMessage);
+		}
+	};
+
 	render() {
 		const {
 			tvShow,
@@ -84,8 +96,18 @@ class TVShowDetailsPage extends Component {
 						<TVShowInfo
 							tvShow={tvShow}
 							savedTVShow={savedTVShow}
-							handleSaveWatchlistTVShow={handleSaveWatchlistTVShow}
-							handleSaveFavouriteTVShow={handleSaveFavouriteTVShow}
+							handleSaveWatchlistTVShow={() =>
+								this.validateIsUserLoggedIn(
+									handleSaveWatchlistTVShow,
+									"Please login to add to Watchlist"
+								)
+							}
+							handleSaveFavouriteTVShow={() =>
+								this.validateIsUserLoggedIn(
+									handleSaveFavouriteTVShow,
+									"Please login to add to Favourites"
+								)
+							}
 						/>
 						<TVShowSeasons tvShow={tvShow} />
 						<Casts casts={tvShowCredits} />
@@ -96,7 +118,7 @@ class TVShowDetailsPage extends Component {
 							redirectTo="/tv-show"
 						/>
 					</Container>
-				): (
+				) : (
 					<CircularLoader centered />
 				)}
 			</Fragment>
@@ -112,7 +134,8 @@ const mapStateToProps = ({
 		tvShowReviews,
 		similarTvShows,
 		savedTVShow
-	}
+	},
+	profileDetails: { user }
 }) => {
 	return {
 		isFetchingTVShowDetails,
@@ -120,7 +143,8 @@ const mapStateToProps = ({
 		tvShowCredits,
 		tvShowReviews,
 		similarTvShows,
-		savedTVShow
+		savedTVShow,
+		user
 	};
 };
 
@@ -134,7 +158,8 @@ const mapDispatchToProps = dispatch => {
 			dispatch(saveWatchlistTVShow(payload)),
 		handleSaveFavouriteTVShow: payload =>
 			dispatch(saveFavouriteTVShow(payload)),
-		handleFetchIsTVShowSaved: () => dispatch(fetchIsTVShowSaved())
+		handleFetchIsTVShowSaved: () => dispatch(fetchIsTVShowSaved()),
+		handleShowSnackbar: payload => dispatch(showSnackbar(payload))
 	};
 };
 

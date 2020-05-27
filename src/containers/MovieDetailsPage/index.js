@@ -16,6 +16,7 @@ import Reviews from "../../components/Reviews";
 import SimilarContent from "../../components/SimilarContent";
 import { STORED_SESSION_ID } from "../../constants";
 import CircularLoader from "../../components/CircularLoader";
+import { showSnackbar } from "../App/actions";
 
 const Container = styled.div`
 	border: 1px solid #38c3a3;
@@ -71,6 +72,17 @@ class MovieDetailsPage extends Component {
 		}
 	}
 
+	validateIsUserLoggedIn = (callback, errorMessage) => {
+		const { user, handleShowSnackbar } = this.props;
+		if (Object.keys(user).length > 0) {
+			// callback to be called if user is logged in
+			callback();
+		} else {
+			// if not then show snackbar to login
+			handleShowSnackbar(errorMessage);
+		}
+	};
+
 	render() {
 		const {
 			movie,
@@ -88,8 +100,18 @@ class MovieDetailsPage extends Component {
 					<Container>
 						<MovieInfo
 							movie={movie}
-							handleSaveWatchlistMovie={handleSaveWatchlistMovie}
-							handleSaveFavouriteMovie={handleSaveFavouriteMovie}
+							handleSaveWatchlistMovie={() =>
+								this.validateIsUserLoggedIn(
+									handleSaveWatchlistMovie,
+									"Please login to add to Watchlist"
+								)
+							}
+							handleSaveFavouriteMovie={() =>
+								this.validateIsUserLoggedIn(
+									handleSaveFavouriteMovie,
+									"Please login to add to Favourites"
+								)
+							}
 							savedMovie={savedMovie}
 						/>
 						<Casts casts={casts} />
@@ -119,7 +141,8 @@ const mapStateToProps = ({
 		isFetchingSimilarMovies,
 		similarMovies,
 		savedMovie
-	}
+	},
+	profileDetails: { user }
 }) => {
 	return {
 		isFetchingMovieDetails,
@@ -130,7 +153,8 @@ const mapStateToProps = ({
 		reviews,
 		isFetchingSimilarMovies,
 		similarMovies,
-		savedMovie
+		savedMovie,
+		user
 	};
 };
 
@@ -142,7 +166,8 @@ const mapDispatchToProps = dispatch => {
 		handleFetchSimilarMovies: payload => dispatch(fetchSimilarMovies(payload)),
 		handleSaveWatchlistMovie: payload => dispatch(saveWatchlistMovie(payload)),
 		handleSaveFavouriteMovie: payload => dispatch(saveFavouriteMovie(payload)),
-		handleFetchIsMovieSaved: () => dispatch(fetchIsMovieSaved())
+		handleFetchIsMovieSaved: () => dispatch(fetchIsMovieSaved()),
+		handleShowSnackbar: payload => dispatch(showSnackbar(payload))
 	};
 };
 
