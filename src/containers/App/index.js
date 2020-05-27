@@ -15,7 +15,7 @@ import { saveNavbarOption } from "./actions";
 class App extends Component {
 	render() {
 		const activeTab = localStorage.getItem('activeTab');
-		const { handleSaveNavbarOption } = this.props;
+		const { handleSaveNavbarOption, user } = this.props;
 		return (
 			<Router>
 				<Header />
@@ -32,15 +32,17 @@ class App extends Component {
 				<Navbar
 					handleSaveNavbarOption={handleSaveNavbarOption}
 					activeTab={activeTab}
+					user={user}
 				/>
 			</Router>
 		);
 	}
 }
 
-const mapStateToProps = ({ app: { activeTab } }) => {
+const mapStateToProps = ({ app: { activeTab }, profileDetails: { user } }) => {
 	return {
-		activeTab
+		activeTab,
+		user
 	};
 };
 

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { MdSearch, MdFace, MdMovie, MdTv } from "react-icons/md";
+import { GRAVATAR_BASE_URL, DEFAULT_USER_IMAGE } from "../../constants";
 
 const Container = styled.div`
 	position: fixed;
@@ -36,7 +37,22 @@ const NavbarName = styled.div`
 	color: ${({ color }) => color};
 `;
 
-const Navbar = ({ handleSaveNavbarOption, activeTab }) => {
+const UserImage = styled.div`
+	height: 20px;
+	width: 20px;
+	background-image: ${({ src }) =>
+		src
+			? `url(${GRAVATAR_BASE_URL}/${src}?s=100)`
+			: `url(${DEFAULT_USER_IMAGE})`};
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+	border-radius: 50%;
+	border: 1px solid #347768;
+	margin: ${({ src }) => src ? '2px auto' : '16px auto'};
+`;
+
+const Navbar = ({ handleSaveNavbarOption, activeTab, user }) => {
 	return (
 		<Container>
 			<NavbarOption onClick={() => handleSaveNavbarOption("homePage")}>
@@ -78,10 +94,10 @@ const Navbar = ({ handleSaveNavbarOption, activeTab }) => {
 			</NavbarOption>
 			<NavbarOption onClick={() => handleSaveNavbarOption("profilePage")}>
 				<RedirectLink to="/profile">
-					<MdFace
+					{Object.keys(user).length > 0 && user.avatar.gravatar.hash ? <UserImage src={user.avatar.gravatar.hash} /> :  <MdFace
 						size="22px"
 						color={activeTab === "profilePage" ? "#2e8066" : "#141d2b"}
-					/>
+					/>}
 					<NavbarName
 						color={activeTab === "profilePage" ? "#2e8066" : "#141d2b"}
 					>
