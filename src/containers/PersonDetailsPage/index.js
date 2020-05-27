@@ -8,6 +8,7 @@ import SectionTitle from "../../components/SectionTitle";
 import Divider from "../../components/Divider";
 import Card from "../../components/Card";
 import HorizontalScrollWrapper from "../../components/HorizontalScrollWrapper";
+import CircularLoader from "../../components/CircularLoader";
 
 const PersonImage = styled.div`
 	width: 150px;
@@ -97,7 +98,7 @@ class ActorDetailsPage extends Component {
 	}
 
 	render() {
-		const { person, personMovies } = this.props;
+		const { person, personMovies, isFetchingPersonDetails } = this.props;
 		const movies =
 			Object.keys(personMovies).length > 0 &&
 			personMovies.cast &&
@@ -108,41 +109,49 @@ class ActorDetailsPage extends Component {
 				else return 0;
 			});
 		return (
-			<div>
-				<BPIWrapper>
-					{person.profile_path && (
-						<BackdropPersonImage
-							src={person.profile_path}
-						></BackdropPersonImage>
-					)}
-				</BPIWrapper>
-				<Wrapper>
-					{person.profile_path && (
-						<PersonImage src={person.profile_path}></PersonImage>
-					)}
-					<PersonName>{person.name}</PersonName>
-					<PersonKFD>{person.known_for_department}</PersonKFD>
-					<PersonBirthday>
-						Date of Birth: {dayjs(person.birthday).format("DD MMM YYYY")}
-					</PersonBirthday>
-					<PersonPopularity>Popularity: {person.popularity}</PersonPopularity>
-					<PersonPOB>Place of Birth: {person.place_of_birth}</PersonPOB>
-					<Divider />
-					<SectionTitle>Biography</SectionTitle>
-					<PersonBiography>{person.biography}</PersonBiography>
-					<Divider />
-					{movies && movies.length > 0 && (
-						<Fragment>
-							<SectionTitle>Movies</SectionTitle>
-							<HorizontalScrollWrapper>
-								{personMovies.cast.map(movie => (
-									<Card redirectTo="/movie" format={movie} key={movie.id} />
-								))}
-							</HorizontalScrollWrapper>
-						</Fragment>
-					)}
-				</Wrapper>
-			</div>
+			<Fragment>
+				{!isFetchingPersonDetails && Object.keys(person).length > 0 ? (
+					<div>
+						<BPIWrapper>
+							{person.profile_path && (
+								<BackdropPersonImage
+									src={person.profile_path}
+								></BackdropPersonImage>
+							)}
+						</BPIWrapper>
+						<Wrapper>
+							{person.profile_path && (
+								<PersonImage src={person.profile_path}></PersonImage>
+							)}
+							<PersonName>{person.name}</PersonName>
+							<PersonKFD>{person.known_for_department}</PersonKFD>
+							<PersonBirthday>
+								Date of Birth: {dayjs(person.birthday).format("DD MMM YYYY")}
+							</PersonBirthday>
+							<PersonPopularity>
+								Popularity: {person.popularity}
+							</PersonPopularity>
+							<PersonPOB>Place of Birth: {person.place_of_birth}</PersonPOB>
+							<Divider />
+							<SectionTitle>Biography</SectionTitle>
+							<PersonBiography>{person.biography}</PersonBiography>
+							<Divider />
+							{movies && movies.length > 0 && (
+								<Fragment>
+									<SectionTitle>Movies</SectionTitle>
+									<HorizontalScrollWrapper>
+										{personMovies.cast.map(movie => (
+											<Card redirectTo="/movie" format={movie} key={movie.id} />
+										))}
+									</HorizontalScrollWrapper>
+								</Fragment>
+							)}
+						</Wrapper>
+					</div>
+				) : (
+					<CircularLoader centered />
+				)}
+			</Fragment>
 		);
 	}
 }

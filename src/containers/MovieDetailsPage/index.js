@@ -10,12 +10,12 @@ import {
 	saveFavouriteMovie,
 	fetchIsMovieSaved
 } from "./actions";
-import Loader from "../../components/Loader";
 import MovieInfo from "./components/MovieInfo";
 import Casts from "../../components/Casts";
 import Reviews from "../../components/Reviews";
 import SimilarContent from "../../components/SimilarContent";
 import { STORED_SESSION_ID } from "../../constants";
+import CircularLoader from "../../components/CircularLoader";
 
 const Container = styled.div`
 	border: 1px solid #38c3a3;
@@ -83,9 +83,9 @@ class MovieDetailsPage extends Component {
 			savedMovie
 		} = this.props;
 		return (
-			<Container>
+			<Fragment>
 				{!isFetchingMovieDetails && Object.keys(movie).length > 0 ? (
-					<Fragment>
+					<Container>
 						<MovieInfo
 							movie={movie}
 							handleSaveWatchlistMovie={handleSaveWatchlistMovie}
@@ -99,11 +99,11 @@ class MovieDetailsPage extends Component {
 							title="Similar Movies"
 							redirectTo="/movie"
 						/>
-					</Fragment>
+					</Container>
 				) : (
-					<Loader />
+					<CircularLoader centered />
 				)}
-			</Container>
+			</Fragment>
 		);
 	}
 }

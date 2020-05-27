@@ -17,6 +17,7 @@ import styled from "styled-components";
 import TVShowInfo from "./components/TVShowInfo";
 import TVShowSeasons from "./components/TVShowSeasons";
 import { STORED_SESSION_ID } from "../../constants";
+import CircularLoader from "../../components/CircularLoader";
 
 const Container = styled.div`
 	border: 1px solid #38c3a3;
@@ -73,12 +74,13 @@ class TVShowDetailsPage extends Component {
 			similarTvShows,
 			handleSaveWatchlistTVShow,
 			handleSaveFavouriteTVShow,
-			savedTVShow
+			savedTVShow,
+			isFetchingTVShowDetails
 		} = this.props;
 		return (
-			<Container>
-				{Object.keys(tvShow).length > 0 && (
-					<Fragment>
+			<Fragment>
+				{!isFetchingTVShowDetails && Object.keys(tvShow).length > 0 ? (
+					<Container>
 						<TVShowInfo
 							tvShow={tvShow}
 							savedTVShow={savedTVShow}
@@ -93,9 +95,11 @@ class TVShowDetailsPage extends Component {
 							title="Similar TV Shows"
 							redirectTo="/tv-show"
 						/>
-					</Fragment>
+					</Container>
+				): (
+					<CircularLoader centered />
 				)}
-			</Container>
+			</Fragment>
 		);
 	}
 }
