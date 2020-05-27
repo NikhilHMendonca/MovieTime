@@ -11,12 +11,39 @@ import {
 	fetchPopularMovies,
 	fetchTopRatedMovies
 } from "../HomePage/actions";
+import { createSession, fetchUserDetails } from "../ProfilePage/actions/index.js";
 
 const Container = styled.div`
 	padding: 0 0 48px 0;
 `;
 
 class HomePage extends Component {
+	componentDidMount(){
+		const {
+			handleCreateSession,
+			handleFetchUserDetails,
+			user
+		} = this.props;
+		const requestToken = this.getUrlParameter("request_token");
+		const sessionId = localStorage.getItem('sessionId');
+		if (!sessionId && requestToken) {
+			handleCreateSession(requestToken);
+		} else if (sessionId && Object.keys(user).length < 1) {
+			localStorage.setItem('activeTab', 'homePage');
+			handleFetchUserDetails();
+		}
+	}
+
+	getUrlParameter = name => {
+		// eslint-disable-next-line
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+		var results = regex.exec(window.location.search);
+		return results === null
+			? false
+			: decodeURIComponent(results[1].replace(/\+/g, " "));
+	};
+
 	render() {
 		const {
 			handleFetchUpcomingMovies,
@@ -30,7 +57,7 @@ class HomePage extends Component {
 			fetchingPopularMovies,
 			handleFetchTopRatedMovies,
 			fetchingTopRatedMovies,
-			topRatedMoviesList
+			topRatedMoviesList,
 		} = this.props;
 		return (
 			<Container>
@@ -70,6 +97,9 @@ const mapStateToProps = ({
 		fetchingPopularMovies,
 		topRatedMoviesList,
 		fetchingTopRatedMovies
+	},
+	profileDetails: {
+		user
 	}
 }) => {
 	return {
@@ -80,7 +110,8 @@ const mapStateToProps = ({
 		popularMoviesList,
 		fetchingPopularMovies,
 		topRatedMoviesList,
-		fetchingTopRatedMovies
+		fetchingTopRatedMovies,
+		user
 	};
 };
 
@@ -89,7 +120,9 @@ const mapDispatchToProps = dispatch => {
 		handleFetchUpcomingMovies: () => dispatch(fetchUpcomingMovies()),
 		handleFetchNowPlayingMovies: () => dispatch(fetchNowPlayingMovies()),
 		handleFetchPopularMovies: () => dispatch(fetchPopularMovies()),
-		handleFetchTopRatedMovies: () => dispatch(fetchTopRatedMovies())
+		handleFetchTopRatedMovies: () => dispatch(fetchTopRatedMovies()),
+		handleCreateSession: payload => dispatch(createSession(payload)),
+		handleFetchUserDetails: payload => dispatch(fetchUserDetails(payload)),
 	};
 };
 

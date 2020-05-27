@@ -1,20 +1,13 @@
 import React, { Component } from "react";
-import {
-	DEFAULT_USER_IMAGE,
-	GRAVATAR_BASE_URL,
-} from "../../constants";
+import { DEFAULT_USER_IMAGE, GRAVATAR_BASE_URL } from "../../constants";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import {
-	fetchToken,
-	createSession,
-	fetchUserDetails,
-	deleteSession
-} from "./actions";
+import { fetchToken, fetchUserDetails, deleteSession } from "./actions";
 import Card from "./components/Card";
 import HorizontalScrollWrapper from "../../components/HorizontalScrollWrapper";
 import SectionTitle from "../../components/SectionTitle";
 import Divider from "../../components/Divider";
+import CircularLoader from "../../components/CircularLoader";
 
 const Container = styled.div`
 	padding: 0 0 24px 0;
@@ -43,9 +36,15 @@ const LoginSignupButton = styled.button`
 	padding: 12px;
 	border-radius: 4px;
 	background: #edfffa;
-	margin: 16px auto;
+	margin: 24px auto;
 	min-width: 200px;
+	height: 50px;
 	display: block;
+
+	&:active,
+	&:focus {
+		outline: none;
+	}
 `;
 
 const UserName = styled.div`
@@ -61,28 +60,12 @@ const Wrapper = styled.div`
 
 class Profile extends Component {
 	componentDidMount() {
-		const {
-			handleCreateSession,
-			handleFetchUserDetails,
-			// sessionId
-		} = this.props;
-		const requestToken = this.getUrlParameter("request_token");
-		const sessionId = localStorage.getItem('sessionId');
-		if (!sessionId && requestToken) {
-			handleCreateSession(requestToken);
-		} else if (sessionId) {
+		const { handleFetchUserDetails, user } = this.props;
+		const sessionId = localStorage.getItem("sessionId");
+		if (sessionId && Object.keys(user).length < 1) {
 			handleFetchUserDetails();
 		}
 	}
-
-	getUrlParameter = name => {
-		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-		var results = regex.exec(window.location.search);
-		return results === null
-			? false
-			: decodeURIComponent(results[1].replace(/\+/g, " "));
-	};
 
 	handleOnLoginSignup = () => {
 		const { handleFetchToken } = this.props;
@@ -96,7 +79,9 @@ class Profile extends Component {
 			favouriteMovies,
 			watchlistTVShows,
 			favouriteTVShows,
-			handleDeleteSession
+			handleDeleteSession,
+			isFetchingToken,
+			isDeletingSession
 		} = this.props;
 		return (
 			<Container>
@@ -105,7 +90,7 @@ class Profile extends Component {
 						<UserImage src={user.avatar.gravatar.hash} />
 						<UserName>{user.username}</UserName>
 						<LoginSignupButton onClick={handleDeleteSession}>
-							Logout
+							{isDeletingSession ? <CircularLoader /> : "Logout"}
 						</LoginSignupButton>
 						<Divider />
 						<Wrapper>
@@ -150,7 +135,7 @@ class Profile extends Component {
 						<UserImage src={DEFAULT_USER_IMAGE} />
 						<UserName>Guest</UserName>
 						<LoginSignupButton onClick={this.handleOnLoginSignup}>
-							Login/Signup
+							{isFetchingToken ? <CircularLoader /> : "Login / Signup"}
 						</LoginSignupButton>
 					</Container>
 				)}
@@ -160,7 +145,16 @@ class Profile extends Component {
 }
 
 const mapStateToProps = ({
-	profileDetails: { sessionId, user, watchlistMovies, favouriteMovies, watchlistTVShows, favouriteTVShows }
+	profileDetails: {
+		sessionId,
+		user,
+		watchlistMovies,
+		favouriteMovies,
+		watchlistTVShows,
+		favouriteTVShows,
+		isFetchingToken,
+		isDeletingSession
+	}
 }) => {
 	return {
 		sessionId,
@@ -169,13 +163,14 @@ const mapStateToProps = ({
 		favouriteMovies,
 		watchlistTVShows,
 		favouriteTVShows,
+		isFetchingToken,
+		isDeletingSession
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
 		handleFetchToken: () => dispatch(fetchToken()),
-		handleCreateSession: payload => dispatch(createSession(payload)),
 		handleFetchUserDetails: payload => dispatch(fetchUserDetails(payload)),
 		handleDeleteSession: () => dispatch(deleteSession())
 	};

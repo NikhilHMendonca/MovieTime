@@ -18,7 +18,10 @@ import {
 	FETCH_WATCHLIST_TV_SHOWS_FAILED,
 	FETCH_FAVOURITE_TV_SHOWS,
 	FETCH_FAVOURITE_TV_SHOWS_SUCCESSFUL,
-	FETCH_FAVOURITE_TV_SHOWS_FAILED
+	FETCH_FAVOURITE_TV_SHOWS_FAILED,
+	FETCH_TOKEN,
+	FETCH_TOKEN_SUCCESSFUL,
+	FETCH_TOKEN_FAILED
 } from "../constants";
 
 const initialState = {
@@ -34,11 +37,30 @@ const initialState = {
 	isFetchingWatchlistTVShows: false,
 	isFetchingFavouriteTVShows: false,
 	watchlistTVShows: [],
-	favouriteTVShows: []
+	favouriteTVShows: [],
+	isDeletingSession: false,
 };
 
 const profileDetails = (state = initialState, action) => {
 	switch (action.type) {
+		case FETCH_TOKEN: {
+			return {
+				...state,
+				isFetchingToken: true,
+			};
+		}
+		case FETCH_TOKEN_SUCCESSFUL: {
+			return {
+				...state,
+				isFetchingToken: false,
+			};
+		}
+		case FETCH_TOKEN_FAILED: {
+			return {
+				...state,
+				isFetchingToken: false,
+			};
+		}
 		case CREATE_SESSION: {
 			return {
 				...state,
@@ -148,7 +170,8 @@ const profileDetails = (state = initialState, action) => {
 		}
 		case DELETE_SESSION: {
 			return {
-				...state
+				...state,
+				isDeletingSession: true
 			};
 		}
 		case DELETE_SESSION_SUCCESSFUL: {
@@ -158,12 +181,14 @@ const profileDetails = (state = initialState, action) => {
 				sessionId: null,
 				watchlistMovies: [],
 				favouriteMovies: [],
-				user: {}
+				user: {},
+				isDeletingSession: false
 			};
 		}
 		case DELETE_SESSION_FAILED: {
 			return {
-				...state
+				...state,
+				isDeletingSession: false
 			};
 		}
 		default:
