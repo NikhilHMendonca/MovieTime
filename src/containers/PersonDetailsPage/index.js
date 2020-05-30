@@ -48,9 +48,9 @@ const Wrapper = styled.div`
 
 const PersonName = styled.div`
 	text-align: center;
-	color: red;
-	font-size: 20px;
-	font-weight: 500;
+	color: #2e8066;
+	font-size: 22px;
+	font-weight: 600;
 `;
 
 const PersonBirthday = styled.div`
