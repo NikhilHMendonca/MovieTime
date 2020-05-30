@@ -17,7 +17,7 @@ import {
 	saveFavouriteTVShowApi,
 	fetchIsTVShowSavedApi
 } from "../../../api";
-import { API_KEY, LANGUAGE } from "../../../constants";
+import { API_KEY, LANGUAGE, STORED_SESSION_ID } from "../../../constants";
 import {
 	fetchTVShowDetailsSuccessful,
 	fetchTVShowDetailsFailed,
@@ -98,7 +98,7 @@ function* savingWatchlistTVShowAsync() {
 		const accountId = yield select(ACCOUNT_ID);
 		const tvShowDetails = yield select(TV_SHOW);
 		const savedTVShow = yield select(SAVED_TV_SHOW);
-		const sessionId = yield select(SESSION_ID);
+		// const sessionId = yield select(SESSION_ID);
 		yield call(
 			saveWatchlistTVShowApi,
 			accountId,
@@ -107,7 +107,7 @@ function* savingWatchlistTVShowAsync() {
 				media_id: tvShowDetails.id,
 				watchlist: !savedTVShow.watchlist
 			},
-			{ params: { api_key: API_KEY, session_id: sessionId } }
+			{ params: { api_key: API_KEY, session_id: STORED_SESSION_ID } }
 		);
 		yield put(saveWatchlistTVShowSuccessful());
 		yield put(fetchIsTVShowSaved());
@@ -120,7 +120,7 @@ function* savingFavouriteTVShowAsync() {
 		const accountId = yield select(ACCOUNT_ID);
 		const tvShowDetails = yield select(TV_SHOW);
 		const savedTVShow = yield select(SAVED_TV_SHOW);
-		const sessionId = yield select(SESSION_ID);
+		// const sessionId = yield select(SESSION_ID);
 		yield call(
 			saveFavouriteTVShowApi,
 			accountId,
@@ -129,7 +129,7 @@ function* savingFavouriteTVShowAsync() {
 				media_id: tvShowDetails.id,
 				favorite: !savedTVShow.favorite
 			},
-			{ params: { api_key: API_KEY, session_id: sessionId } }
+			{ params: { api_key: API_KEY, session_id: STORED_SESSION_ID } }
 		);
 		yield put(saveFavouriteTVShowSuccessful());
 		yield put(fetchIsTVShowSaved());
@@ -141,11 +141,11 @@ function* savingFavouriteTVShowAsync() {
 function* fetchIsTVShowSavedAsync() {
 	try {
 		const tvShowId = yield select(TV_SHOW_ID);
-		const sessionId = yield select(SESSION_ID);
+		// const sessionId = yield select(SESSION_ID);
 		const params = {
 			params: {
 				api_key: API_KEY,
-				session_id: sessionId
+				session_id: STORED_SESSION_ID
 			}
 		};
 		const { data } = yield call(fetchIsTVShowSavedApi, tvShowId, params);
