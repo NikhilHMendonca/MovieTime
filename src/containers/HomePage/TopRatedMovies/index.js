@@ -13,7 +13,6 @@ class TopRatedMovies extends Component {
 
 	render() {
 		const { fetchingTopRatedMovies, topRatedMoviesList } = this.props;
-		const moviesList = topRatedMoviesList.slice(0, 5);
 		return (
 			<Container>
 			<SectionTitle>Top Rated</SectionTitle>
@@ -21,7 +20,7 @@ class TopRatedMovies extends Component {
 				<Loader />
 			) : (
 				<Wrapper>
-					{moviesList.map(movie => (
+					{topRatedMoviesList.map(movie => (
 						<Card format={movie} redirectTo="/movie" key={movie.id} />
 					))}
 				</Wrapper>

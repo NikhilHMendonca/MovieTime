@@ -14,7 +14,6 @@ class NowPlayingMovies extends Component {
 
 	render() {
 		const { nowPlayingMoviesList, fetchingNowPlayingMovies } = this.props;
-		const moviesList = nowPlayingMoviesList.slice(0, 5);
 		return (
 			<Container>
 			<SectionTitle>Now Playing</SectionTitle>
@@ -22,7 +21,7 @@ class NowPlayingMovies extends Component {
 				<Loader />
 			) : (
 				<Wrapper>
-					{moviesList.map(movie => (
+					{nowPlayingMoviesList.map(movie => (
 						<Card format={movie} redirectTo="/movie" key={movie.id} />
 					))}
 				</Wrapper>

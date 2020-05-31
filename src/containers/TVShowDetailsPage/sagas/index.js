@@ -40,7 +40,7 @@ import {
 	ACCOUNT_ID,
 	TV_SHOW,
 	SAVED_TV_SHOW,
-	SESSION_ID
+	// SESSION_ID
 } from "../selectors";
 
 const params = {

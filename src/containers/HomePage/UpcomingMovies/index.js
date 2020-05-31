@@ -20,7 +20,7 @@ class UpcomingMovies extends Component {
 				<Loader />
 			) : (
 				<Wrapper>
-					{upcomingMoviesList.slice(0, 5).map(movie => (
+					{upcomingMoviesList.map(movie => (
 						<Card format={movie} redirectTo="/movie" key={movie.id} />
 					))}
 				</Wrapper>
