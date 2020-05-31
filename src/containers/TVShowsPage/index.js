@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
+import styled from 'styled-components';
 import { Container } from "../HomePage/HomePageStyles";
 import SectionTitle from "../../components/SectionTitle";
 import Wrapper from "../../components/HorizontalScrollWrapper";
@@ -7,6 +8,9 @@ import Card from "../../components/Card";
 import { connect } from "react-redux";
 import { fetchPopularTvShows, fetchTopRatedTvShows } from "./actions";
 
+const ParentWrapper = styled.div`
+	padding: 0 0 60px 0;
+`;
 class TVShows extends Component {
 	componentDidMount() {
 		const {
@@ -25,7 +29,7 @@ class TVShows extends Component {
 			topRatedTvShows
 		} = this.props;
 		return (
-			<Fragment>
+			<ParentWrapper>
 				<Container>
 					<SectionTitle>Popular</SectionTitle>
 					{isfetchingPopularMovies ? (
@@ -50,7 +54,7 @@ class TVShows extends Component {
 						</Wrapper>
 					)}
 				</Container>
-			</Fragment>
+			</ParentWrapper>
 		);
 	}
 }
