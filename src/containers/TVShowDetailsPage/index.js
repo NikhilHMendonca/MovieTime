@@ -16,9 +16,9 @@ import Casts from "../../components/Casts";
 import styled from "styled-components";
 import TVShowInfo from "./components/TVShowInfo";
 import TVShowSeasons from "./components/TVShowSeasons";
-import { STORED_SESSION_ID } from "../../constants";
 import CircularLoader from "../../components/CircularLoader";
 import { showSnackbar } from "../App/actions";
+import { fetchSessionId } from "../../utils";
 
 const Container = styled.div`
 	border: 1px solid #38c3a3;
@@ -42,7 +42,7 @@ class TVShowDetailsPage extends Component {
 		handleFetchTvShowCredits();
 		handleFetchTvShowReviews();
 		handleFetchSimilarTvShows();
-		if (STORED_SESSION_ID) handleFetchIsTVShowSaved();
+		if (fetchSessionId()) handleFetchIsTVShowSaved();
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -63,7 +63,7 @@ class TVShowDetailsPage extends Component {
 			handleFetchTvShowCredits();
 			handleFetchTvShowReviews();
 			handleFetchSimilarTvShows();
-			if (STORED_SESSION_ID) handleFetchIsTVShowSaved();
+			if (fetchSessionId()) handleFetchIsTVShowSaved();
 		}
 	}
 

@@ -17,7 +17,7 @@ import {
 	saveFavouriteTVShowApi,
 	fetchIsTVShowSavedApi
 } from "../../../api";
-import { API_KEY, LANGUAGE, STORED_SESSION_ID } from "../../../constants";
+import { API_KEY, LANGUAGE } from "../../../constants";
 import {
 	fetchTVShowDetailsSuccessful,
 	fetchTVShowDetailsFailed,
@@ -42,6 +42,7 @@ import {
 	SAVED_TV_SHOW,
 	// SESSION_ID
 } from "../selectors";
+import { fetchSessionId } from "../../../utils";
 
 const params = {
 	params: { api_key: API_KEY, language: LANGUAGE }
@@ -107,7 +108,7 @@ function* savingWatchlistTVShowAsync() {
 				media_id: tvShowDetails.id,
 				watchlist: !savedTVShow.watchlist
 			},
-			{ params: { api_key: API_KEY, session_id: STORED_SESSION_ID } }
+			{ params: { api_key: API_KEY, session_id: fetchSessionId() } }
 		);
 		yield put(saveWatchlistTVShowSuccessful());
 		yield put(fetchIsTVShowSaved());
@@ -129,7 +130,7 @@ function* savingFavouriteTVShowAsync() {
 				media_id: tvShowDetails.id,
 				favorite: !savedTVShow.favorite
 			},
-			{ params: { api_key: API_KEY, session_id: STORED_SESSION_ID } }
+			{ params: { api_key: API_KEY, session_id: fetchSessionId() } }
 		);
 		yield put(saveFavouriteTVShowSuccessful());
 		yield put(fetchIsTVShowSaved());
@@ -145,7 +146,7 @@ function* fetchIsTVShowSavedAsync() {
 		const params = {
 			params: {
 				api_key: API_KEY,
-				session_id: STORED_SESSION_ID
+				session_id: fetchSessionId()
 			}
 		};
 		const { data } = yield call(fetchIsTVShowSavedApi, tvShowId, params);
