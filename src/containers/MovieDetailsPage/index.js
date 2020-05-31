@@ -14,9 +14,9 @@ import MovieInfo from "./components/MovieInfo";
 import Casts from "../../components/Casts";
 import Reviews from "../../components/Reviews";
 import SimilarContent from "../../components/SimilarContent";
-import { STORED_SESSION_ID } from "../../constants";
 import CircularLoader from "../../components/CircularLoader";
 import { showSnackbar } from "../App/actions";
+import { fetchSessionId } from "../../utils";
 
 const Container = styled.div`
 	border: 1px solid #38c3a3;
@@ -43,7 +43,7 @@ class MovieDetailsPage extends Component {
 		handleFetchMovieCredits();
 		handleFetchMovieReviews();
 		handleFetchSimilarMovies();
-		if (STORED_SESSION_ID) handleFetchIsMovieSaved();
+		if (fetchSessionId()) handleFetchIsMovieSaved();
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -68,7 +68,7 @@ class MovieDetailsPage extends Component {
 			handleFetchMovieCredits();
 			handleFetchMovieReviews();
 			handleFetchSimilarMovies();
-			if (STORED_SESSION_ID) handleFetchIsMovieSaved();
+			if (fetchSessionId()) handleFetchIsMovieSaved();
 		}
 	}
 

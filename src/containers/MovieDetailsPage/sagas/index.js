@@ -8,7 +8,8 @@ import {
 	SAVE_FAVOURITE_MOVIE,
 	FETCH_IS_MOVIE_SAVED
 } from "../constants";
-import { API_KEY, LANGUAGE, STORED_SESSION_ID } from "../../../constants";
+import { API_KEY, LANGUAGE } from "../../../constants";
+import { fetchSessionId } from "../../../utils";
 import {
 	fetchMovieDetailsApi,
 	fetchMovieCreditsApi,
@@ -100,7 +101,7 @@ function* savingWatchlistMovieAsync() {
 				media_id: movieDetails.id,
 				watchlist: !savedMovie.watchlist
 			},
-			{ params: { api_key: API_KEY, session_id: STORED_SESSION_ID } }
+			{ params: { api_key: API_KEY, session_id: fetchSessionId() } }
 		);
 		yield put(saveWatchlistMovieSuccessful());
 		yield put(fetchIsMovieSaved(movieDetails.id));
@@ -121,7 +122,7 @@ function* savingFavouriteMovieAsync() {
 				media_id: movieDetails.id,
 				favorite: !savedMovie.favorite
 			},
-			{ params: { api_key: API_KEY, session_id: STORED_SESSION_ID } }
+			{ params: { api_key: API_KEY, session_id: fetchSessionId() } }
 		);
 		yield put(saveFavouriteMovieSuccessful());
 		yield put(fetchIsMovieSaved());
@@ -136,7 +137,7 @@ function* fetchIsMovieSavedAsync() {
 		const params = {
 			params: {
 				api_key: API_KEY,
-				session_id: STORED_SESSION_ID
+				session_id: fetchSessionId()
 			}
 		};
 		const { data } = yield call(fetchIsMovieSavedApi, movieId, params);

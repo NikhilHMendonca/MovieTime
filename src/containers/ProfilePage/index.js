@@ -63,7 +63,7 @@ class Profile extends Component {
 	componentDidMount() {
 		const { handleFetchUserDetails, user } = this.props;
 		const sessionId = localStorage.getItem("sessionId");
-		if (sessionId && Object.keys(user).length < 1) {
+		if (sessionId) {
 			handleFetchUserDetails();
 		}
 	}

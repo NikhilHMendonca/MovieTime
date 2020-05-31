@@ -45,6 +45,7 @@ import {
 } from "../actions";
 import qs from "qs";
 import { TOKEN, ACCOUNT_ID, SESSION_ID } from "../selectors";
+import { fetchSessionId } from "../../../utils";
 
 const params = {
 	params: { api_key: API_KEY }
@@ -82,9 +83,8 @@ function* createSessionAsync() {
 
 function* fetchUserDetailsAsync() {
 	try {
-		const session_Id = yield (localStorage.getItem('sessionId') || select(SESSION_ID));
 		const uparams = {
-			params: { api_key: API_KEY, session_id: session_Id }
+			params: { api_key: API_KEY, session_id: fetchSessionId() }
 		};
 		const { data } = yield call(fetchUserDetailsApi, uparams);
 		yield put(fetchUserDetailsSuccessful(data));
@@ -100,11 +100,10 @@ function* fetchUserDetailsAsync() {
 function* fetchFavouriteMoviesAsync() {
 	try {
 		const accountId = yield select(ACCOUNT_ID);
-		const sessionId = yield (localStorage.getItem('sessionId') || select(SESSION_ID));
 		const {
 			data: { results }
 		} = yield call(fetchFavouriteMoviesApi, accountId, {
-			params: { api_key: API_KEY, session_id: sessionId }
+			params: { api_key: API_KEY, session_id: fetchSessionId() }
 		});
 		yield put(fetchFavouriteMoviesSuccessful(results));
 	} catch (error) {
@@ -115,11 +114,10 @@ function* fetchFavouriteMoviesAsync() {
 function* fetchWatchlistMoviesAsync() {
 	try {
 		const accountId = yield select(ACCOUNT_ID);
-		const sessionId = yield (localStorage.getItem('sessionId') || select(SESSION_ID));
 		const {
 			data: { results }
 		} = yield call(fetchWatchlistMoviesApi, accountId, {
-			params: { api_key: API_KEY, session_id: sessionId }
+			params: { api_key: API_KEY, session_id: fetchSessionId() }
 		});
 		yield put(fetchWatchlistMoviesSuccessful(results));
 	} catch (error) {
@@ -130,11 +128,10 @@ function* fetchWatchlistMoviesAsync() {
 function* fetchFavouriteTVShowsAsync() {
 	try {
 		const accountId = yield select(ACCOUNT_ID);
-		const sessionId = yield (localStorage.getItem('sessionId') || select(SESSION_ID));
 		const {
 			data: { results }
 		} = yield call(fetchFavouriteTVShowsApi, accountId, {
-			params: { api_key: API_KEY, session_id: sessionId }
+			params: { api_key: API_KEY, session_id: fetchSessionId() }
 		});
 		yield put(fetchFavouriteTVShowsSuccessful(results));
 	} catch (error) {
@@ -145,11 +142,10 @@ function* fetchFavouriteTVShowsAsync() {
 function* fetchWatchlistTVShowsAsync() {
 	try {
 		const accountId = yield select(ACCOUNT_ID);
-		const sessionId = yield (localStorage.getItem('sessionId') || select(SESSION_ID));
 		const {
 			data: { results }
 		} = yield call(fetchWatchlistTVShowsApi, accountId, {
-			params: { api_key: API_KEY, session_id: sessionId }
+			params: { api_key: API_KEY, session_id: fetchSessionId() }
 		});
 		yield put(fetchWatchlistTVShowsSuccessful(results));
 	} catch (error) {
@@ -159,9 +155,8 @@ function* fetchWatchlistTVShowsAsync() {
 
 function* deleteSessionAsync() {
 	try {
-		const sessionId = yield (localStorage.getItem('sessionId') || select(SESSION_ID));
 		yield call(deleteSessionApi, {
-			params: { api_key: API_KEY, session_id: sessionId }
+			params: { api_key: API_KEY, session_id: fetchSessionId() }
 		});
 		yield put(deleteSessionSuccessful());
 		localStorage.removeItem("sessionId");
