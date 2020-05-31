@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/16db9d8b-2501-471b-8ce6-b1d339ee4d2c/deploy-status)](https://app.netlify.com/sites/movietimeapp/deploys)
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -67,5 +69,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
-// Shows latest deployment status for project repository 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/16db9d8b-2501-471b-8ce6-b1d339ee4d2c/deploy-status)](https://app.netlify.com/sites/movietimeapp/deploys)
