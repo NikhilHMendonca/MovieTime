@@ -5,10 +5,6 @@ import { MdTrendingUp } from "react-icons/md";
 import { IMAGE_BASE_URL_200 } from "../../../../constants";
 import { Link } from "react-router-dom";
 
-const Wrapper = styled.div`
-	padding: 0 0 60px 0;
-`;
-
 const Container = styled.div`
 	margin: 16px 0;
 	display: flex;
@@ -45,7 +41,7 @@ const RouteLink = styled(Link)`
 
 const Trending = ({ trending }) => {
 	return (
-		<Wrapper>
+		<div>
 			<SectionTitle>Trending</SectionTitle>
 			<div>
 				{trending.length > 0 &&
@@ -67,7 +63,7 @@ const Trending = ({ trending }) => {
 						);
 					})}
 			</div>
-		</Wrapper>
+		</div>
 	);
 };
 

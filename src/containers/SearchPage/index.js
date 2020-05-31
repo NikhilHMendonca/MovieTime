@@ -7,6 +7,7 @@ import { IMAGE_BASE_URL_200, DEFAULT_USER_IMAGE } from "../../constants";
 import { Link } from "react-router-dom";
 import Trending from "./components/Trending";
 import Divider from "../../components/Divider";
+import Footer from "../../components/Footer";
 
 const Container = styled.div`
   // width: calc(100vw - 32px);
@@ -149,6 +150,7 @@ class SearchPage extends Component {
 				</div>
 				<Divider />
 				{!searchedValue && <Trending trending={trending} />}
+				<Footer />
 			</Fragment>
 		);
 	}
