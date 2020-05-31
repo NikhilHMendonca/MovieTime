@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import styled from "styled-components";
+import React, { Component, Fragment } from "react";
 import UpcomingMovies from "./UpcomingMovies/index.js";
 import NowPlayingMovies from "./NowPlayingMovies/index.js";
 import TopRatedMovies from "./TopRatedMovies/index.js";
@@ -12,10 +11,7 @@ import {
 	fetchTopRatedMovies
 } from "../HomePage/actions";
 import { createSession, fetchUserDetails } from "../ProfilePage/actions/index.js";
-
-const Container = styled.div`
-	padding: 0 0 48px 0;
-`;
+import Footer from '../../components/Footer';
 
 class HomePage extends Component {
 	componentDidMount(){
@@ -60,7 +56,7 @@ class HomePage extends Component {
 			topRatedMoviesList,
 		} = this.props;
 		return (
-			<Container>
+			<Fragment>
 				<UpcomingMovies
 					fetchUpcomingMovies={handleFetchUpcomingMovies}
 					upcomingMoviesList={upcomingMoviesList}
@@ -81,8 +77,9 @@ class HomePage extends Component {
 					popularMoviesList={popularMoviesList}
 					fetchingPopularMovies={fetchingPopularMovies}
 				/>
+				<Footer />
 				{/* <div>Icons made by <a href="https://www.flaticon.com/free-icon/camera_860321" title="monkik">monkik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> */}
-			</Container>
+			</Fragment>
 		);
 	}
 }

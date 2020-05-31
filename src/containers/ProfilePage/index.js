@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { DEFAULT_USER_IMAGE, GRAVATAR_BASE_URL } from "../../constants";
 import styled from "styled-components";
 import { connect } from "react-redux";
@@ -8,6 +8,7 @@ import HorizontalScrollWrapper from "../../components/HorizontalScrollWrapper";
 import SectionTitle from "../../components/SectionTitle";
 import Divider from "../../components/Divider";
 import CircularLoader from "../../components/CircularLoader";
+import Footer from "../../components/Footer";
 
 const Container = styled.div`
 	padding: 0 0 24px 0;
@@ -84,7 +85,7 @@ class Profile extends Component {
 			isDeletingSession
 		} = this.props;
 		return (
-			<Container>
+			<Fragment>
 				{Object.keys(user).length > 0 ? (
 					<Container>
 						<UserImage src={user.avatar.gravatar.hash} />
@@ -139,7 +140,8 @@ class Profile extends Component {
 						</LoginSignupButton>
 					</Container>
 				)}
-			</Container>
+				<Footer />
+			</Fragment>
 		);
 	}
 }
